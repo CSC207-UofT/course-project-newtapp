@@ -8,11 +8,11 @@
         <version>2.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>edu.toronto.csc207</groupId>
-    <artifactId>enrolment-system</artifactId>
+    <groupId>com.newts</groupId>
+    <artifactId>newtapp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>enrolment-system-demo1</name>
-    <description>enrolment-system-demo1</description>
+    <name>newtapp</name>
+    <description>newtapp</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -42,18 +42,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.vladmihalcea/hibernate-types-52 -->
-        <dependency>
-            <groupId>com.vladmihalcea</groupId>
-            <artifactId>hibernate-types-52</artifactId>
-            <version>2.14.0</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -64,4 +52,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
