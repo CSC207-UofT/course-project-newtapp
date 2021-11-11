@@ -1,31 +1,76 @@
 package com.newts.newtapp.entities;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+@Entity
+@Table(name = "conversation")
+// We've defined a custom type in order to save ArrayLists to the database - this is only possible with certain Databases, like Postgres.
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
+public class Conversation {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @Column(name = "title", columnDefinition = "text")
+    private String title;
+
+    @Column(name = "topics", columnDefinition = "text[]")
+    @Type(type = "list-array")
+    private final List<String> topics;
+
+    @Column(name = "location", columnDefinition = "text")
+    private String location;
+
+    @Column(name = "location_radius", columnDefinition = "int")
+    private final int locationRadius;
+
+    @Column(name = "min_rating", columnDefinition = "int")
+    private int minRating;
+
+    @Column(name = "max_size", columnDefinition = "int")
+    private int maxSize;
+
+    @Column(name = "closing_time", columnDefinition = "text")
+    private String closingTime;
+
+    @Column(name = "is_open", columnDefinition = "boolean")
+    private boolean isOpen;
+
+    @Column(name = "messages", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final ArrayList<Integer> messages;
+
+    @Column(name = "user", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final ArrayList<Integer> users;
+
+    public String getId() {
+        return id.toString();
+    }
+
+    @Deprecated(since = "we will not be manually setting an ID, as Spring Boot will manage these IDs to ensure they match the database")
+    private void setId(Long id) {
+        this.id = id;
+    }
 
 /**
  * A class representing a conversation
  */
-public class Conversation {
-    private final String id;
-    private String title;
-    private final List<String> topics;
-    private String location;
-    private final int locationRadius;
-    private int minRating;
-    private int maxSize;
-    private String closingTime;
-    private boolean isOpen;
-    private final List<Message> messages;
-    private final List<User> users;
 
-    public Conversation(String id, String title,
+    public Conversation(Long id, String title,
                         List<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
                         String closingTime, boolean isOpen,
-                        ArrayList<Message> messages,
-                        ArrayList<User> users) {
+                        ArrayList<Integer> messages,
+                        ArrayList<Integer> users) {
         this.id = id;
         this.title = title;
         this.topics = topics;
@@ -38,27 +83,6 @@ public class Conversation {
         this.messages = messages;
         this.users = users;
     }
-
-    public Conversation() {
-        this.id = "";
-        this.title = "";
-        this.topics = new ArrayList<>();
-        this.location = "";
-        this.locationRadius = 0;
-        this.minRating = 0;
-        this.maxSize = 0;
-        this.closingTime = "";
-        this.isOpen = false;
-        this.messages = new ArrayList<Message>();
-        this.users = new ArrayList<User>();
-    }
-
-
-    /**
-     * Return the id of the conversation.
-     * @return a string representing the id
-     */
-    public String getId(){ return this.id; }
 
     /**
      * Return the title of the conversation.
@@ -124,7 +148,7 @@ public class Conversation {
      * Return the messages in the conversation.
      * @return an ArrayList containing messages
      */
-    public List<Message> getMessages(){
+    public ArrayList<Integer> getMessages(){
         return this.messages;
     }
 
@@ -132,7 +156,7 @@ public class Conversation {
      * Return the users in the conversation.
      * @return an ArrayList containing users
      */
-    public List<User> getUsers(){
+    public ArrayList<Integer> getUsers(){
         return this.users;
     }
 
@@ -191,7 +215,7 @@ public class Conversation {
      * Add a message to the conversation.
      * @param message the message to be added
      */
-    public void addMessage(Message message){ this.messages.add(message); }
+    public void addMessage(Message message){ this.messages.add(message.getId()); }
 
     /**
      * Add a user to the conversation.
@@ -200,7 +224,7 @@ public class Conversation {
      */
     public boolean addUser(User user){
         if (this.users.size() < this.maxSize){
-            this.users.add(user);
+            this.users.add(user.getId());
             return true;
         } else {
             return false;
