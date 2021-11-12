@@ -1,31 +1,111 @@
 package com.newts.newtapp.entities;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A class representing a conversation
  */
+@Entity
+@Table(name = "conversation")
+// A custom type in order to save ArrayLists to the database.
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Conversation {
-    private final String id;
-    private String title;
-    private final List<String> topics;
-    private String location;
-    private final int locationRadius;
-    private int minRating;
-    private int maxSize;
-    private String closingTime;
-    private boolean isOpen;
-    private final List<Message> messages;
-    private final List<User> users;
 
-    public Conversation(String id, String title,
+    /**
+     * This Conversation's unique id.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private int id;
+
+    /**
+     * This Conversation's title.
+     */
+    @Column(name = "title", columnDefinition = "text")
+    private String title;
+
+    /**
+     * A list of topics that are relevant to this Conversation.
+     */
+    @Column(name = "topics", columnDefinition = "text[]")
+    @Type(type = "list-array")
+    private final List<String> topics;
+
+    /**
+     * The location where this Conversation's location radius is centered.
+     */
+    @Column(name = "location", columnDefinition = "text")
+    private String location;
+
+    /**
+     * The radius within which users should be able to search for this Conversation. NOT IMPLMEMENTED.
+     */
+    @Column(name = "location_radius", columnDefinition = "int")
+    private final int locationRadius;
+
+    /**
+     * The minimum rating a user must have to join this Conversation.
+     */
+    @Column(name = "min_rating", columnDefinition = "int")
+    private int minRating;
+
+    /**
+     * The maximum number of users that can be in this Conversation.
+     */
+    @Column(name = "max_size", columnDefinition = "int")
+    private int maxSize;
+
+    /**
+     * The time at which this Conversation's isOpen status should change automatically to closed.
+     */
+    @Column(name = "closing_time", columnDefinition = "text")
+    private String closingTime;
+
+    /**
+     * Boolean value indicating whether this conversation should appear in search and allow new users to join.
+     */
+    @Column(name = "is_open", columnDefinition = "boolean")
+    private boolean isOpen;
+
+    /**
+     * A list of messages in this conversation in order of when they were added (new messages are added to the end of
+     * the list).
+     */
+    @Column(name = "messages", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final ArrayList<Integer> messages;
+
+    /**
+     * A list of users in this conversation in order of when they joined (new users are added to end of list).
+     */
+    @Column(name = "user", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final ArrayList<Integer> users;
+
+    /**
+     * Create a new Conversation object.
+     * @param id                Unique id of this conversation
+     * @param title             Conversation's title
+     * @param topics            List of this conversation's topics
+     * @param location          Where this conversation is taking place
+     * @param locationRadius    Radius in km where people should be able to see this conversation
+     * @param minRating         Minimum rating a user must have in order to join this conversation
+     * @param maxSize           Max number of users in this conversation
+     * @param closingTime       Time at which this conversation will not accept new users
+     * @param creator           The creator of this conversation
+     */
+    public Conversation(int id, String title,
                         List<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
-                        String closingTime, boolean isOpen,
-                        ArrayList<Message> messages,
-                        ArrayList<User> users) {
+                        String closingTime, User creator) {
         this.id = id;
         this.title = title;
         this.topics = topics;
@@ -34,13 +114,17 @@ public class Conversation {
         this.minRating = minRating;
         this.maxSize = maxSize;
         this.closingTime = closingTime;
-        this.isOpen = isOpen;
-        this.messages = messages;
-        this.users = users;
+        isOpen = true;
+        messages = new ArrayList<>();
+        users = new ArrayList<>();
+        users.add(creator.getId());
     }
 
+    /**
+     * Initialize a new empty conversation. Mostly used for testing purposes.
+     */
     public Conversation() {
-        this.id = "";
+        this.id = -1;
         this.title = "";
         this.topics = new ArrayList<>();
         this.location = "";
@@ -49,16 +133,15 @@ public class Conversation {
         this.maxSize = 0;
         this.closingTime = "";
         this.isOpen = false;
-        this.messages = new ArrayList<Message>();
-        this.users = new ArrayList<User>();
+        this.messages = new ArrayList<>();
+        this.users = new ArrayList<>();
     }
-
 
     /**
      * Return the id of the conversation.
      * @return a string representing the id
      */
-    public String getId(){ return this.id; }
+    public int getId(){ return this.id; }
 
     /**
      * Return the title of the conversation.
@@ -124,7 +207,7 @@ public class Conversation {
      * Return the messages in the conversation.
      * @return an ArrayList containing messages
      */
-    public List<Message> getMessages(){
+    public ArrayList<Integer> getMessages(){
         return this.messages;
     }
 
@@ -132,7 +215,7 @@ public class Conversation {
      * Return the users in the conversation.
      * @return an ArrayList containing users
      */
-    public List<User> getUsers(){
+    public ArrayList<Integer> getUsers(){
         return this.users;
     }
 
@@ -191,7 +274,7 @@ public class Conversation {
      * Add a message to the conversation.
      * @param message the message to be added
      */
-    public void addMessage(Message message){ this.messages.add(message); }
+    public void addMessage(Message message){ this.messages.add(message.getId()); }
 
     /**
      * Add a user to the conversation.
@@ -200,7 +283,7 @@ public class Conversation {
      */
     public boolean addUser(User user){
         if (this.users.size() < this.maxSize){
-            this.users.add(user);
+            this.users.add(user.getId());
             return true;
         } else {
             return false;

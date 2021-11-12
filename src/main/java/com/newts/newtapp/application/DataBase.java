@@ -83,7 +83,7 @@ public class DataBase {
      * @param conversationID String id of the conversation that the message is being added to.
      * @param message Message being added.
      */
-    public static void addMessage(String conversationID, Message message){
+    public static void addMessage(int conversationID, Message message){
         for(Conversation c : ConversationList){
             if(Objects.equals(c.getId(), conversationID)){
                 c.addMessage(message);
