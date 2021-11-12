@@ -17,7 +17,7 @@ public class ChangeConversationStatus extends ConversationInteractor {
         Conversation selectedConversation = DataBase.getConversation(conversationId);
         ConfigReader config = (ConfigReader) request.get(RequestField.CONFIG);
 
-        if (selectedConversation.getId().equals("")) {
+        if (selectedConversation.getId() == -1) {
             // Output an error because there is no such conversation with the id
             response.fill(ResponseField.FAILURE, config.get("invalidConversation") + conversationId);
         } else {
