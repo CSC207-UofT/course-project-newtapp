@@ -147,7 +147,7 @@ public class User {
 
     /**
      * Setter method for user's ID.
-     * @param id    The new id to assign this user.
+     * @param id   The new id to assign this user.
      */
     public void setId(int id) {
         this.id = id;
