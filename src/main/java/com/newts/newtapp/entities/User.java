@@ -48,7 +48,7 @@ public class User {
      */
     @Column(name = "interests", columnDefinition = "text[]")
     @Type(type = "list-array")
-    private final List<String> interests;
+    private ArrayList<String> interests;
 
     /**
      * This is the user's total rating- a sum of all ratings given to this user. Used for rating calculation.
@@ -73,21 +73,21 @@ public class User {
      */
     @Column(name = "following", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> following;
+    private List<Integer> following;
 
     /**
      * A list of unique user identifiers corresponding to the Users that follow this User.
      */
     @Column(name = "followers", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> followers;
+    private List<Integer> followers;
 
     /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
     @Column(name = "conversations", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> conversations;
+    private List<Integer> conversations;
 
     /**
      * Create a new User with given User information.
@@ -99,7 +99,7 @@ public class User {
     public User(int id,
                 String username,
                 String password,
-                List<String> interests) {
+                ArrayList<String> interests) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -202,11 +202,19 @@ public class User {
     }
 
     /**
-     * Getter method for ArrayList of user interest.
-     * @return Returns ArrayList of user interests.
+     * Getter method for ArrayList of user interests.
+     * @return Returns a copy of the ArrayList of user interests.
      */
-    public List<String> getInterests() {
-        return interests;
+    public ArrayList<String> getInterests() {
+        return new ArrayList<>(this.interests);
+    }
+
+    /**
+     * Setter method for Arraylist of user's interests.
+     * @param interests Interests of the user
+     */
+    public void setInterests(ArrayList<String> interests){
+        this.interests = interests;
     }
 
     /**
@@ -278,8 +286,14 @@ public class User {
     /**
      * @return  List of User ids that this User follows.
      */
-    public List<Integer> getFollowing() {
-        return following;
+    public ArrayList<Integer> getFollowing() {return new ArrayList<>(following);}
+
+    /**
+     * Setter method for the Arraylist of user's id this user is following.
+     * @param following Ids of users a user is following
+     */
+    public void setFollowing(ArrayList<Integer> following){
+        this.following = following;
     }
 
     /**
@@ -301,8 +315,14 @@ public class User {
     /**
      * @return  List of User ids of those following this User
      */
-    public List<Integer> getFollowers() {
-        return followers;
+    public ArrayList<Integer> getFollowers() {return new ArrayList<>(followers);}
+
+    /**
+     * Setter method for the Arraylist of ids of followers.
+     * @param followers Ids of users that follow a user
+     */
+    public void setFollowers(ArrayList<Integer> followers){
+        this.followers = followers;
     }
 
     /**
@@ -328,8 +348,13 @@ public class User {
      * Returns list of user's active conversations.
      * @return ArrayList of user's active conversations.
      */
-    public List<Integer> getConversations(){
-        return conversations;
-    }
+    public ArrayList<Integer> getConversations(){return new ArrayList<>(conversations);}
 
+    /**
+     * Setter method for the Arraylist of conversation's ids a user has joined.
+     * @param conversations ids of conversations a user has joined
+     */
+    public void setConversations(ArrayList<Integer> conversations){
+        this.conversations = conversations;
+    }
 }
