@@ -9,7 +9,6 @@ import com.newts.newtapp.entities.User;
  */
 public abstract class UserInteractor<ReturnType, ExceptionType extends Exception>
         implements InputBoundary<ReturnType, ExceptionType> {
-    private User user;
     private UserRepository repository;
 
     /**
