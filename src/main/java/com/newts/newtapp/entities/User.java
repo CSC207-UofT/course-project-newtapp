@@ -1,5 +1,9 @@
 package com.newts.newtapp.entities;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,56 +14,79 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "users")
+// Custom type for ArrayLists
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class User {
     /**
      * This User's unique identifier.
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
 
     /**
      * This User's username, used for logging in and is visible to other Users.
      */
+    @Column(name = "username", columnDefinition = "text")
     private String username;
 
     /**
      * This User's password, used for logging in.
      */
+    @Column(name = "password", columnDefinition = "text")
     private String password;
 
     /**
      * This User's location, used for finding local conversations.
      */
+    @Column(name = "location", columnDefinition = "text")
     private String location;
 
     /**
      * A list of this user's interests.
      */
+    @Column(name = "interests", columnDefinition = "text[]")
+    @Type(type = "list-array")
     private final List<String> interests;
 
     /**
-     * This user's rating, simply an average of all ratings given to this user by others. Each user starts with one
-     * rating of 5. A rating is a double in the range of 0 to 5.
+     * This is the user's total rating- a sum of all ratings given to this user. Used for rating calculation.
      */
-    private double rating;
+    @Column(name = "total_rating", columnDefinition = "int")
+    private int totalRating;
 
     /**
      * Total number of ratings this user has received. This is used for computing the user's rating. Is 1 initially.
      */
+    @Column(name = "num_ratings", columnDefinition = "int")
     private int numRatings;
 
     /**
      * True if and only if this user is currently logged in.
      */
+    @Column(name = "login_status", columnDefinition = "boolean")
     private boolean loginStatus;
 
     /**
-     * A list of unique user identifiers corresponding to this User's friends.
+     * A list of unique user identifiers corresponding to the Users that this User follows.
      */
-    private final List<Integer> friends;
+    @Column(name = "following", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final List<Integer> following;
+
+    /**
+     * A list of unique user identifiers corresponding to the Users that follow this User.
+     */
+    @Column(name = "followers", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private final List<Integer> followers;
 
     /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
+    @Column(name = "conversations", columnDefinition = "int[]")
+    @Type(type = "list-array")
     private final List<Integer> conversations;
 
     /**
@@ -69,19 +96,20 @@ public class User {
      * @param interests A List of the user's initial specified interests.
      * @param id        The user's unique id.
      */
-    public User(String username,
+    public User(int id,
+                String username,
                 String password,
-                List<String> interests,
-                int id){
+                List<String> interests) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.interests = interests;
-        this.id = id;
         location = null;
-        rating = 5;
+        totalRating = 5;
         numRatings = 1;
         loginStatus = false;
-        friends = new ArrayList<>();
+        following = new ArrayList<>();
+        followers = new ArrayList<>();
         conversations = new ArrayList<>();
     }
 
@@ -93,10 +121,11 @@ public class User {
         password = null;
         interests = new ArrayList<>();
         id = 0;
-        rating = 0;
+        totalRating = 0;
         numRatings = 0;
         loginStatus = false;
-        friends = new ArrayList<>();
+        following = new ArrayList<>();
+        followers = new ArrayList<>();
         conversations = new ArrayList<>();
     }
 
@@ -160,11 +189,8 @@ public class User {
      * Setter method for the user's password
      * @param password Password to be set
      */
-
     public void setPassword(String password){
-        if(password.length() >= 6) {
-            this.password = password;
-        }
+        this.password = password;
     }
 
     /**
@@ -195,18 +221,18 @@ public class User {
      * Removes specified interest from user's interests
      * @param interest Interest to be removed
      */
-    public void removeInterest (String interest){
+    public void removeInterest(String interest){
         int index = interests.indexOf(interest);
         if (index != -1)
             interests.remove(index);
     }
 
     /**
-     * Getter method which returns the user's average rating
+     * Returns this user's rating. totalRatings/numRatings.
      * @return User's average rating
      */
     public double getRating() {
-        return rating/numRatings;
+        return (float) totalRating / numRatings;
     }
 
     /**
@@ -215,7 +241,7 @@ public class User {
      * @param rating Rating to be added
      */
     public void addRating(float rating){
-        this.rating += rating;
+        this.totalRating += rating;
         numRatings ++;
     }
 
@@ -234,29 +260,49 @@ public class User {
     }
 
     /**
-     * Adds specified user to user's friendslist
-     * @param friend User to be added as friend
+     * Adds a User to this User's following list.
+     * @param other     User to add
      */
-    public void addFriend(User friend) {
-        friends.add(friend.id);
+    public void addFollowing(User other) {
+        following.add(other.getId());
     }
 
     /**
-     * Removes specified user from user's friendslist
-     * @param friend User to be removed
+     * Removes a User from this User's following list, if they are in the list.
+     * @param other     User to remove
      */
-    public void removeFriend(User friend){
-        int index = friends.indexOf(friend.getId());
-        if (index != -1)
-            friends.remove(index);
+    public void removeFollowing(User other) {
+        following.remove(other.getId());
     }
 
     /**
-     * Getter method which returns user's friendslist
-     * @return Returns user's friendslist which is an ArrayList of users
+     * @return  List of User ids that this User follows.
      */
-    public List<Integer> getFriends(){
-        return friends;
+    public List<Integer> getFollowing() {
+        return following;
+    }
+
+    /**
+     * Adds a User to this User's follower list.
+     * @param other     User to add
+     */
+    public void addFollower(User other) {
+        followers.add(other.getId());
+    }
+
+    /**
+     * Removes a User from this User's follower list.
+     * @param other     User to remove
+     */
+    public void removeFollower(User other) {
+        followers.remove(other.getId());
+    }
+
+    /**
+     * @return  List of User ids of those following this User
+     */
+    public List<Integer> getFollowers() {
+        return followers;
     }
 
     /**
