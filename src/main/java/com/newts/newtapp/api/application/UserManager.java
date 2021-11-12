@@ -15,7 +15,7 @@ public class UserManager {
      * The User this UserManager is managing.
      */
     private User user;
-    private UserRepository repository;
+    private final UserRepository repository;
 
     /**
      * Initialize a new UserManager with given UserRepository.
