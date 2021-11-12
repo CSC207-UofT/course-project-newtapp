@@ -43,7 +43,7 @@ public class Message {
     private String writtenAt;
 
     /**
-     * This message's time at which it was updated.
+     * This message's time at which it was last updated.
      */
     @Column(name = "last_updated_at", columnDefinition = "text")
     private String lastUpdatedAt;
