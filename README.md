@@ -22,12 +22,11 @@ CREATE USER optimisticnewt WITH ENCRYPTED PASSWORD 'newtdb';
 GRANT ALL PRIVILEGES ON DATABASE newtapp TO optimisticnewt;
 ```
 
-Sql commands for step 5:
+SQL table creation commands for step 5:
 
-Conversation table,
 ```
 CREATE TABLE conversation (
-    Id serial PRIMARY KEY,
+    id serial PRIMARY KEY,
     title text,
     topics text[],
     location text,
@@ -39,12 +38,18 @@ CREATE TABLE conversation (
     messages int[],
     users int[]
 )
-```
 
-User table,
-```
-```
-
-Message table,
-```
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    username text,
+    password text,
+    location text,
+    interests text[],
+    total_rating int,
+    num_ratings int,
+    login_status boolean,
+    following int[],
+    followers int[],
+    conversations int[]
+)
 ```
