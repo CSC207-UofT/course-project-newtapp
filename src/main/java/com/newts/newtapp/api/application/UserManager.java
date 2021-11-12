@@ -1,5 +1,8 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.errors.InvalidPassword;
+import com.newts.newtapp.api.errors.SameUser;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
 import com.newts.newtapp.api.application.user.*;
@@ -26,19 +29,17 @@ public class UserManager {
      * Creates a new user according to the given RequestModel and sets this UserManager's user accordingly.
      * @param request   RequestModel containing new User information.
      */
-    public void createUser(RequestModel request) {
-        CreateUser createUser = new CreateUser();
+    public void createUser(RequestModel request) throws InvalidPassword {
+        CreateUser createUser = new CreateUser(repository);
         createUser.request(request);
-        user = createUser.getUser();
     }
 
     /**
      * Logs in a user according to RequestModel information and sets this UserManager's user accordingly.
      */
-    public void login(RequestModel request) {
-        LoginUser loginUser = new LoginUser();
+    public void login(RequestModel request) throws UserNotFound, InvalidPassword {
+        LoginUser loginUser = new LoginUser(repository);
         loginUser.request(request);
-        user = loginUser.getUser();
     }
 
     public void logout() {
@@ -49,8 +50,8 @@ public class UserManager {
      * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
      * @param request   RequestModel containing delete User information.
      */
-    public void deleteUser(RequestModel request) {
-        DeleteUser deleteUser = new DeleteUser();
+    public void deleteUser(RequestModel request) throws UserNotFound {
+        DeleteUser deleteUser = new DeleteUser(repository);
         deleteUser.request(request);
     }
 
@@ -58,7 +59,7 @@ public class UserManager {
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFriend User information.
      */
-    public void addFollow(RequestModel request) {
+    public void addFollow(RequestModel request) throws UserNotFound, SameUser {
         AddFollow addFollow = new AddFollow(repository);
         addFollow.request(request);
     }

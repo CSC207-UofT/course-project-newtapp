@@ -1,5 +1,7 @@
 package com.newts.newtapp.api.application;
 
+import com.newts.newtapp.api.errors.InvalidPassword;
+import com.newts.newtapp.api.errors.UserNotFound;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,5 +13,5 @@ public interface InputBoundary<ReturnType, ExceptionType extends Exception> {
      * Accepts a request.
      * @param request   a request stored as a RequestModel
      */
-    ReturnType request(RequestModel request) throws ExceptionType;
+    ReturnType request(RequestModel request) throws ExceptionType, UserNotFound, InvalidPassword;
 }

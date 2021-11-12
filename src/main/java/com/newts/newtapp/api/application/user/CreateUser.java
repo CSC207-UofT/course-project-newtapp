@@ -1,47 +1,42 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.entities.User;
 import java.util.ArrayList;
 
 
-public class CreateUser extends UserInteractor {
-    private User user;
+public class CreateUser extends UserInteractor<Void,Exception> {
+    private UserRepository repository;
 
+    /**
+     * Initialize a new AddFollow interactor with given UserRepository.
+     * @param repository    UserRepository to access user data by
+     */
+    public CreateUser(UserRepository repository) { super(repository); }
 
+    /**
+     * Accepts a CreateUserRequest
+     * @param request   a request stored as a RequestModel
+     */
     @Override
-    public void request(RequestModel request) {
-        ResponseModel response = new ResponseModel();
-        ConfigReader config = (ConfigReader) request.get(RequestField.CONFIG);
-
-        // check that password is strong enough before creating User
+    public Void request(RequestModel request) throws InvalidPassword {
         if (((String) request.get(RequestField.PASSWORD)).length() >= 6) {
 
             String username = ((String) request.get(RequestField.USERNAME));
             String password = (String) request.get(RequestField.PASSWORD);
             ArrayList<String> interests = new ArrayList<>();
             interests.add((String) request.get(RequestField.INTEREST));
-            int id = (int) request.get(RequestField.ID); //TODO adjust for new data access object
+            int id = (int) request.get(RequestField.ID);
             User user = new User(id, username, password, interests);
 
-            DataBase.addUser(user);
-            response.fill(ResponseField.SUCCESS, user.getUsername() + config.get("created"));
+            repository.save(user);
+            return null;
         }
         else {
-            response.fill(ResponseField.FAILURE, config.get("invalidPassword"));
+            throw new InvalidPassword();
         }
-
-        // send response through provided output boundary
-        request.getOutput().respond(response);
     }
-
-    /**
-     * Returns the User that was successfully created this interactor, or null otherwise.
-     * @return created User or null if no user has been created.
-     */
-    public User getUser() {
-        return user;
-    }
-
 }
 

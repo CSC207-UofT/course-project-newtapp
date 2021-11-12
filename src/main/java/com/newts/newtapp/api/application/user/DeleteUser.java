@@ -1,26 +1,29 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
-public class DeleteUser extends UserInteractor {
-    private User user;
-    private String password;
+public class DeleteUser extends UserInteractor<Void,Exception> {
+    private UserRepository repository;
 
+    /**
+     * Initialize a new AddFollow interactor with given UserRepository.
+     * @param repository    UserRepository to access user data by
+     */
+    public DeleteUser(UserRepository repository) { super(repository); }
 
+    /**
+     * Accepts a CreateUserRequest
+     * @param request   a request stored as a RequestModel
+     */
     @Override
-    public void request(RequestModel request) {
-        ResponseModel response = new ResponseModel();
-        ConfigReader config = (ConfigReader) request.get(RequestField.CONFIG);
+    public Void request(RequestModel request) throws UserNotFound {
+        int userId = (int) request.get(RequestField.ID);
 
-        int id = (int) request.get(RequestField.ID);
-
-        if (DataBase.containsUserID(id)) {
-            DataBase.deleteUser(id);
-            response.fill(ResponseField.SUCCESS, config.get("deletedUser"));
-        } else {
-            response.fill(ResponseField.FAILURE, config.get("InvalidID"));
-        }
-        // send response through provided output boundary
-        request.getOutput().respond(response);
-    }
+        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
+        repository.delete(user);
+        return null;
+       }
 }

@@ -1,43 +1,42 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.errors.InvalidPassword;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
+import java.util.ArrayList;
 
-public class LoginUser extends UserInteractor {
-    private User user;
+
+public class LoginUser extends UserInteractor<Void,Exception> {
+    private UserRepository repository;
 
     /**
-     * Accepts a request.
-     * @param request   a request stored as a RequestModel
+     * Initialize a new AddFollow interactor with given UserRepository.
+     *
+     * @param repository UserRepository to access user data by
+     */
+    public LoginUser(UserRepository repository) {
+        super(repository);
+    }
+
+    /**
+     * Accepts a CreateUserRequest
+     *
+     * @param request a request stored as a RequestModel
      */
     @Override
-    public void request(RequestModel request) {
-        ResponseModel response = new ResponseModel();
-        ConfigReader config = (ConfigReader) request.get(RequestField.CONFIG);
+    public Void request(RequestModel request) throws UserNotFound, InvalidPassword {
+        int userId = (int) request.get(RequestField.ID);
 
-        user = DataBase.getUser((String) request.get(RequestField.USERNAME));
+        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
 
-        if (user.getUsername() == null) {
-            // Output an error because there is no such user with the given username
-            response.fill(ResponseField.FAILURE, new Exception(ApplicationExceptions.NO_SUCH_USER_ERROR));
-        } else if (user.getPassword() == request.get(RequestField.PASSWORD)) {
-            // Login the user
+        if (user.getPassword() == request.get(RequestField.PASSWORD)) {
             user.logIn();
-            response.fill(ResponseField.SUCCESS, user.getUsername() + config.get("loggedIn"));
+            repository.save(user);
+            return null;
         } else {
-            // Input password was incorrect.
-            response.fill(ResponseField.FAILURE, config.get("incorrectPassword"));
+            throw new InvalidPassword();
         }
-        // send response through provided output boundary
-        request.getOutput().respond(response);
-    }
-
-    /**
-     * Returns the User that has been logged in by this interactor, or null otherwise.
-     * @return  logged in User or null if no user has been logged in.
-     */
-    public User getUser() {
-        return user;
     }
 }
-
-
