@@ -3,9 +3,13 @@ package com.newts.newtapp.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
 /**
  * An object representing a User of the application.
  */
+@Entity
+@Table(name = "users")
 public class User {
     /**
      * This User's unique identifier.
@@ -56,7 +60,7 @@ public class User {
     /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
-    private final List<String> conversations;
+    private final List<Integer> conversations;
 
     /**
      * Create a new User with given User information.
