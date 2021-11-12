@@ -73,21 +73,21 @@ public class User {
      */
     @Column(name = "following", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private List<Integer> following;
+    private ArrayList<Integer> following;
 
     /**
      * A list of unique user identifiers corresponding to the Users that follow this User.
      */
     @Column(name = "followers", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private List<Integer> followers;
+    private ArrayList<Integer> followers;
 
     /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
     @Column(name = "conversations", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private List<Integer> conversations;
+    private ArrayList<Integer> conversations;
 
     /**
      * Create a new User with given User information.
@@ -138,6 +138,14 @@ public class User {
     }
 
     /**
+     * Set this User's loginStatus.
+     * @param loginStatus   True iff this user is logged in
+     */
+    public void setLoginStatus(boolean loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    /**
      * Getter method for user's ID.
      * @return Returns user ID.
      */
@@ -165,7 +173,7 @@ public class User {
      * Setter method for username
      * @param username Username to be set
      */
-    public void setUsername(String username) {this.username = username;}
+    public void setUsername(String username) { this.username = username; }
 
     /**
      * Getter method for user's password.
@@ -175,6 +183,7 @@ public class User {
     public String getPassword(){
         return password;
     }
+
     /**
      * Getter method for user's last updated location.
      * NOTE: Wasn't sure what type the location data would be,
@@ -251,6 +260,36 @@ public class User {
     public void addRating(float rating){
         this.totalRating += rating;
         numRatings ++;
+    }
+
+    /**
+     * @return  Number of ratings this user has received.
+     */
+    public int getNumRatings() {
+        return numRatings;
+    }
+
+    /**
+     * Set the number of ratings this user has received.
+     * @param numRatings    number of ratings this user has received
+     */
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
+
+    /**
+     * @return  Sum of all ratings this user has received
+     */
+    public int getTotalRating() {
+        return totalRating;
+    }
+
+    /**
+     * Set the total rating of this user.
+     * @param totalRating   total rating of this user
+     */
+    public void setTotalRating(int totalRating) {
+        this.totalRating = totalRating;
     }
 
     /**
