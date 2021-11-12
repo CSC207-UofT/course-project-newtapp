@@ -12,8 +12,6 @@ import java.time.format.DateTimeFormatter;
  */
 @Entity
 @Table(name = "message")
-// A custom type in order to save ArrayLists to the database.
-@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Message {
 
     /**
