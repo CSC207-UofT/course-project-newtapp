@@ -11,7 +11,7 @@ import com.newts.newtapp.api.application.RequestField;
  * UserInteractor that adds a follow relationship.
  * RequestModel must provide two User ids, the first is the user who wants to follow the other.
  */
-public class AddFollow extends UserInteractor<Void,Exception> {
+public class AddFollow extends UserInteractor<Void, Exception> {
     private UserRepository repository;
 
     /**

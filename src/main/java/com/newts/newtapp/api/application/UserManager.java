@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.entities.User;
 
 import com.newts.newtapp.api.application.user.*;
@@ -58,7 +59,7 @@ public class UserManager {
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFriend User information.
      */
-    public void addFollow(RequestModel request) {
+    public void addFollow(RequestModel request) throws UserNotFound, SameUser {
         AddFollow addFollow = new AddFollow(repository);
         addFollow.request(request);
     }
