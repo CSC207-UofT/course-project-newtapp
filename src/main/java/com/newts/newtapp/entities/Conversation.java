@@ -10,13 +10,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "conversation")
-// We've defined a custom type in order to save ArrayLists to the database - this is only possible with certain Databases, like Postgres.
+// Defined a custom type in order to save ArrayLists to the database.
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Conversation {
+    /**
+     * A class representing a conversation
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private int id;
 
     @Column(name = "title", columnDefinition = "text")
     private String title;
@@ -51,20 +54,7 @@ public class Conversation {
     @Type(type = "list-array")
     private final ArrayList<Integer> users;
 
-    public String getId() {
-        return id.toString();
-    }
-
-    @Deprecated(since = "we will not be manually setting an ID, as Spring Boot will manage these IDs to ensure they match the database")
-    private void setId(Long id) {
-        this.id = id;
-    }
-
-/**
- * A class representing a conversation
- */
-
-    public Conversation(Long id, String title,
+    public Conversation(int id, String title,
                         List<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
@@ -83,6 +73,26 @@ public class Conversation {
         this.messages = messages;
         this.users = users;
     }
+
+    public Conversation() {
+        this.id = 0;
+        this.title = "";
+        this.topics = new ArrayList<>();
+        this.location = "";
+        this.locationRadius = 0;
+        this.minRating = 0;
+        this.maxSize = 0;
+        this.closingTime = "";
+        this.isOpen = false;
+        this.messages = new ArrayList<>();
+        this.users = new ArrayList<>();
+    }
+
+    /**
+     * Return the id of the conversation.
+     * @return a string representing the id
+     */
+    public int getId(){ return this.id; }
 
     /**
      * Return the title of the conversation.
