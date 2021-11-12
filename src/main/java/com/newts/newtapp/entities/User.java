@@ -48,7 +48,7 @@ public class User {
      */
     @Column(name = "interests", columnDefinition = "text[]")
     @Type(type = "list-array")
-    private final List<String> interests;
+    private ArrayList<String> interests;
 
     /**
      * This is the user's total rating- a sum of all ratings given to this user. Used for rating calculation.
@@ -73,21 +73,21 @@ public class User {
      */
     @Column(name = "following", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> following;
+    private ArrayList<Integer> following;
 
     /**
      * A list of unique user identifiers corresponding to the Users that follow this User.
      */
     @Column(name = "followers", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> followers;
+    private ArrayList<Integer> followers;
 
     /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
     @Column(name = "conversations", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final List<Integer> conversations;
+    private ArrayList<Integer> conversations;
 
     /**
      * Create a new User with given User information.
@@ -99,7 +99,7 @@ public class User {
     public User(int id,
                 String username,
                 String password,
-                List<String> interests) {
+                ArrayList<String> interests) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -138,6 +138,14 @@ public class User {
     }
 
     /**
+     * Set this User's loginStatus.
+     * @param loginStatus   True iff this user is logged in
+     */
+    public void setLoginStatus(boolean loginStatus) {
+        this.loginStatus = loginStatus;
+    }
+
+    /**
      * Getter method for user's ID.
      * @return Returns user ID.
      */
@@ -147,7 +155,7 @@ public class User {
 
     /**
      * Setter method for user's ID.
-     * @param id    The new id to assign this user.
+     * @param id   The new id to assign this user.
      */
     public void setId(int id) {
         this.id = id;
@@ -165,7 +173,7 @@ public class User {
      * Setter method for username
      * @param username Username to be set
      */
-    public void setUsername(String username) {this.username = username;}
+    public void setUsername(String username) { this.username = username; }
 
     /**
      * Getter method for user's password.
@@ -175,6 +183,7 @@ public class User {
     public String getPassword(){
         return password;
     }
+
     /**
      * Getter method for user's last updated location.
      * NOTE: Wasn't sure what type the location data would be,
@@ -202,11 +211,19 @@ public class User {
     }
 
     /**
-     * Getter method for ArrayList of user interest.
-     * @return Returns ArrayList of user interests.
+     * Getter method for ArrayList of user interests.
+     * @return Returns a copy of the ArrayList of user interests.
      */
-    public List<String> getInterests() {
-        return interests;
+    public ArrayList<String> getInterests() {
+        return new ArrayList<>(this.interests);
+    }
+
+    /**
+     * Setter method for Arraylist of user's interests.
+     * @param interests Interests of the user
+     */
+    public void setInterests(ArrayList<String> interests){
+        this.interests = interests;
     }
 
     /**
@@ -246,6 +263,36 @@ public class User {
     }
 
     /**
+     * @return  Number of ratings this user has received.
+     */
+    public int getNumRatings() {
+        return numRatings;
+    }
+
+    /**
+     * Set the number of ratings this user has received.
+     * @param numRatings    number of ratings this user has received
+     */
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
+
+    /**
+     * @return  Sum of all ratings this user has received
+     */
+    public int getTotalRating() {
+        return totalRating;
+    }
+
+    /**
+     * Set the total rating of this user.
+     * @param totalRating   total rating of this user
+     */
+    public void setTotalRating(int totalRating) {
+        this.totalRating = totalRating;
+    }
+
+    /**
      * Sets user loginStatus to True
      */
     public void logIn(){
@@ -278,8 +325,14 @@ public class User {
     /**
      * @return  List of User ids that this User follows.
      */
-    public List<Integer> getFollowing() {
-        return following;
+    public ArrayList<Integer> getFollowing() {return new ArrayList<>(following);}
+
+    /**
+     * Setter method for the Arraylist of user's id this user is following.
+     * @param following Ids of users a user is following
+     */
+    public void setFollowing(ArrayList<Integer> following){
+        this.following = following;
     }
 
     /**
@@ -301,8 +354,14 @@ public class User {
     /**
      * @return  List of User ids of those following this User
      */
-    public List<Integer> getFollowers() {
-        return followers;
+    public ArrayList<Integer> getFollowers() {return new ArrayList<>(followers);}
+
+    /**
+     * Setter method for the Arraylist of ids of followers.
+     * @param followers Ids of users that follow a user
+     */
+    public void setFollowers(ArrayList<Integer> followers){
+        this.followers = followers;
     }
 
     /**
@@ -328,8 +387,13 @@ public class User {
      * Returns list of user's active conversations.
      * @return ArrayList of user's active conversations.
      */
-    public List<Integer> getConversations(){
-        return conversations;
-    }
+    public ArrayList<Integer> getConversations(){return new ArrayList<>(conversations);}
 
+    /**
+     * Setter method for the Arraylist of conversation's ids a user has joined.
+     * @param conversations ids of conversations a user has joined
+     */
+    public void setConversations(ArrayList<Integer> conversations){
+        this.conversations = conversations;
+    }
 }
