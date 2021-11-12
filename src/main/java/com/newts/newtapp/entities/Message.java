@@ -1,13 +1,51 @@
 package com.newts.newtapp.entities;
 
+import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.TypeDef;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A class representing a message
+ */
+@Entity
+@Table(name = "message")
+// A custom type in order to save ArrayLists to the database.
+@TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Message {
+
+    /**
+     * This Message's unique id.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private int id;
+
+    /**
+     * This message's body.
+     */
+    @Column(name = "body", columnDefinition = "text")
     private String body;
+
+    /**
+     * This message's author.
+     */
+    @Column(name = "author", columnDefinition = "integer")
     private int author;
+
+    /**
+     * This message's time at which it was written.
+     */
+    @Column(name = "written_at", columnDefinition = "text")
     private String writtenAt;
+
+    /**
+     * This message's time at which it was updated.
+     */
+    @Column(name = "last_updated_at", columnDefinition = "text")
     private String lastUpdatedAt;
 
     /**

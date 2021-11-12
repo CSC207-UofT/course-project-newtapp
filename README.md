@@ -52,4 +52,12 @@ CREATE TABLE users (
     followers int[],
     conversations int[]
 )
+
+CREATE TABLE message (
+    id serial PRIMARY KEY,
+    body text,
+    author integer,
+    written_at text,
+    last_updated_at text
+)
 ```
