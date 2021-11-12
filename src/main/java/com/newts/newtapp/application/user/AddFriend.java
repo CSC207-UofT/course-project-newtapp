@@ -4,7 +4,7 @@ import com.newts.newtapp.application.*;
 import com.newts.newtapp.entities.User;
 
 /**
- * UserInteracotor for adding a friend.
+ * UserInteractor for adding a friend.
  */
 public class AddFriend extends UserInteractor {
     private User user;
@@ -31,7 +31,8 @@ public class AddFriend extends UserInteractor {
         } else {
             // A User with the given username was found
             response.fill(ResponseField.SUCCESS, user.getUsername() + config.get("friendAdded"));
-            user.addFriend(userTwo);
+            user.addFollowing(userTwo);
+            // TODO: adjust for new following/follower model
         }
         // send response through provided output boundary
         request.getOutput().respond(response);

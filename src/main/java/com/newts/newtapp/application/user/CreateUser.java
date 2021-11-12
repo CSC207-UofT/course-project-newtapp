@@ -22,7 +22,7 @@ public class CreateUser extends UserInteractor {
             ArrayList<String> interests = new ArrayList<>();
             interests.add((String) request.get(RequestField.INTEREST));
             int id = (int) request.get(RequestField.ID); //TODO adjust for new data access object
-            User user = new User(username, password, interests, id);
+            User user = new User(id, username, password, interests);
 
             DataBase.addUser(user);
             response.fill(ResponseField.SUCCESS, user.getUsername() + config.get("created"));
