@@ -6,7 +6,6 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A class representing a conversation
