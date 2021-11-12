@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Message implements Serializable {
-    private String id;
+    private int id;
     private String body;
     private User author;
     private String writtenAt;
     private String lastUpdatedAt;
 
-    public Message(String id, String body, User author) {
+    public Message(int id, String body, User author) {
         this.id = id;
         this.body = body;
         this.author = author;
@@ -82,7 +82,7 @@ public class Message implements Serializable {
      * Returns message ID.
      * @return String representing messages unique id.
      */
-    public String getId(){
+    public int getId(){
         return id;
     }
 }

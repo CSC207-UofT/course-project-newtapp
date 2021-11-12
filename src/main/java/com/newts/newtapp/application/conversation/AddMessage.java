@@ -31,7 +31,7 @@ public class AddMessage extends ConversationInteractor {
         else{
             String writeTime = ((String) request.get(RequestField.WRITE_TIME));
             String lastUpdatedTime = ((String) request.get(RequestField.LAST_UPDATED_TIME));
-            String messageID = ((String) request.get(RequestField.MESSAGE_ID));
+            int messageID = ((int) request.get(RequestField.MESSAGE_ID));
             message  = new Message(messageID, messageBody, user);
             DataBase.addMessage(conversation.getId(), message);
             response.fill(ResponseField.SUCCESS, config.get("messageSent"));

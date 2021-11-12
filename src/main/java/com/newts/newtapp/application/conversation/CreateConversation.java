@@ -2,6 +2,8 @@ package com.newts.newtapp.application.conversation;
 
 import com.newts.newtapp.application.*;
 import com.newts.newtapp.entities.Conversation;
+import com.newts.newtapp.entities.User;
+
 import java.util.ArrayList;
 
 
@@ -20,7 +22,7 @@ public class CreateConversation extends ConversationInteractor {
 
         // check that a valid id is given
         if (((String) request.get(RequestField.ID)).length() != 0){
-            String id = (String) request.get(RequestField.ID);
+            int id = (int) request.get(RequestField.ID);
             String title = (String) request.get(RequestField.TITLE);
             ArrayList<String> topics = new ArrayList<>();
             topics.add((String) request.get(RequestField.TOPIC));
@@ -29,11 +31,10 @@ public class CreateConversation extends ConversationInteractor {
             int minRating = (int) request.get(RequestField.MIN_RATING);
             int maxSize = (int) request.get(RequestField.MAX_SIZE);
             String closingTime = (String) request.get(RequestField.CLOSING_TIME);
-            boolean isOpen = (boolean) request.get(RequestField.IS_OPEN);
+            User creator = (User) request.get(RequestField.USER);
 
             this.conversation = new Conversation(id, title, topics, location,
-                    locationRadius, minRating, maxSize, closingTime, isOpen,
-                    new ArrayList<>(), new ArrayList<>());
+                    locationRadius, minRating, maxSize, closingTime, creator);
             DataBase.addConversation(this.conversation);
 
             response.fill(ResponseField.SUCCESS, "Conversation with ID " + id + config.get("created"));

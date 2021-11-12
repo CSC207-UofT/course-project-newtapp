@@ -282,7 +282,7 @@ public class User {
      * Returns list of user's active conversations.
      * @return ArrayList of user's active conversations.
      */
-    public List<String> getConversations(){
+    public List<Integer> getConversations(){
         return conversations;
     }
 

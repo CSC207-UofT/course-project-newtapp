@@ -29,9 +29,9 @@ public class ConversationGetUserList extends ConversationInteractor {
             ArrayList<String> usernames = new ArrayList<>();
             // Get the usernames of the users
             // TODO: Change how Conversation store users
-            for (User user: conversation.getUsers()){
+            for (int id: conversation.getUsers()){
                 // Retrieve a username from DataBase and add it to usernames
-                usernames.add(DataBase.getUser(user.getUsername()).getUsername());
+//                usernames.add(DataBase.getUser(id).getUsername());
             }
             // Output usernames of users in a conversation
             response.fill(ResponseField.SUCCESS, usernames + config.get("inConversation"));
