@@ -35,6 +35,7 @@ public class LoginUser extends UserInteractor<Void,Exception> {
             user.logIn();
             repository.save(user);
             return null;
+
         } else {
             throw new InvalidPassword();
         }

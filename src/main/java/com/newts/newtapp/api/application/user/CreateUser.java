@@ -30,7 +30,6 @@ public class CreateUser extends UserInteractor<Void,Exception> {
             interests.add((String) request.get(RequestField.INTEREST));
             int id = (int) request.get(RequestField.ID);
             User user = new User(id, username, password, interests);
-
             repository.save(user);
             return null;
         }

@@ -24,6 +24,7 @@ public class DeleteUser extends UserInteractor<Void,Exception> {
 
         User user = repository.findById(userId).orElseThrow(UserNotFound::new);
         repository.delete(user);
+
         return null;
        }
 }
