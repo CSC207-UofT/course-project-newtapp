@@ -36,7 +36,7 @@ public class Conversation {
      */
     @Column(name = "topics", columnDefinition = "text[]")
     @Type(type = "list-array")
-    private final List<String> topics;
+    private ArrayList<String> topics;
 
     /**
      * The location where this Conversation's location radius is centered.
@@ -80,14 +80,14 @@ public class Conversation {
      */
     @Column(name = "messages", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final ArrayList<Integer> messages;
+    private ArrayList<Integer> messages;
 
     /**
      * A list of users in this conversation in order of when they joined (new users are added to end of list).
      */
-    @Column(name = "user", columnDefinition = "int[]")
+    @Column(name = "users", columnDefinition = "int[]")
     @Type(type = "list-array")
-    private final ArrayList<Integer> users;
+    private ArrayList<Integer> users;
 
     /**
      * Create a new Conversation object.
@@ -102,7 +102,7 @@ public class Conversation {
      * @param creator           The creator of this conversation
      */
     public Conversation(int id, String title,
-                        List<String> topics, String location,
+                        ArrayList<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
                         String closingTime, User creator) {
@@ -152,10 +152,16 @@ public class Conversation {
     }
 
     /**
-     * Return the topic of the conversation.
-     * @return a string representing the topic of the conversation
+     * Return a list of topics for this conversation.
+     * @return  List of
      */
-    public List<String> getTopics() { return this.topics; }
+    public ArrayList<String> getTopics() { return new ArrayList<>(topics); }
+
+    /**
+     * Set list of Conversation's topics.
+     * @param topics    List of topics
+     */
+    public void setTopics(ArrayList<String> topics) { this.topics = topics; }
 
     /**
      * Return the location of the conversation.
@@ -204,11 +210,25 @@ public class Conversation {
     }
 
     /**
+     * Set isOpen status of this Conversation.
+     * @param isOpen    true iff conversation is open.
+     */
+    public void setIsOpen(boolean isOpen) { this.isOpen = isOpen; }
+
+    /**
      * Return the messages in the conversation.
      * @return an ArrayList containing messages
      */
     public ArrayList<Integer> getMessages(){
-        return this.messages;
+        return new ArrayList<>(messages);
+    }
+
+    /**
+     * Set the list of messages in this conversation.
+     * @param messages  List of message ids
+     */
+    public void setMessages(ArrayList<Integer> messages) {
+        this.messages = messages;
     }
 
     /**
@@ -216,7 +236,7 @@ public class Conversation {
      * @return an ArrayList containing users
      */
     public ArrayList<Integer> getUsers(){
-        return this.users;
+        return new ArrayList<>(users);
     }
 
     /**
@@ -291,6 +311,14 @@ public class Conversation {
     }
 
     /**
+     * Set the list of Users in this conversation.
+     * @param users     List of User ids
+     */
+    public void setUsers(ArrayList<Integer> users) {
+        this.users = users;
+    }
+
+    /**
      * Returns the number of Users in a Conversation
      * @return Number of users
      */
@@ -304,11 +332,10 @@ public class Conversation {
      * @return true if the user was removed
      */
     public boolean removeUser(User user) {
-        if (this.users.contains(user)){
-            this.users.remove(user);
+        if (users.contains(user.getId())) {
+            users.remove(user.getId());
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
