@@ -11,13 +11,9 @@ import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
-
-import java.util.ArrayList;
-
 public class GetRelevantConversations extends UserInteractor<Conversation[],UserNotFound>  {
-    private UserRepository repository;
+    private UserRepository userRepository;
     private ConversationRepository conversationRepository;
-    private MessageRepository messageRepository;
 
     /**
      * Initialize a new Create interactor with given UserRepository.
@@ -36,7 +32,7 @@ public class GetRelevantConversations extends UserInteractor<Conversation[],User
     @Override
     public Conversation[] request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.ID);
-        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         InterestSorter sorter = new InterestSorter();
 
