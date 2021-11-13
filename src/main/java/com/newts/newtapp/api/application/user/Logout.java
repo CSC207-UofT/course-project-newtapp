@@ -2,11 +2,8 @@ package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.*;
-import com.newts.newtapp.api.errors.IncorrectPassword;
-import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
-import java.util.ArrayList;
 
 
 public class Logout extends UserInteractor<Void,Exception> {
@@ -28,7 +25,7 @@ public class Logout extends UserInteractor<Void,Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound {
-        int userId = (int) request.get(RequestField.ID);
+        int userId = (int) request.get(RequestField.USER_ID);
 
         User user = repository.findById(userId).orElseThrow(UserNotFound::new);
 

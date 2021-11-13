@@ -3,7 +3,6 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.IncorrectPassword;
-import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
@@ -22,7 +21,7 @@ public class Delete extends UserInteractor<Void,Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword {
-        int userId = (int) request.get(RequestField.ID);
+        int userId = (int) request.get(RequestField.USER_ID);
         String password = (String) request.get(RequestField.PASSWORD);
         User user = repository.findById(userId).orElseThrow(UserNotFound::new);
 
