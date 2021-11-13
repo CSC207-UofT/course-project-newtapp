@@ -4,10 +4,12 @@ import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
 import com.newts.newtapp.entities.Conversation;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * An object representing an UserManager of the application.
  */
+@Configuration
 public class UserManager {
     /**
      * The UserRepository this UserManager is working with.
@@ -23,6 +25,17 @@ public class UserManager {
     public UserManager(UserRepository userRepository, ConversationRepository conversationRepository) {
         this.userRepository = userRepository;
         this.conversationRepository = conversationRepository;
+    }
+
+    /**
+     * Returns a UserProfile given a User id in a RequestModel.
+     * @param request           RequestModel containing User's id
+     * @return                  UserProfile of corresponding User
+     * @throws UserNotFound     if User id does not exist
+     */
+    public UserProfile getProfile(RequestModel request) throws UserNotFound {
+        GetProfile getProfile = new GetProfile(userRepository);
+        return getProfile.request(request);
     }
 
     /**
@@ -56,7 +69,7 @@ public class UserManager {
      * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
      * @param request   RequestModel containing delete User information.
      */
-    public void deleteUser(RequestModel request) throws UserNotFound, IncorrectPassword {
+    public void delete(RequestModel request) throws UserNotFound, IncorrectPassword {
         Delete delete = new Delete(userRepository);
         delete.request(request);
     }

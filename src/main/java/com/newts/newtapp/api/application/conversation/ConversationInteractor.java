@@ -1,5 +1,7 @@
 package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.ConversationRepository;
+import com.newts.newtapp.api.MessageRepository;
+import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.InputBoundary;
 import com.newts.newtapp.entities.Conversation;
 
@@ -35,7 +37,7 @@ public abstract class ConversationInteractor<ReturnType, ExceptionType extends E
     public ConversationInteractor(ConversationRepository conversationRepository,
                                   UserRepository userRepository){
         this.conversationRepository = conversationRepository;
-        this userRepository = userRepository;
+        this.userRepository = userRepository;
     }
 
     /**
