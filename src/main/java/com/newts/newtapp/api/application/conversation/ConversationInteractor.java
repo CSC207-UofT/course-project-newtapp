@@ -11,9 +11,9 @@ import com.newts.newtapp.entities.Conversation;
  */
 public abstract class ConversationInteractor<ReturnType, ExceptionType extends Exception>
         implements InputBoundary<ReturnType, ExceptionType>{
-    private ConversationRepository conversationRepository;
-    private MessageRepository messageRepository;
-    private UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
 
     /**
      * Initialize a new ConversationInteractor with all repositories.
@@ -38,11 +38,16 @@ public abstract class ConversationInteractor<ReturnType, ExceptionType extends E
                                   UserRepository userRepository){
         this.conversationRepository = conversationRepository;
         this.userRepository = userRepository;
+        this.messageRepository = null;
     }
 
     /**
      * Initialize a new ConversationInteractor with conversation repository.
      * @param conversationRepository ConversationRepostory containing conversation data.
      */
-    public ConversationInteractor(ConversationRepository conversationRepository){this.conversationRepository = conversationRepository;}
+    public ConversationInteractor(ConversationRepository conversationRepository){
+        this.conversationRepository = conversationRepository;
+        this.userRepository = null;
+        this.messageRepository = null;
+    }
 }
