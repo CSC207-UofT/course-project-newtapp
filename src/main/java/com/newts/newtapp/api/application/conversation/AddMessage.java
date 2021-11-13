@@ -1,49 +1,59 @@
 package com.newts.newtapp.api.application.conversation;
 
+import com.newts.newtapp.api.ConversationRepository;
+import com.newts.newtapp.api.MessageRepository;
+import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.application.RequestField;
+import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.errors.ConversationNotFound;
+import com.newts.newtapp.api.errors.EmptyMessage;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.*;
+import com.newts.newtapp.api.application.*;
 
 
-public class AddMessage extends ConversationInteractor {
-    Message message;
-    Conversation conversation;
+public class AddMessage extends ConversationInteractor<Void, Exception> {
+    MessageRepository messageRepository;
+    ConversationRepository conversationRepository;
+    UserRepository userRepository;
+
     /**
-     * Accepts a request.
-     *
-     * @param request a request stored as a RequestModel
+     * Initialize a new AddMessage interactor with supplied message, conversation and user repositories
+     * @param messageRepository MessagerRepository containing message data
+     * @param conversationRepository ConversationRepository containing conversation data
+     * @param userRepository UserRepository  containing user data
      */
-    @Override
-    public void request(RequestModel request) {
-        ResponseModel response = new ResponseModel();
-        ConfigReader config = (ConfigReader) request.get(RequestField.CONFIG);
-
-
-        // Fetching conversation that the message is being added to and user writing message
-        conversation = DataBase.getConversation((String) request.get(RequestField.CONVERSATION_ID));
-        User user = DataBase.getUser((String) request.get(RequestField.USERNAME));
-
-        String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
-
-        //Checks if message is empty
-        if(messageBody.isEmpty()){
-            response.fill(ResponseField.FAILURE, config.get("emptyMessage"));
-        }
-        else{
-            String writeTime = ((String) request.get(RequestField.WRITE_TIME));
-            String lastUpdatedTime = ((String) request.get(RequestField.LAST_UPDATED_TIME));
-            int messageID = ((int) request.get(RequestField.MESSAGE_ID));
-            message  = new Message(messageID, messageBody, user);
-            DataBase.addMessage(conversation.getId(), message);
-            response.fill(ResponseField.SUCCESS, config.get("messageSent"));
-        }
-        // send response through provided output boundary
-        request.getOutput().respond(response);
+    public AddMessage(ConversationRepository conversationRepository,
+                      MessageRepository messageRepository,
+                      UserRepository userRepository){
+        super(conversationRepository, messageRepository, userRepository);
     }
 
     /**
-     * Returns the Message that was successfully created this interactor, or null otherwise.
-     * @return created Message or null if no message has been created.
+     * Accepts an AddMessage request.
+     * @param request a request stored as a RequestModel
      */
-    public Message getMessage(){
-        return message;
+    @Override
+    public Void request(RequestModel request) throws ConversationNotFound, UserNotFound, EmptyMessage {
+        int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
+        int userID = (int) request.get(RequestField.USERID);
+        String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
+
+        // Fetching conversation that the message is being added to and user writing message
+        Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
+        User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
+
+        //Checks if message is empty
+        if(messageBody.isEmpty()){
+            throw new EmptyMessage();
+        }
+        else{
+            int messageID = ((int) request.get(RequestField.MESSAGE_ID));
+            // Writetime and Updatetime are handled within message constructor
+            Message message  = new Message(messageID, messageBody, user);
+            conversation.addMessage(message);
+            messageRepository.save(message);
+            return null;
+        }
     }
 }
