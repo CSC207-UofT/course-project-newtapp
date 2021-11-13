@@ -8,11 +8,34 @@ import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.EmptyMessage;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Message;
+import com.newts.newtapp.api.errors.ConversationFull;
+import com.newts.newtapp.api.errors.UserBelowMinimumRating;
+import com.newts.newtapp.entities.Conversation;
 
 /**
  * An object representing a ConversationManager of the application.
  */
 public class ConversationManager {
+    /**
+     * The ConversationRepository, MessageRepository and UserRepository this UserManager is working with.
+     */
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
+
+    /**
+     * Initialize a new ConversationManager with given UserRepository.
+     * @param conversationRepository ConversationRepository containing conversation data.
+     * @param messageRepository      MessageRepository containing message data.
+     * @param userRepository         User repository containing user data.
+     */
+    public ConversationManager(ConversationRepository conversationRepository,
+                               MessageRepository messageRepository,
+                               UserRepository userRepository){
+        this.conversationRepository = conversationRepository;
+        this.messageRepository = messageRepository;
+        this.userRepository = userRepository;
+    }
 
     ConversationRepository conversationRepository;
     MessageRepository messageRepository;
@@ -21,7 +44,7 @@ public class ConversationManager {
      * Creates a conversation using request
      * @param request the filled in RequestModel
      */
-    public void createConversation(RequestModel request) {
+    public void createConversation(RequestModel request) throws Exception {
         CreateConversation createConversation = new CreateConversation();
         createConversation.request(request);
     }
@@ -39,8 +62,8 @@ public class ConversationManager {
      * Adds the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
-    public void addUser(RequestModel request) {
-        ConversationAddUser conversationAddUser = new ConversationAddUser();
+    public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
+        AddUser conversationAddUser = new AddUser(conversationRepository, userRepository);
         conversationAddUser.request(request);
     }
 
@@ -48,7 +71,7 @@ public class ConversationManager {
      * Gets the user list of a conversation and outputs it using a ResponseModel
      * @param request the filled in RequestModel
      */
-    public void getUserList(RequestModel request) {
+    public void getUserList(RequestModel request) throws Exception {
         ConversationGetUserList conversationGetUserList= new ConversationGetUserList();
         conversationGetUserList.request(request);
     }
@@ -57,7 +80,7 @@ public class ConversationManager {
      * Removes the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
-    public void removeUser(RequestModel request) {
+    public void removeUser(RequestModel request) throws Exception {
         ConversationRemoveUser conversationRemoveUser = new ConversationRemoveUser();
         conversationRemoveUser.request(request);
     }

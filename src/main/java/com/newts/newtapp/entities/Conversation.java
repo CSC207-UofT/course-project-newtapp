@@ -98,13 +98,13 @@ public class Conversation {
      * @param minRating         Minimum rating a user must have in order to join this conversation
      * @param maxSize           Max number of users in this conversation
      * @param closingTime       Time at which this conversation will not accept new users
-     * @param creator           The creator of this conversation
+     * @param creatorId         The id of the creator of this conversation
      */
     public Conversation(int id, String title,
                         ArrayList<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
-                        String closingTime, User creator) {
+                        String closingTime, int creatorId) {
         this.id = id;
         this.title = title;
         this.topics = topics;
@@ -116,7 +116,7 @@ public class Conversation {
         isOpen = true;
         messages = new ArrayList<>();
         users = new ArrayList<>();
-        users.add(creator.getId());
+        users.add(creatorId);
     }
 
     /**
