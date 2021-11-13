@@ -67,7 +67,7 @@ public class ConversationManager {
      * @param request the filled in RequestModel
      */
     public void AddMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
-        AddMessage addMessage = new AddMessage(conversationRepository,messageRepository, userRepository);
+        AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
         addMessage.request(request);
     }
 
