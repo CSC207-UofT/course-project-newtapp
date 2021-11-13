@@ -4,9 +4,8 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.MessageRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.conversation.*;
-import com.newts.newtapp.api.errors.ConversationFull;
 import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.UserBelowMinimumRating;
+import com.newts.newtapp.api.errors.EmptyMessage;
 import com.newts.newtapp.api.errors.UserNotFound;
 
 /**
@@ -34,6 +33,9 @@ public class ConversationManager {
         this.userRepository = userRepository;
     }
 
+    ConversationRepository conversationRepository;
+    MessageRepository messageRepository;
+    UserRepository userRepository;
     /**
      * Creates a conversation using request
      * @param request the filled in RequestModel
@@ -77,6 +79,15 @@ public class ConversationManager {
     public void removeUser(RequestModel request) throws Exception {
         ConversationRemoveUser conversationRemoveUser = new ConversationRemoveUser();
         conversationRemoveUser.request(request);
+    }
+
+    /**
+     * Adds message to the conversation specified by the user
+     * @param request the filled in RequestModel
+     */
+    public void AddMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
+        AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
+        addMessage.request(request);
     }
 
     //TODO: Whatever needs to be done with regards to the conversationqueue stuff
