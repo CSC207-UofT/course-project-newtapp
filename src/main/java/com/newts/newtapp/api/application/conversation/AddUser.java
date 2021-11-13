@@ -34,7 +34,7 @@ public class AddUser extends ConversationInteractor<Void, Exception> {
     @Override
     public Void request(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
         int conversationid = (int) request.get(RequestField.CONVERSATION_ID);
-        int userid = (int) request.get(RequestField.USERID);
+        int userid = (int) request.get(RequestField.USER_ID);
 
         // Fetching the conversation
         Conversation conversation = conversationRepository.findById(conversationid).orElseThrow(ConversationNotFound::new);
