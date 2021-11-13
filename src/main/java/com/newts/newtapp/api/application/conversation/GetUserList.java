@@ -36,17 +36,10 @@ public class GetUserList extends ConversationInteractor<ArrayList<UserProfile>, 
      * @throws UserNotFound         if user does not exist
      */
     @Override
-    public ArrayList<UserProfile> request(RequestModel request) throws ConversationNotFound, EmptyConversation,
-            UserNotFound {
+    public ArrayList<UserProfile> request(RequestModel request) throws ConversationNotFound, UserNotFound {
         int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
 
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
-
-        // Check if conversation is empty
-        if (conversation.getNumUsers() == 0) {
-            // Output empty conversation message
-            throw new EmptyConversation();
-        }
 
         ArrayList<UserProfile> userProfiles = new ArrayList<>();
 
