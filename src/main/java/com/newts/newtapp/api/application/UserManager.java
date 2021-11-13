@@ -3,6 +3,7 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
+import com.newts.newtapp.entities.Conversation;
 
 /**
  * An object representing an UserManager of the application.
@@ -69,10 +70,10 @@ public class UserManager {
         addFollow.request(request);
     }
 
-    public void getRelevantConversations(RequestModel request) throws UserNotFound {
+    public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
-        getRelevantConversations.request(request);
+        return getRelevantConversations.request(request);
     }
 
 }
