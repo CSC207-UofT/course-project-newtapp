@@ -11,7 +11,7 @@ An app for meeting people and having conversations.
 1. Set up PostgreSQL on your machine.
 2. Create a user called `optimisticnewt` with password `newtdb`.
 3. Create a new database called `newtapp`.
-4. Give user `optimisicnewt` privileges on `newtapp` database.
+4. Give user `optimisticnewt` privileges on `newtapp` database.
 5. Create User, Conversation and Message tables in the database (see SQL commands below).
 6. Assign data source to User, Conversation and Message.
 
