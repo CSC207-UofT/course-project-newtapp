@@ -4,7 +4,6 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.entities.Conversation;
-import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
@@ -35,9 +34,9 @@ public class Create extends ConversationInteractor<Void, Exception> {
         int minRating = (int) request.get(RequestField.MIN_RATING);
         int maxSize = (int) request.get(RequestField.MAX_SIZE);
         String closingTime = (String) request.get(RequestField.CLOSING_TIME);
-        int creatorId = (int) request.get(RequestField.USERID);
+        int creatorId = (int) request.get(RequestField.USER_ID);
 
-        int id = (int) request.get(RequestField.ID); // TODO: ensure id generation works as expected
+        int id = (int) request.get(RequestField.CONVERSATION_ID); // TODO: ensure id generation works as expected
         Conversation conversation = new Conversation(id, title, topics, location,
                 locationRadius, minRating, maxSize, closingTime, creatorId);
         repository.save(conversation);

@@ -28,8 +28,8 @@ public class AddFollow extends UserInteractor<Void, Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, SameUser {
-        int userId = (int) request.get(RequestField.USERID);
-        int otherId = (int) request.get(RequestField.USERID_TWO);
+        int userId = (int) request.get(RequestField.USER_ID);
+        int otherId = (int) request.get(RequestField.USER_ID_TWO);
 
         // Check if users are the same
         if (userId == otherId) {
