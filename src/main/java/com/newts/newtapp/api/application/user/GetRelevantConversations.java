@@ -13,7 +13,7 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversations extends UserInteractor {
+public class GetRelevantConversations extends UserInteractor<ArrayList<Conversation>,Exception>  {
     private UserRepository repository;
 
     /**
