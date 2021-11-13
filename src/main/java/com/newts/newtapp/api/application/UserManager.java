@@ -1,4 +1,5 @@
 package com.newts.newtapp.api.application;
+import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
@@ -11,13 +12,16 @@ public class UserManager {
      * The UserRepository this UserManager is working with.
      */
     private final UserRepository repository;
+    private final ConversationRepository conversationRepository;
 
     /**
      * Initialize a new UserManager with given UserRepository.
      * @param repository    UserRepository to access User data
+     * @param conversationRepository ConversationRepository to access Conversation data
      */
-    public UserManager(UserRepository repository) {
+    public UserManager(UserRepository repository, ConversationRepository conversationRepository) {
         this.repository = repository;
+        this.conversationRepository = conversationRepository;
     }
 
     /**
@@ -64,4 +68,11 @@ public class UserManager {
         AddFollow addFollow = new AddFollow(repository);
         addFollow.request(request);
     }
+
+    public void getRelevantConversations(RequestModel request) throws UserNotFound {
+        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(repository,
+                conversationRepository);
+        getRelevantConversations.request(request);
+    }
+
 }
