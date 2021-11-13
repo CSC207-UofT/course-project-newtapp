@@ -22,7 +22,7 @@ public class UserController {
     @GetMapping("/users/{id}")
     UserProfile one(@PathVariable int id) throws UserNotFound {
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERID, id);
+        request.fill(RequestField.USER_ID, id);
         return userManager.getProfile(request);
     }
 
@@ -30,7 +30,7 @@ public class UserController {
     Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
             throws UserNotFound {
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERID, userId);
+        request.fill(RequestField.USER_ID, userId);
         request.fill(RequestField.LOCATION_RADIUS, locationRadius);
         return userManager.getRelevantConversations(request);
     }

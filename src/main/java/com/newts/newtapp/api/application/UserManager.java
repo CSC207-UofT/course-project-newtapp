@@ -7,18 +7,18 @@ import com.newts.newtapp.entities.Conversation;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * An object representing an UserManager of the application.
+ * A facade for user interactors.
  */
 @Configuration
 public class UserManager {
     /**
-     * The UserRepository this UserManager is working with.
+     * The application's repositories to provide database access:
      */
     private final UserRepository userRepository;
     private final ConversationRepository conversationRepository;
 
     /**
-     * Initialize a new UserManager with given UserRepository.
+     * Initialize a new UserManager with given repositories.
      * @param userRepository    UserRepository to access User data
      * @param conversationRepository ConversationRepository to access Conversation data
      */
