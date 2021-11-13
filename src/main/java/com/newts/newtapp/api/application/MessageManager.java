@@ -2,7 +2,6 @@ package com.newts.newtapp.api.application;
 
 import com.newts.newtapp.api.MessageRepository;
 import com.newts.newtapp.api.UserRepository;
-import com.newts.newtapp.entities.User;
 import org.springframework.context.annotation.Configuration;
 
 /**
