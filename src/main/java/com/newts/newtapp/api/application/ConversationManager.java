@@ -7,10 +7,6 @@ import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.EmptyMessage;
 import com.newts.newtapp.api.errors.UserNotFound;
-import com.newts.newtapp.entities.Message;
-import com.newts.newtapp.api.errors.ConversationFull;
-import com.newts.newtapp.api.errors.UserBelowMinimumRating;
-import com.newts.newtapp.entities.Conversation;
 
 /**
  * An object representing a ConversationManager of the application.
@@ -45,17 +41,17 @@ public class ConversationManager {
      * @param request the filled in RequestModel
      */
     public void createConversation(RequestModel request) throws Exception {
-        CreateConversation createConversation = new CreateConversation();
-        createConversation.request(request);
+        Create create = new Create(conversationRepository);
+        create.request(request);
     }
 
     /**
      * Changes the status of a conversation specified by request
      * @param request the filled in RequestModel
      */
-    public void changeConversationStatus(RequestModel request) {
-        ChangeConversationStatus changeConversationStatus = new ChangeConversationStatus();
-        changeConversationStatus.request(request);
+    public void changeConversationStatus(RequestModel request) throws Exception {
+        ChangeStatus changeStatus = new ChangeStatus(conversationRepository);
+        changeStatus.request(request);
     }
 
     /**
@@ -63,8 +59,8 @@ public class ConversationManager {
      * @param request the filled in RequestModel
      */
     public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
-        AddUser conversationAddUser = new AddUser(conversationRepository, userRepository);
-        conversationAddUser.request(request);
+        AddUser addUser = new AddUser(conversationRepository, userRepository);
+        addUser.request(request);
     }
 
     /**
@@ -72,8 +68,8 @@ public class ConversationManager {
      * @param request the filled in RequestModel
      */
     public void getUserList(RequestModel request) throws Exception {
-        ConversationGetUserList conversationGetUserList= new ConversationGetUserList();
-        conversationGetUserList.request(request);
+        GetUserList getUserList= new GetUserList(conversationRepository, userRepository);
+        getUserList.request(request);
     }
 
     /**
