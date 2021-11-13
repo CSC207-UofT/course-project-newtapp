@@ -8,17 +8,17 @@ import com.newts.newtapp.entities.User;
 import java.util.ArrayList;
 
 
-public class CreateUser extends UserInteractor<Void,Exception> {
+public class Create extends UserInteractor<Void,Exception> {
     private UserRepository repository;
 
     /**
-     * Initialize a new CreateUser interactor with given UserRepository.
+     * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public CreateUser(UserRepository repository) { super(repository); }
+    public Create(UserRepository repository) { super(repository); }
 
     /**
-     * Accepts a CreateUser request.
+     * Accepts a Create request.
      * @param request   a request stored as a RequestModel
      */
     @Override

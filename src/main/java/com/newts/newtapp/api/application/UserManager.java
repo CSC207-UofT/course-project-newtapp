@@ -25,16 +25,26 @@ public class UserManager {
      * @param request   RequestModel containing new User information.
      */
     public void createUser(RequestModel request) throws InvalidPassword, UserAlreadyExists {
-        CreateUser createUser = new CreateUser(repository);
-        createUser.request(request);
+        Create create = new Create(repository);
+        create.request(request);
     }
 
     /**
      * Logs in a user according to RequestModel information and sets this UserManager's user accordingly.
      */
     public void login(RequestModel request) throws UserNotFound, IncorrectPassword {
-        LoginUser loginUser = new LoginUser(repository);
-        loginUser.request(request);
+        Login login = new Login(repository);
+        login.request(request);
+    }
+
+    /**
+     * Logs out a user.
+     * @param request           RequestModel containing User's id
+     * @throws UserNotFound     If user does not exist
+     */
+    public void logout(RequestModel request) throws UserNotFound {
+        Logout logout = new Logout(repository);
+        logout.request(request);
     }
 
     /**
@@ -42,8 +52,8 @@ public class UserManager {
      * @param request   RequestModel containing delete User information.
      */
     public void deleteUser(RequestModel request) throws UserNotFound, IncorrectPassword {
-        DeleteUser deleteUser = new DeleteUser(repository);
-        deleteUser.request(request);
+        Delete delete = new Delete(repository);
+        delete.request(request);
     }
 
     /**

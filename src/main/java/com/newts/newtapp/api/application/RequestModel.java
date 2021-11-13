@@ -7,24 +7,11 @@ import java.util.Map;
  * A data structure representing a request passed through an InputBoundary Interface.
  */
 public class RequestModel {
-//    /**
-//     * Location to send output to during a request involving this RequestModel.
-//     */
-//    private final OutputBoundary output;
-
     /**
      * A Map containing the request's data. Specific Key-Value contracts are not enforced here, this should be
      * documented by each class that wants to use a RequestModel. See RequestField enum for valid keys.
      */
     private final Map<RequestField, Object> data;
-
-//    /**
-//     * Create an empty RequestModel.
-//     */
-//    public RequestModel(OutputBoundary output) {
-//        this.output = output;
-//        this.data = new HashMap<>();
-//    }
 
     /**
      * Create an empty RequestModel.
@@ -49,11 +36,4 @@ public class RequestModel {
     public Object get(RequestField key) {
         return data.get(key);
     }
-
-//    /**
-//     * @return  The OutputBoundary associated with this RequestModel.
-//     */
-//    public OutputBoundary getOutput() {
-//        return output;
-//    }
 }

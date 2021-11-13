@@ -9,19 +9,19 @@ import com.newts.newtapp.entities.User;
 import java.util.ArrayList;
 
 
-public class LoginUser extends UserInteractor<Void,Exception> {
+public class Login extends UserInteractor<Void,Exception> {
     private UserRepository repository;
 
     /**
-     * Initialize a new LoginUser interactor with given UserRepository.
+     * Initialize a new Login interactor with given UserRepository.
      * @param repository UserRepository to access user data by
      */
-    public LoginUser(UserRepository repository) {
+    public Login(UserRepository repository) {
         super(repository);
     }
 
     /**
-     * Accepts a LoginUser request.
+     * Accepts a Login request.
      * @param request a request stored as a RequestModel
      */
     @Override

@@ -7,14 +7,14 @@ import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
-public class DeleteUser extends UserInteractor<Void,Exception> {
+public class Delete extends UserInteractor<Void,Exception> {
     private UserRepository repository;
 
     /**
      * Initialize a new AddFollow interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public DeleteUser(UserRepository repository) { super(repository); }
+    public Delete(UserRepository repository) { super(repository); }
 
     /**
      * Accepts a CreateUserRequest
