@@ -42,6 +42,5 @@ public class GetRelevantConversations extends UserInteractor<Conversation[],User
         conversationQueue.addAll(conversationRepository.findAll());
 
         return conversationQueue.toArray();
-
     }
 }
