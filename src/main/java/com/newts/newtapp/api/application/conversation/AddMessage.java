@@ -9,7 +9,6 @@ import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.EmptyMessage;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.*;
-import com.newts.newtapp.api.application.*;
 
 
 public class AddMessage extends ConversationInteractor<Void, Exception> {
@@ -53,6 +52,7 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
             Message message  = new Message(messageID, messageBody, user);
             conversation.addMessage(message);
             messageRepository.save(message);
+            conversationRepository.save(conversation);
             return null;
         }
     }

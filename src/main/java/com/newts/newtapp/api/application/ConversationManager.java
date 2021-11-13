@@ -7,7 +7,7 @@ import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.EmptyMessage;
 import com.newts.newtapp.api.errors.UserNotFound;
-import com.newts.newtapp.entities.Message;
+import com.newts.newtapp.api.errors.UserNotFoundInConversation;
 
 /**
  * An object representing a ConversationManager of the application.
@@ -57,9 +57,9 @@ public class ConversationManager {
      * Removes the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
-    public void removeUser(RequestModel request) {
-        ConversationRemoveUser conversationRemoveUser = new ConversationRemoveUser();
-        conversationRemoveUser.request(request);
+    public void removeUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserNotFoundInConversation {
+        RemoveUser removeUser = new RemoveUser(conversationRepository, userRepository);
+        removeUser.request(request);
     }
 
     /**
