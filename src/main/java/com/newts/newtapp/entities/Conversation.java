@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * A class representing a conversation
  */
 @Entity
-@Table(name = "conversation")
+@Table(name = "conversations")
 // A custom type in order to save ArrayLists to the database.
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
 public class Conversation {

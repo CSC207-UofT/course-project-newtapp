@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
  * A class representing a message
  */
 @Entity
-@Table(name = "message")
+@Table(name = "messages")
 public class Message {
 
     /**

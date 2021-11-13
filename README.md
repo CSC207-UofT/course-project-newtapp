@@ -25,7 +25,7 @@ GRANT ALL PRIVILEGES ON DATABASE newtapp TO optimisticnewt;
 SQL table creation commands for step 5:
 
 ```
-CREATE TABLE conversation (
+CREATE TABLE conversations (
     id serial PRIMARY KEY,
     title text,
     topics text[],
@@ -53,7 +53,7 @@ CREATE TABLE users (
     conversations int[]
 )
 
-CREATE TABLE message (
+CREATE TABLE messages (
     id serial PRIMARY KEY,
     body text,
     author integer,
