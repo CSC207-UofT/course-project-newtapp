@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;
@@ -15,12 +16,15 @@ import java.util.ArrayList;
 
 public class GetRelevantConversations extends UserInteractor<ArrayList<Conversation>,Exception>  {
     private UserRepository repository;
+    private ConversationRepository conversationRepository;
 
     /**
      * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public GetRelevantConversations(UserRepository repository) { super(repository); }
+    public GetRelevantConversations(UserRepository repository, ConversationRepository conversationRepository) {
+        super(repository, conversationRepository);
+    }
 
     @Override
     public ArrayList<Conversation> request(RequestModel request) throws Exception {
