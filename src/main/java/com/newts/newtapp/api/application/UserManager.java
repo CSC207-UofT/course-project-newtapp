@@ -1,7 +1,9 @@
 package com.newts.newtapp.api.application;
+import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
+import com.newts.newtapp.entities.Conversation;
 
 /**
  * An object representing an UserManager of the application.
@@ -10,14 +12,17 @@ public class UserManager {
     /**
      * The UserRepository this UserManager is working with.
      */
-    private final UserRepository repository;
+    private final UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
 
     /**
      * Initialize a new UserManager with given UserRepository.
-     * @param repository    UserRepository to access User data
+     * @param userRepository    UserRepository to access User data
+     * @param conversationRepository ConversationRepository to access Conversation data
      */
-    public UserManager(UserRepository repository) {
-        this.repository = repository;
+    public UserManager(UserRepository userRepository, ConversationRepository conversationRepository) {
+        this.userRepository = userRepository;
+        this.conversationRepository = conversationRepository;
     }
 
     /**
@@ -25,7 +30,7 @@ public class UserManager {
      * @param request   RequestModel containing new User information.
      */
     public void createUser(RequestModel request) throws InvalidPassword, UserAlreadyExists {
-        Create create = new Create(repository);
+        Create create = new Create(userRepository);
         create.request(request);
     }
 
@@ -33,7 +38,7 @@ public class UserManager {
      * Logs in a user according to RequestModel information and sets this UserManager's user accordingly.
      */
     public void login(RequestModel request) throws UserNotFound, IncorrectPassword {
-        Login login = new Login(repository);
+        Login login = new Login(userRepository);
         login.request(request);
     }
 
@@ -43,7 +48,7 @@ public class UserManager {
      * @throws UserNotFound     If user does not exist
      */
     public void logout(RequestModel request) throws UserNotFound {
-        Logout logout = new Logout(repository);
+        Logout logout = new Logout(userRepository);
         logout.request(request);
     }
 
@@ -52,7 +57,7 @@ public class UserManager {
      * @param request   RequestModel containing delete User information.
      */
     public void deleteUser(RequestModel request) throws UserNotFound, IncorrectPassword {
-        Delete delete = new Delete(repository);
+        Delete delete = new Delete(userRepository);
         delete.request(request);
     }
 
@@ -61,7 +66,14 @@ public class UserManager {
      * @param request   RequestModel containing addFriend User information.
      */
     public void addFollow(RequestModel request) throws UserNotFound, SameUser {
-        AddFollow addFollow = new AddFollow(repository);
+        AddFollow addFollow = new AddFollow(userRepository);
         addFollow.request(request);
     }
+
+    public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
+        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
+                conversationRepository);
+        return getRelevantConversations.request(request);
+    }
+
 }
