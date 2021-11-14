@@ -76,11 +76,21 @@ public class UserManager {
 
     /**
      * Adjust two given users such that the first follows the second.
-     * @param request   RequestModel containing addFriend User information.
+     * @param request   RequestModel containing addFollow User information.
      */
     public void follow(RequestModel request) throws UserNotFound, SameUser {
         Follow follow = new Follow(userRepository);
         follow.request(request);
+    }
+
+    /**
+     * Removes second user from first user's following list, and appropriately removes the first user
+     * from the second user's follower list.
+     * @param request RequestModel containing unfollow User information.
+     */
+    public void unfollow(RequestModel request) throws UserNotFound, SameUser{
+        Unfollow unfollow = new Unfollow(userRepository);
+        unfollow.request(request);
     }
 
     public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
@@ -88,5 +98,6 @@ public class UserManager {
                 conversationRepository);
         return getRelevantConversations.request(request);
     }
+
 
 }
