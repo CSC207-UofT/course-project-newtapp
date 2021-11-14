@@ -2,7 +2,7 @@
 
 ### Updated Specification
 
-    Since Phase 0, our group has completed a number of ciritical comonents for our social media application. We began by completing remaining tasks in our 
+   Since Phase 0, our group has completed a number of ciritical comonents for our social media application. We began by completing remaining tasks in our 
 specification and user stories. These tasks included:
 - Reworking a cleaner approach to our Request and Response Models 
 - Reworking interactors for our improved Input and Output Models
