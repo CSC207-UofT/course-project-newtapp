@@ -10,7 +10,7 @@ specification and user stories. These tasks included:
 - Implementing a Gateway for reading constants from a JSON file
 - Changing User IDs to be unique integer ID’s for easier sorting/management in the database
 
-   After completing our specification, we turned our focus to implementing a Web Application. This involved:
+After completing our specification, we turned our focus to implementing a Web Application. This involved:
 - Moving to and configuring SpringBoot
 - Implementing and configuring a database using PostgreSQL
 - Adjusting our Request/Response models 
