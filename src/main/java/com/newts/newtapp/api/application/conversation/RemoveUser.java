@@ -44,7 +44,6 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
             // else ust remove user from conversation.
             if(conversation.getNumUsers() == 1){
                 conversationRepository.delete(conversation);
-                conversationRepository.save(conversation);
             } else{
                 conversation.removeUser(user);
                 user.removeConversation(conversation);
