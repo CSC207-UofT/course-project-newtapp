@@ -29,6 +29,61 @@ After completing our specification, we turned our focus to implementing a Web Ap
    
    However, after moving to SpringBoot and implementing Databses for getting and writing data, we found PostgreSQL Databases to offer an easy way of automatically setting unique integer IDs in chronological order, so we decided to utilize PostgreSQL's handy implementation of int ids. 
 
+### Clean Architecture
+
+
+### SOLID Design Principles
+
+   The single responsibility principle states that each class, module, or function should only have full responsibility for a single functionality of the program. The single responsibility principle is evident in the Application Business Rules/Interactors layer, where each User, Message or Conversation interactor is responsible for a specific feature pertaining to a user, conversation or a message 
+
+   The second design principle hilights how entities should be open for extension, but closed for modification. In our code, through our implementation of Clean Architecture, Entities within the Enterprise Business Rules portray essential basic components of our program. As such, any additional features to our program exist in the Application Business Rules/Interactors layer, allowing for additonal features to be easily extended as an Interactor.
+
+   Next, the Liskov substitution principle highlights how objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program. ******
+
+   The Interface Segregation principle requires that classes only be able to perform behaviours that are useful to achieve their purpose. In other words, classes do not include behaviours they do not use. **** Facade design patterns -> splitting interactors
+
+   Finally, the Dependency Inversion Design principle states that high-level modules should depend on abstractions or interfaces rather than low-level modules and that details (like concrete implementations) should depend on abstractions. ******
+
+
+### Packaging Strategies
+
+   Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting betwen the functionality and purpose of methods. Since our code was created with the purpose of fufilling throughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, consise and organized file sorting. 
+   
+### Design Patterns
+
+   Our program displays the use of many important design patterns, to solve important problems effectively and efficiently in our code. 
+ 
+ - Facade Design Pattern
+
+    The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Coversations and Users have a lot of particuilar interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Buisness Rules Layer, which serve as facades to delegate calls to speciifc interactors as needed.
+
+- Strategy Design Pattern
+
+    The Strategy Design pattern facilitates defining family of algorithms in seperate classes, while still making their objects interchangeable. ***
+    
+### Progress Report
+
+Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a team in communicating amidst ourselves and in dividing the work between us.
+Further, Clean Architecture has continued to show its benefits with an easy transfer of specific components into SpringBoot. 
+
+## Work Allocation
+
+We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
+
+Alex: Refactoring User Interactor for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
+Spencer: Moving to SpringBoot
+Will: Refactoring Conversation interactor for new Response Model, Moving to SpringBoot
+Ted: Moving to SpringBoot
+Yukthi: 
+Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors. Slideshow presentation.
+
+What we plan to work on next:
+Alex
+Spencer
+Will
+Ted
+Yukthi
+Zach
 
 
 
