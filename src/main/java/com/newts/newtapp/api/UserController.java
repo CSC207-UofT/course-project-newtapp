@@ -33,6 +33,36 @@ public class UserController {
     }
 
     /**
+     * Login user with given id provided password is correct.
+     * @param id                    id of user to log in
+     * @param password              password of user to log in
+     * @throws UserNotFound         if no user exists with id
+     * @throws IncorrectPassword    if password is incorrect for user with id
+     */
+    @PutMapping("/users/login/{id}")
+    void login(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, id);
+        request.fill(RequestField.PASSWORD, password);
+        userManager.login(request);
+    }
+
+    /**
+     * Logout user with given id provided password is correct.
+     * @param id                    id of user to log out
+     * @param password              password of user to log out
+     * @throws UserNotFound         if no user exists with id
+     * @throws IncorrectPassword    if password is incorrect for user with id
+     */
+    @PutMapping("/users/logout/{id}")
+    void logout(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, id);
+        request.fill(RequestField.PASSWORD, password);
+        userManager.logout(request);
+    }
+
+    /**
      * Create a new user
      * @param username              Username of new user
      * @param password              Password of new user

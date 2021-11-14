@@ -48,7 +48,10 @@ public class UserManager {
     }
 
     /**
-     * Logs in a user according to RequestModel information and sets this UserManager's user accordingly.
+     * Logs in a user.
+     * @param request               RequestModel containing User's id and password
+     * @throws UserNotFound         If user does not exist
+     * @throws IncorrectPassword    If user's password is incorrect
      */
     public void login(RequestModel request) throws UserNotFound, IncorrectPassword {
         Login login = new Login(userRepository);
@@ -57,10 +60,10 @@ public class UserManager {
 
     /**
      * Logs out a user.
-     * @param request           RequestModel containing User's id
+     * @param request           RequestModel containing User's id and password
      * @throws UserNotFound     If user does not exist
      */
-    public void logout(RequestModel request) throws UserNotFound {
+    public void logout(RequestModel request) throws UserNotFound, IncorrectPassword {
         Logout logout = new Logout(userRepository);
         logout.request(request);
     }
