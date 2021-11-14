@@ -9,8 +9,8 @@ import com.newts.newtapp.api.application.InputBoundary;
  */
 public abstract class UserInteractor<ReturnType, ExceptionType extends Exception>
         implements InputBoundary<ReturnType, ExceptionType> {
-    private final UserRepository userRepository;
-    private final ConversationRepository conversationRepository;
+    protected final UserRepository userRepository;
+    protected ConversationRepository conversationRepository;
 
     /**
      * Initialize a new UserInteractor with given repository.
@@ -18,7 +18,6 @@ public abstract class UserInteractor<ReturnType, ExceptionType extends Exception
      */
     public UserInteractor(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.conversationRepository = null;
     }
 
     /**

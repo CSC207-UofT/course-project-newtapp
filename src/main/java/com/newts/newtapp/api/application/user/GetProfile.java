@@ -11,7 +11,6 @@ import com.newts.newtapp.entities.User;
  * Get a UserProfile for a given User.
  */
 public class GetProfile extends UserInteractor<UserProfile, UserNotFound>{
-    private UserRepository repository;
 
     /**
      * Construct a new GetProfile interactor with given UserRepository.
@@ -30,7 +29,7 @@ public class GetProfile extends UserInteractor<UserProfile, UserNotFound>{
     @Override
     public UserProfile request(RequestModel request) throws UserNotFound {
         int id = (int) request.get(RequestField.USER_ID);
-        User user = repository.findById(id).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(id).orElseThrow(UserNotFound::new);
         return new UserProfile(user);
     }
 }

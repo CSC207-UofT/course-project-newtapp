@@ -8,7 +8,6 @@ import com.newts.newtapp.entities.User;
 
 
 public class Login extends UserInteractor<Void,Exception> {
-    private UserRepository repository;
 
     /**
      * Initialize a new Login interactor with given UserRepository.
@@ -26,14 +25,14 @@ public class Login extends UserInteractor<Void,Exception> {
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword {
         int userId = (int) request.get(RequestField.USER_ID);
 
-        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         if (user.getPassword() != request.get(RequestField.PASSWORD)) {
             throw new IncorrectPassword();
         }
 
         user.logIn();
-        repository.save(user);
+        userRepository.save(user);
         return null;
     }
 }

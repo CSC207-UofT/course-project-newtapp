@@ -4,7 +4,6 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.EmptyConversation;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
@@ -32,7 +31,6 @@ public class GetUserList extends ConversationInteractor<ArrayList<UserProfile>, 
      * @param  request              a request stored as a RequestModel
      * @return userProfiles         a list of user profiles of the conversation
      * @throws ConversationNotFound if conversation does not exist
-     * @throws EmptyConversation    if the conversation has no users
      * @throws UserNotFound         if user does not exist
      */
     @Override

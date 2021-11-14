@@ -11,19 +11,18 @@ import com.newts.newtapp.api.application.RequestField;
  * UserInteractor that adds a follow relationship.
  * RequestModel must provide two User ids, the first is the user who wants to follow the other.
  */
-public class AddFollow extends UserInteractor<Void, Exception> {
-    private UserRepository repository;
+public class Follow extends UserInteractor<Void, Exception> {
 
     /**
-     * Initialize a new AddFollow interactor with given UserRepository.
+     * Initialize a new Follow interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public AddFollow(UserRepository repository) {
+    public Follow(UserRepository repository) {
         super(repository);
     }
 
     /**
-     * Accepts an AddFollow request.
+     * Accepts an Follow request.
      * @param request   a request stored as a RequestModel
      */
     @Override
@@ -37,8 +36,8 @@ public class AddFollow extends UserInteractor<Void, Exception> {
         }
 
         // look up the users, if they don't exist throw UserNotFound
-        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
-        User other = repository.findById(otherId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        User other = userRepository.findById(otherId).orElseThrow(UserNotFound::new);
 
         // Add userTwo to following of user
         user.addFollowing(other);
@@ -46,8 +45,8 @@ public class AddFollow extends UserInteractor<Void, Exception> {
         other.addFollower(user);
 
         // Save both users
-        repository.save(user);
-        repository.save(other);
+        userRepository.save(user);
+        userRepository.save(other);
         return null;
     }
 }

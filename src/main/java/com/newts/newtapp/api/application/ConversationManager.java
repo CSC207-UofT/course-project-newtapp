@@ -4,10 +4,7 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.MessageRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.conversation.*;
-import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.EmptyMessage;
-import com.newts.newtapp.api.errors.UserNotFound;
-import com.newts.newtapp.api.errors.UserNotFoundInConversation;
+import com.newts.newtapp.api.errors.*;
 
 /**
  * An object representing a ConversationManager of the application.
@@ -34,9 +31,6 @@ public class ConversationManager {
         this.userRepository = userRepository;
     }
 
-    ConversationRepository conversationRepository;
-    MessageRepository messageRepository;
-    UserRepository userRepository;
     /**
      * Creates a conversation using request
      * @param request the filled in RequestModel
@@ -90,6 +84,4 @@ public class ConversationManager {
         AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
         addMessage.request(request);
     }
-
-    //TODO: Whatever needs to be done with regards to the conversationqueue stuff
 }

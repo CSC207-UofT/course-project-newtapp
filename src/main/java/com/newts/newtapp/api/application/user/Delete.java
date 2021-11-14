@@ -7,10 +7,9 @@ import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
 public class Delete extends UserInteractor<Void,Exception> {
-    private UserRepository repository;
 
     /**
-     * Initialize a new AddFollow interactor with given UserRepository.
+     * Initialize a new Follow interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
     public Delete(UserRepository repository) { super(repository); }
@@ -23,13 +22,13 @@ public class Delete extends UserInteractor<Void,Exception> {
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword {
         int userId = (int) request.get(RequestField.USER_ID);
         String password = (String) request.get(RequestField.PASSWORD);
-        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         if (!(user.getPassword().equals(password))) {
             throw new IncorrectPassword();
         }
 
-        repository.delete(user);
+        userRepository.delete(user);
         return null;
        }
 }

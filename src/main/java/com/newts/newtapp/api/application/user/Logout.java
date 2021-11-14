@@ -7,7 +7,6 @@ import com.newts.newtapp.entities.User;
 
 
 public class Logout extends UserInteractor<Void,Exception> {
-    private UserRepository repository;
 
     /**
      * Initialize a new Logout interactor with given UserRepository.
@@ -27,10 +26,10 @@ public class Logout extends UserInteractor<Void,Exception> {
     public Void request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
 
-        User user = repository.findById(userId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         user.logOut();
-        repository.save(user);
+        userRepository.save(user);
         return null;
     }
 }
