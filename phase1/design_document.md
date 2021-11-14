@@ -41,6 +41,7 @@ Our program effectively displays the use of Clean Architecture *****
 In the development of our App, we considered many uses of SOLID design principles to better demonstrate effective, well-designed code.
 
 - The single responsibility principle
+  
   The single responsibility principle states that each class, module, or function should only have full responsibility for a single functionality of the program. The single responsibility principle is evident in the Application Business Rules/Interactors layer, where each User, Message or Conversation interactor is responsible for a specific feature pertaining to a user, conversation or a message 
 
 - Open/Closed principle
