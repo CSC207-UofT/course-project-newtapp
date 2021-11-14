@@ -29,10 +29,8 @@ public class GetProfile extends UserInteractor<UserProfile, UserNotFound>{
      */
     @Override
     public UserProfile request(RequestModel request) throws UserNotFound {
-        int id = (int) request.get(RequestField.ID);
+        int id = (int) request.get(RequestField.USER_ID);
         User user = repository.findById(id).orElseThrow(UserNotFound::new);
-        return new UserProfile(user.getId(), user.getUsername(), user.getLocation(),
-                user.getInterests(), user.getLoginStatus(), user.getFollowing(), user.getFollowers(),
-                user.getConversations());
+        return new UserProfile(user);
     }
 }

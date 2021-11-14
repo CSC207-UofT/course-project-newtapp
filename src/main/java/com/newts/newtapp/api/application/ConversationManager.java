@@ -13,6 +13,26 @@ import com.newts.newtapp.api.errors.UserNotFoundInConversation;
  * An object representing a ConversationManager of the application.
  */
 public class ConversationManager {
+    /**
+     * The ConversationRepository, MessageRepository and UserRepository this UserManager is working with.
+     */
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
+
+    /**
+     * Initialize a new ConversationManager with given UserRepository.
+     * @param conversationRepository ConversationRepository containing conversation data.
+     * @param messageRepository      MessageRepository containing message data.
+     * @param userRepository         User repository containing user data.
+     */
+    public ConversationManager(ConversationRepository conversationRepository,
+                               MessageRepository messageRepository,
+                               UserRepository userRepository){
+        this.conversationRepository = conversationRepository;
+        this.messageRepository = messageRepository;
+        this.userRepository = userRepository;
+    }
 
     ConversationRepository conversationRepository;
     MessageRepository messageRepository;
@@ -21,36 +41,36 @@ public class ConversationManager {
      * Creates a conversation using request
      * @param request the filled in RequestModel
      */
-    public void createConversation(RequestModel request) {
-        CreateConversation createConversation = new CreateConversation();
-        createConversation.request(request);
+    public void createConversation(RequestModel request) throws Exception {
+        Create create = new Create(conversationRepository);
+        create.request(request);
     }
 
     /**
      * Changes the status of a conversation specified by request
      * @param request the filled in RequestModel
      */
-    public void changeConversationStatus(RequestModel request) {
-        ChangeConversationStatus changeConversationStatus = new ChangeConversationStatus();
-        changeConversationStatus.request(request);
+    public void changeConversationStatus(RequestModel request) throws Exception {
+        ChangeStatus changeStatus = new ChangeStatus(conversationRepository);
+        changeStatus.request(request);
     }
 
     /**
      * Adds the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
-    public void addUser(RequestModel request) {
-        ConversationAddUser conversationAddUser = new ConversationAddUser();
-        conversationAddUser.request(request);
+    public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
+        AddUser addUser = new AddUser(conversationRepository, userRepository);
+        addUser.request(request);
     }
 
     /**
      * Gets the user list of a conversation and outputs it using a ResponseModel
      * @param request the filled in RequestModel
      */
-    public void getUserList(RequestModel request) {
-        ConversationGetUserList conversationGetUserList= new ConversationGetUserList();
-        conversationGetUserList.request(request);
+    public void getUserList(RequestModel request) throws Exception {
+        GetUserList getUserList= new GetUserList(conversationRepository, userRepository);
+        getUserList.request(request);
     }
 
     /**
@@ -67,7 +87,7 @@ public class ConversationManager {
      * @param request the filled in RequestModel
      */
     public void AddMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
-        AddMessage addMessage = new AddMessage(conversationRepository,messageRepository, userRepository);
+        AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
         addMessage.request(request);
     }
 

@@ -1,5 +1,7 @@
 package com.newts.newtapp.api.application;
 
+import com.newts.newtapp.entities.User;
+
 import java.util.ArrayList;
 
 /**
@@ -15,22 +17,15 @@ public class UserProfile {
     private final ArrayList<Integer> followers;
     private final ArrayList<Integer> conversations;
 
-    public UserProfile(int id,
-                       String username,
-                       String location,
-                       ArrayList<String> interests,
-                       boolean loginStatus,
-                       ArrayList<Integer> following,
-                       ArrayList<Integer> followers,
-                       ArrayList<Integer> conversations) {
-        this.id = id;
-        this.username = username;
-        this.location = location;
-        this.interests = interests;
-        this.loginStatus = loginStatus;
-        this.following = following;
-        this.followers = followers;
-        this.conversations = conversations;
+    public UserProfile(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.location = user.getLocation();
+        this.interests = user.getInterests();
+        this.loginStatus = user.getLoginStatus();
+        this.following = user.getFollowing();
+        this.followers = user.getFollowers();
+        this.conversations = user.getConversations();
     }
 
 

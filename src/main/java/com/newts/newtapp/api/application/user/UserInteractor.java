@@ -1,7 +1,7 @@
 package com.newts.newtapp.api.application.user;
+import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.InputBoundary;
-import com.newts.newtapp.entities.User;
 
 /**
  * An abstract UserInteractor object. Generally to be extended as a specific User usecase.
@@ -9,13 +9,25 @@ import com.newts.newtapp.entities.User;
  */
 public abstract class UserInteractor<ReturnType, ExceptionType extends Exception>
         implements InputBoundary<ReturnType, ExceptionType> {
-    private UserRepository repository;
+    private final UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
 
     /**
      * Initialize a new UserInteractor with given repository.
-     * @param repository    UserRepository containing user data.
+     * @param userRepository            UserRepository for User data access
      */
-    public UserInteractor(UserRepository repository) {
-        this.repository = repository;
+    public UserInteractor(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        this.conversationRepository = null;
+    }
+
+    /**
+     * Initialize a new UserInteractor with given repositories.
+     * @param userRepository            UserRepository for User data access
+     * @param conversationRepository    ConversationRepository for Conversation data access
+     */
+    public UserInteractor(UserRepository userRepository, ConversationRepository conversationRepository) {
+        this.userRepository = userRepository;
+        this.conversationRepository = conversationRepository;
     }
 }
