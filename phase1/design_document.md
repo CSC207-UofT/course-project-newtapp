@@ -48,7 +48,7 @@ Also, since the controllers handle the user's input, the user never directly uti
 Once the use cases accept the request, it fetches the entity/ies from the database using a data access interface. 
 The data access interface implemented by each repository associated with each entity is an explicit use of dependency inversion to maintain a clean architecture.
 
-Lastly, and not implemented yet, the output is returned through the controller, and the
+Lastly, and not implemented yet, the output is returned through the controller and the
 information relevant to the user is displayed on the web application's graphical user interface (not implemented).
 
 - At the Enterprise Business Rules layer are the core components of the application: User, Conversation, Message.
