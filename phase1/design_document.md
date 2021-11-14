@@ -71,11 +71,11 @@ Further, Clean Architecture has continued to show its benefits with an easy tran
 As our group continutes to implement a Web Application, we have come across a few design questions that we are consiering.
 - Long vs int for user ids
 
-We noticed SpringBoot and PostgreSQL to use longs as variables by default for ids. Is there an advantage between using longs versus using ints?
+  We noticed SpringBoot and PostgreSQL to use longs as variables by default for ids. Is there an advantage between using longs versus using ints?
 
 - Using Database-set IDs vs setting our own database ids
 
-We found PostgreSQL's implementation of int IDs to be very useful for databse organization, however, some sources on the web we came across suggested using Database generated IDs to delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
+  We found PostgreSQL's implementation of int IDs to be very useful for databse organization, however, some sources on the web we came across suggested using Database generated IDs to delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
 
 - Making our api publicly available
 
