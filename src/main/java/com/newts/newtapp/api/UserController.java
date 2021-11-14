@@ -72,7 +72,7 @@ public class UserController {
      * @throws UserNotFound     if no such user exists with id1 or id2
      * @throws SameUser         if id1 == id2
      */
-    @PatchMapping("/users/{id1}/{id2}")
+    @PutMapping("/users/follow/{id1}/{id2}")
     void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id1);
