@@ -25,24 +25,37 @@ public class UserController {
      * @return                  UserProfile of User with id
      * @throws UserNotFound     If no user exists with id
      */
-    @GetMapping("/users/{id}")
-    UserProfile one(@PathVariable int id) throws UserNotFound {
+    @GetMapping("/users")
+    UserProfile getById(@RequestParam int id) throws UserNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id);
-        return userManager.getProfile(request);
+        return userManager.getProfileById(request);
+    }
+
+    /**
+     * Returns a UserProfile for the user with given username.
+     * @param username          username of User
+     * @return                  UserProfile of User with username
+     * @throws UserNotFound     If no user exists with username
+     */
+    @GetMapping("/users/{username}")
+    UserProfile getByUsername(@PathVariable String username) throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        return userManager.getProfileByUsername(request);
     }
 
     /**
      * Login user with given id provided password is correct.
-     * @param id                    id of user to log in
+     * @param username              username of user to log in
      * @param password              password of user to log in
      * @throws UserNotFound         if no user exists with id
      * @throws IncorrectPassword    if password is incorrect for user with id
      */
-    @PutMapping("/users/login/{id}")
-    void login(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+    @PutMapping("/users/login/{username}")
+    void login(@PathVariable String username, @RequestParam String password) throws UserNotFound, IncorrectPassword {
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, id);
+        request.fill(RequestField.USERNAME, username);
         request.fill(RequestField.PASSWORD, password);
         userManager.login(request);
     }
