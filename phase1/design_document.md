@@ -64,7 +64,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
  
  - Facade Design Pattern
 
-    The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Coversations and Users have a lot of particuilar interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Buisness Rules Layer, which serve as facades to delegate calls to speciifc interactors as needed.
+   The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Coversations and Users have a lot of particuilar interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Buisness Rules Layer, which serve as facades to delegate calls to speciifc interactors as needed.
 
 - Strategy Design Pattern
 
