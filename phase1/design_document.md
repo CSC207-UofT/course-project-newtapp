@@ -55,7 +55,7 @@ In the development of our App, we considered many uses of SOLID design principle
 - Interface Segregation principle
 
    The Interface Segregation principle requires that classes only be able to perform behaviours that are useful to achieve their purpose. In other words, classes do not include behaviours they do not use. In the Application Buisness Rules layer of our code, we used the Facade design pattern to split interactors so that they only implement specific features, limiting their scope to only the behaviours that they use.
- **** Facade design patterns -> splitting interactors
+
 
 - The Dependency Inversion principle
 
