@@ -41,7 +41,7 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
         // Check that the user is in the conversation
         if (conversation.getUsers().contains(userID)) {
             // Checks to see how many users are in conversation, if 1 delete conversation
-            // else ust remove user from conversation.
+            // else just remove user from conversation.
             if(conversation.getNumUsers() == 1){
                 conversationRepository.delete(conversation);
             } else{
