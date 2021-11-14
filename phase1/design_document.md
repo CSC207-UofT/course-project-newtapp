@@ -66,7 +66,18 @@ After completing our specification, we turned our focus to implementing a Web Ap
 Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a team in communicating amidst ourselves and in dividing the work between us.
 Further, Clean Architecture has continued to show its benefits with an easy transfer of specific components into SpringBoot. 
 
-# Work Allocation
+### Open Questions
+
+As our group continutes to implement a Web Application, we have come across a few design questions that we are consiering.
+- Long vs int for user ids
+We noticed SpringBoot and PostgreSQL to use longs as variables by default for ids. Is there an advantage between using longs versus using ints?
+
+- Using Database-set IDs vs setting our own database ids
+We found PostgreSQL's implementation of int IDs to be very useful for databse organization, however, some sources on the web we came across suggested using Database generated IDs to delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
+- Making our api publicly available
+
+
+### Work Allocation
 
 We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
 
