@@ -36,8 +36,7 @@ public class Create extends ConversationInteractor<Void, Exception> {
         String closingTime = (String) request.get(RequestField.CLOSING_TIME);
         int creatorId = (int) request.get(RequestField.USER_ID);
 
-        int id = (int) request.get(RequestField.CONVERSATION_ID); // TODO: ensure id generation works as expected
-        Conversation conversation = new Conversation(id, title, topics, location,
+        Conversation conversation = new Conversation(0, title, topics, location,
                 locationRadius, minRating, maxSize, closingTime, creatorId);
         repository.save(conversation);
         return null;

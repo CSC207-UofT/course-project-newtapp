@@ -9,5 +9,5 @@ import java.util.List;
  * UserRepository implementation is handled by Spring Boot.
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
-    List<User> findByUsernameIgnoreCase(String username);
+    List<User> findByUsernameIgnoreCase(String username);   // this is incredibly cool @Spring Boot Devs
 }
