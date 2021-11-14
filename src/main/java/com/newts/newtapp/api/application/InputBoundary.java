@@ -14,5 +14,5 @@ public interface InputBoundary<ReturnType, ExceptionType extends Exception> {
      * Accepts a request.
      * @param request   a request stored as a RequestModel
      */
-    ReturnType request(RequestModel request) throws ExceptionType, UserNotFoundInConversation;
+    ReturnType request(RequestModel request) throws ExceptionType;
 }

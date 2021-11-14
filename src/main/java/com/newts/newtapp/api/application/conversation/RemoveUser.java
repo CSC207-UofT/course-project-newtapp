@@ -16,8 +16,8 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
 
     /**
      * Initiaize a new RemoveUser interactor with supplied conversation and user repositories
-     * @param conversationRepository
-     * @param userRepository
+     * @param conversationRepository ConversationRepository which contains conversation data
+     * @param userRepository UserRepository which contains user data
      */
     public RemoveUser(ConversationRepository conversationRepository,
                       UserRepository userRepository){
@@ -29,7 +29,7 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
      * @param request a request stored as a RequestModel
      */
     public Void request(RequestModel request) throws UserNotFound, ConversationNotFound, UserNotFoundInConversation {
-        int userID = (int)request.get(RequestField.USERID);
+        int userID = (int)request.get(RequestField.USER_ID);
         int conversationID = (int)request.get(RequestField.CONVERSATION_ID);
 
         // Fetching the conversation from which we remove user
@@ -39,7 +39,7 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
         User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
 
         // Check that the user is in the conversation
-        if (conversation.getUsers().contains(user)) {
+        if (conversation.getUsers().contains(userID)) {
             // Remove the user from the conversation
             conversation.removeUser(user);
             user.removeConversation(conversation);
