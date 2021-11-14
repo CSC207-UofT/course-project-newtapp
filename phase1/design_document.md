@@ -102,12 +102,12 @@ As our group continutes to implement a Web Application, we have come across a fe
 
 We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
 
-- Alex: Refactoring User Interactor for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
-- Spencer: Moving to SpringBoot
+- Alex: Refactoring User Interactors for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
+- Spencer: Reworking Request and Response Model, Data Acess Object, Moving to SpringBoot
 - Will: Refactoring Conversation interactor for new Response Model, Moving to SpringBoot
 - Ted: Moving to SpringBoot
-- Yukthi: 
-- Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors. Slideshow presentation.
+- Yukthi: User Stories, Reworking Interactors for Spring Boot, Slideshow presentation
+- Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors, Slideshow presentation.
 
 We are all enjoying seeing the fruits of our labour begin to form a working application, and are excited to see where Phase 1 takes us! 
 Here are some ideas of the next steps in our development:
