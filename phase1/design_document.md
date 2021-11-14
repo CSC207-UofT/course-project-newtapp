@@ -66,7 +66,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
 Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a team in communicating amidst ourselves and in dividing the work between us.
 Further, Clean Architecture has continued to show its benefits with an easy transfer of specific components into SpringBoot. 
 
-## Work Allocation
+# Work Allocation
 
 We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
 
