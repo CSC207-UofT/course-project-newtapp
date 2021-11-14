@@ -1,6 +1,6 @@
 # Design Document
 
-### Updated Specification
+## Updated Specification
 
    Since Phase 0, our group has completed a number of ciritical comonents for our social media application. We began by completing remaining tasks in our 
 specification and user stories. These tasks included:
@@ -16,7 +16,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
 - Adjusting our Request/Response models 
 - Linking our entities to read, write and edit from associated Database Repositories
 
-### Design Decisions
+## Design Decisions
 
    In the further development of our app, we were called to consider many design questions for better optimizing the functionality of our app.
    
@@ -30,13 +30,13 @@ After completing our specification, we turned our focus to implementing a Web Ap
    
    However, after moving to SpringBoot and implementing Databses for getting and writing data, we found PostgreSQL Databases to offer an easy way of automatically setting unique integer IDs in chronological order, so we decided to utilize PostgreSQL's handy implementation of int ids. 
 
-### Clean Architecture
+## Clean Architecture
 
 Our program effectively displays the use of Clean Architecture *****
 
 
 
-### SOLID Design Principles
+## SOLID Design Principles
 
 In the development of our App, we considered many uses of SOLID design principles to better demonstrate effective, well-designed code.
 
@@ -60,11 +60,11 @@ In the development of our App, we considered many uses of SOLID design principle
    Finally, the Dependency Inversion Design principle states that high-level modules should depend on abstractions or interfaces rather than low-level modules and that details (like concrete implementations) should depend on abstractions. ******
 
 
-### Packaging Strategies
+## Packaging Strategies
 
    Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting betwen the functionality and purpose of methods. Since our code was created with the purpose of fufilling throughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, consise and organized file sorting. 
    
-### Design Patterns
+## Design Patterns
 
    Our program displays the use of many important design patterns, to solve important problems effectively and efficiently in our code. 
  
@@ -76,12 +76,12 @@ In the development of our App, we considered many uses of SOLID design principle
 
     The Strategy Design pattern facilitates defining family of algorithms in seperate classes, while still making their objects interchangeable. ***
     
-### Progress Report
+## Progress Report
 
 Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a team in communicating amidst ourselves and in dividing the work between us.
 Further, Clean Architecture has continued to show its benefits with an easy transfer of specific components into SpringBoot. 
 
-### Open Questions
+## Open Questions
 
 As our group continutes to implement a Web Application, we have come across a few design questions that we are consiering.
 - Long vs int for user ids
@@ -95,7 +95,7 @@ As our group continutes to implement a Web Application, we have come across a fe
 - Making our api publicly available
 
 
-### Work Allocation
+## Work Allocation
 
 We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
 
