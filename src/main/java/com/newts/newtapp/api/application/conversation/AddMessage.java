@@ -35,7 +35,7 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
     @Override
     public Void request(RequestModel request) throws ConversationNotFound, UserNotFound, EmptyMessage {
         int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
-        int userID = (int) request.get(RequestField.USERID);
+        int userID = (int) request.get(RequestField.USER_ID);
         String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
 
         // Fetching conversation that the message is being added to and user writing message

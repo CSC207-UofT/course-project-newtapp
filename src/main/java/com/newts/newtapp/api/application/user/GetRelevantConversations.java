@@ -12,8 +12,6 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
 public class GetRelevantConversations extends UserInteractor<Conversation[],UserNotFound>  {
-    private UserRepository userRepository;
-    private ConversationRepository conversationRepository;
 
     /**
      * Initialize a new Create interactor with given UserRepository.

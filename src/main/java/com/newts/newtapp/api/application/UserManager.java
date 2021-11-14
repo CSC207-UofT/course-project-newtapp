@@ -42,7 +42,7 @@ public class UserManager {
      * Creates a new user according to the given RequestModel and sets this UserManager's user accordingly.
      * @param request   RequestModel containing new User information.
      */
-    public void createUser(RequestModel request) throws InvalidPassword, UserAlreadyExists {
+    public void create(RequestModel request) throws InvalidPassword, UserAlreadyExists {
         Create create = new Create(userRepository);
         create.request(request);
     }
@@ -78,9 +78,9 @@ public class UserManager {
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFriend User information.
      */
-    public void addFollow(RequestModel request) throws UserNotFound, SameUser {
-        AddFollow addFollow = new AddFollow(userRepository);
-        addFollow.request(request);
+    public void follow(RequestModel request) throws UserNotFound, SameUser {
+        Follow follow = new Follow(userRepository);
+        follow.request(request);
     }
 
     public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {

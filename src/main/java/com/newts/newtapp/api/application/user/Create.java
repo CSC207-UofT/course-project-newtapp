@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 
 public class Create extends UserInteractor<Void,Exception> {
-    private UserRepository repository;
 
     /**
      * Initialize a new Create interactor with given UserRepository.
@@ -24,7 +23,7 @@ public class Create extends UserInteractor<Void,Exception> {
     @Override
     public Void request(RequestModel request) throws InvalidPassword, UserAlreadyExists {
         String username = (String) request.get(RequestField.USERNAME);
-        if (!(repository.findByUsernameIgnoreCase(username).isEmpty())) {
+        if (!(userRepository.findByUsernameIgnoreCase(username).isEmpty())) {
             throw new UserAlreadyExists();
         }
         String password = (String) request.get(RequestField.PASSWORD);
@@ -36,7 +35,7 @@ public class Create extends UserInteractor<Void,Exception> {
 
         int id = 0; // TODO: ensure id generation works as expected
         User user = new User(id, username, password, interests);
-        repository.save(user);
+        userRepository.save(user);
         return null;
     }
 }

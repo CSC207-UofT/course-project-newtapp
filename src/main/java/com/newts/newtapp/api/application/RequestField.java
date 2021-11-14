@@ -7,6 +7,8 @@ public enum RequestField {
     LOCATION,
     LOCATION_RADIUS,
     MAX_SIZE,
+    MESSAGE_BODY,
+    MESSAGE_ID,
     MIN_RATING,
     PASSWORD,
     TITLE,

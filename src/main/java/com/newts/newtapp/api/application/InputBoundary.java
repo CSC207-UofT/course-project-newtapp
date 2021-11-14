@@ -1,10 +1,5 @@
 package com.newts.newtapp.api.application;
 
-import com.newts.newtapp.api.errors.InvalidPassword;
-import com.newts.newtapp.api.errors.UserNotFound;
-import com.newts.newtapp.api.errors.UserNotFoundInConversation;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 /**
  * An Input Boundary interface. Defines a standard input method by which to pass RequestModel objects.
  */
