@@ -8,7 +8,6 @@ import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 
 public class Unfollow extends UserInteractor<Void, Exception>{
-    private UserRepository userRepository;
 
     /**
      * UserInteractor which removes follower/following relationship between users
