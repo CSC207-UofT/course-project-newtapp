@@ -96,7 +96,7 @@ In the development of our App, we considered many uses of SOLID design principle
 
 - Strategy Design Pattern
 
-    The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. Our program features the Strategy Design Pattern through our implementation of Conversation sorting for a User’s ConversationQueue Sorting is done either randomly or by an algorithm that takes into account a User’s interests. Both these strategies implement the ConversationSorter interface and can be used interchangeably by ConversationQueue where appropriate.
+    The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. Our program features the Strategy Design Pattern through our implementation of Conversation sorting for a User’s ConversationQueue. Sorting is done either randomly or by an algorithm that takes into account a User’s interests. Both these strategies implement the ConversationSorter interface and can be used interchangeably by ConversationQueue where appropriate.
 
     
 ## Progress Report
