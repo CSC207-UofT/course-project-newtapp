@@ -30,23 +30,22 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
      * @param request a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws ConversationNotFound, UserNotFound, EmptyMessage {
-        int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
-        int userID = (int) request.get(RequestField.USER_ID);
+    public Void request(RequestModel request) throws ConversationNotFound, EmptyMessage {
+        int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
+        int userId = (int) request.get(RequestField.USER_ID);
         String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
 
         // Fetching conversation that the message is being added to and user writing message
-        Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
-        User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         //Checks if message is empty
         if(messageBody.isEmpty()){
             throw new EmptyMessage();
         }
         else{
-            int messageID = ((int) request.get(RequestField.MESSAGE_ID));
+            int messageId = ((int) request.get(RequestField.MESSAGE_ID));
             // Write time and Update time are handled within message constructor
-            Message message  = new Message(messageID, messageBody, user);
+            Message message  = new Message(messageId, messageBody, userId);
             conversation.addMessage(message);
             messageRepository.save(message);
             conversationRepository.save(conversation);
