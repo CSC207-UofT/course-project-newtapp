@@ -69,7 +69,7 @@ public class UserManager {
      * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
      * @param request   RequestModel containing delete User information.
      */
-    public void delete(RequestModel request) throws UserNotFound, IncorrectPassword {
+    public void delete(RequestModel request) throws UserNotFound, IncorrectPassword, ConversationNotFound {
         Delete delete = new Delete(userRepository);
         delete.request(request);
     }
@@ -78,7 +78,7 @@ public class UserManager {
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFollow User information.
      */
-    public void follow(RequestModel request) throws UserNotFound, SameUser {
+    public void follow(RequestModel request) throws UserNotFound, SameUser, AlreadyFollowingUser {
         Follow follow = new Follow(userRepository);
         follow.request(request);
     }
