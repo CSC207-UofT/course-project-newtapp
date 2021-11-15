@@ -318,7 +318,7 @@ public class User {
      * @param other     User to remove
      */
     public void removeFollowing(User other) {
-        following.remove(other.getId());
+        following.remove(Integer.valueOf(other.getId()));
     }
 
     /**
@@ -347,7 +347,7 @@ public class User {
      * @param other     User to remove
      */
     public void removeFollower(User other) {
-        followers.remove(other.getId());
+        followers.remove(Integer.valueOf(other.getId()));
     }
 
     /**
