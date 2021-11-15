@@ -131,7 +131,7 @@ We have finalized all the remaining fundamental components of our application, a
 - Alex: Refactoring User Interactors for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
 - Spencer: Reworking Request and Response Model, Data Acess Object, Moving to SpringBoot
 - Will: Refactoring Conversation interactor for new Response Model, Moving to SpringBoot
-- Ted: Moving to SpringBoot
+- Ted: AddFollower Interface, UserManager, Moving to SpringBoot
 - Yukthi: User Stories, Reworking Interactors for Spring Boot, Slideshow presentation
 - Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors, Slideshow presentation.
 
