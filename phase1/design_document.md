@@ -125,15 +125,15 @@ Further, Clean Architecture has continued to show its benefits with an easy tran
 
 As our group continues to implement a Web Application, we have come across a few design questions that we are considering.
 - Are 32 bit integers sufficient for unique User ids?
-We noticed in Evan’s “Intro to Web Apps” example that Java’s long type was used for ids. What are the pros and cons to using long instead of int for ids?
+    We noticed in Evan’s “Intro to Web Apps” example that Java’s long type was used for ids. What are the pros and cons to using long instead of int for ids?
 
 
 - Using Database-set IDs vs setting our own database ids
-We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this because using Database generated IDs delegates an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves? What considerations must we make if we choose to do this?
+    We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this because using Database generated IDs delegates an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves? What considerations must we make if we choose to do this?
 
 
 - Making our API publicly available
-We hope to have our API publicly available for Phase 2. Where can we host our app? What changes need to be made to our app and database to support running remotely? What security concerns must we address in making our API public?
+    We hope to have our API publicly available for Phase 2. Where can we host our app? What changes need to be made to our app and database to support running remotely? What security concerns must we address in making our API public?
 
 
 ## Work Allocation
