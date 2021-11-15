@@ -43,6 +43,12 @@ After completing our specification, we turned our focus to implementing a Web Ap
    
    Originally, we had different request models for each interactor, making sending and receiving requests and responses unnecessarily complex. To adjust this, we created one request model for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
 
+## GitHub Usage
+
+   Throughout the development of our web app our group has been making use of several features available on GitHub. One such feature is branching. So far we have been making separate branches for each new feature that we implement. Once the feature has been implemented, we used the pull request feature on GitHub to ensure that other members of the group have a chance to review the code before the branch is merged into our main branch. In addition, we initially only used the projects feature on GitHub to delegate work and ensure that each member knew what the other members were doing. As we progressed through the project we found that we could also make use of the issues feature as well, and that the issues could also be items in the projects tab that can be moved as necessary.
+   
+   Another major change that we made in terms of our GitHub project page is transitioning to a new repository for our Spring Boot transition. We wanted to separate our previous project from the transitioned Spring Boot project so we created a new repository called course-project-newtapp, whereas our old repository was called course-project-optimistic-newts.
+
 ## Clean Architecture
 
 Clean architecture plays a fundamental role in our application. 
