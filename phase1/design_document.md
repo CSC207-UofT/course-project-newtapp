@@ -7,8 +7,7 @@ We want to give our users the opportunity to connect with other users without ex
 
 ## Updated Specification
 
-   Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our 
-specification and user stories. These tasks included:
+   Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. These tasks included:
 - Conversation Queues: for sorting conversations based on user interests
 - Changing User IDs to be unique integer IDs for easier sorting/management in the database
 
@@ -40,7 +39,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
  
 -  Request and Response Models for requests between users and interactors
 
-   After implementing an initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
+   After implementing initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
    
    Originally, we had different request models for each interactor, making sending and receiving requests and responses unnecessarily complex. To adjust this, we created one request model for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
 
@@ -86,7 +85,9 @@ In the development of our App, we considered many uses of SOLID design principle
 
 - The Liskov substitution principle
 
-   Next, the Liskov substitution principle highlights how objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program. ******
+   Next, the Liskov substitution principle highlights how objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+   
+   At the moment, our code does not use the Liskov Substitution Principle, as our program does not make use of subclasses and subtypes with concrete parents. In the future, an additional feature our group might consider implementing is different “types” of users, such as premium users or moderators, who would all be of type user and therefore maintain interchangeability.
 
 
 - Interface Segregation principle
@@ -124,7 +125,7 @@ Further, Clean Architecture has continued to show its benefits with an easy tran
 ## Open Questions
 
 As our group continues to implement a Web Application, we have come across a few design questions that we are considering.
-- Are 32 bit integers sufficient for unique User ids?
+- Are 32-bit integers sufficient for unique User ids?
     
     We noticed in Evan’s “Intro to Web Apps” example that Java’s long type was used for ids. What are the pros and cons to using long instead of int for ids?
 
@@ -164,5 +165,3 @@ What we plan to work on next:
 - Ted: Finalizing our Backend
 - Yukthi: Implementing Front End Design
 - Zachary: Finalizing our Backend
-
-
