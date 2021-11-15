@@ -148,11 +148,11 @@ Here are some ideas of the next steps in our development:
 - UI/Design choices
 
 What we plan to work on next:
-- Alex: Implementing Front End
-- Spencer: 
-- Will: 
-- Ted: 
-- Yukthi: 
-- Zachary:
+- Alex: Implementing Front End Design
+- Spencer: Finalizing our Backend
+- Will: Implementing Front End Design
+- Ted: Finalizing our Backend
+- Yukthi: Implementing Front End Design
+- Zachary: Finalizing our Backend
 
 
