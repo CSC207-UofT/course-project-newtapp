@@ -65,7 +65,7 @@ While challenging at first, implementing clean architecture throughout our appli
 Here is an overview of the architecture of our software:
 
 Our application's first and outermost layer is the web interface, not yet implemented for Phase 1. 
-We plan to use the front-end of our application to take input from the user and send it to the appropriate controller.
+We plan to use the front-end of our application to take input from the user and send it to the Spring Boot API server which makes appropriate calls to the controllers.
 
 Following this, the controller transforms the input into a request given to a use case manager responsible for handling use cases. 
 The use cases implement the input boundary interface to handle the request sent by the controller using the manager.
@@ -133,12 +133,27 @@ information relevant to the user is displayed on the web application's graphical
 
 ## Code Style and Documentation
 
-At the momment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
 
 
 ## Packaging Strategies
 
    Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting between the functionality and purpose of methods. Since our code was created with the purpose of fulfilling thoughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, concise and organized file sorting. 
+
+## Refactoring
+
+We did a fair share of refactoring for Phase 1.  Here are three examples of refactoring we did:
+- Request Model (https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/37): 
+  The first version of our request model was overly complicated. We simplified it a lot by making one request model format that all Use Cases can implement.
+  In our current request model, our Use Cases only need to implement Input Boundary so that they can accept a request. The controller now fills the request and send it to the appropriate Use Case.
+
+
+- Spring Boot (this repository ): We transformed our original application into a Spring Boot application to facilitate the implementation of a web user interface and a database. 
+  Also, Spring boots handling of http requests has proven itself to be very convenient.
+
+
+- Constant (https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/35): We refactored our constants' name to fit naming convention.
+
 
 ## Progress Report
 
