@@ -150,7 +150,7 @@ We have finalized all the remaining fundamental components of our application, a
 - Yukthi: User Stories, Reworking Interactors for Spring Boot, Slideshow presentation
 - Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors, Slideshow presentation.
 
-We are all enjoying seeing the fruits of our labour begin to form a working application, and are excited to see where Phase 1 takes us! 
+We are all enjoying seeing the fruits of our labour begin to form a working application, and are excited to see where Phase 2 takes us! 
 Here are some ideas of the next steps in our development:
 - Finalizing our back end
 - Deciding how we want to handle our front end
