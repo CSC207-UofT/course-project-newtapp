@@ -32,9 +32,29 @@ After completing our specification, we turned our focus to implementing a Web Ap
 
 ## Clean Architecture
 
-Our program effectively displays the use of Clean Architecture *****
+Clean architecture plays a fundamental role in our application. 
+As such, we developed our software so that we can easily modify each component of it without affecting other pieces. 
+Nonetheless challenging at first, implementing clean architecture throughout our application proved itself essential and extremely useful. 
+Here is an overview of the architecture of our software:
 
+Our application's first and outermost layer is the web interface, not yet implemented for Phase 1. 
+We plan to use the front-end of our application to take input from the user and send it to the appropriate controller.
 
+Following this, the controller transforms the input into a request given to a use case manager responsible for handling use cases. 
+The use cases implement the input boundary interface to handle the request sent by the controller using the manager.
+It ensures that use cases do not depend on controllers directly but instead on the input boundary interface.
+Also, since the controllers handle the user's input, the user never directly utilizes the use cases.
+
+Once the use cases accept the request, it fetches the entity/ies from the database using a data access interface. 
+The data access interface implemented by each repository associated with each entity is an explicit use of dependency inversion to maintain a clean architecture.
+
+Lastly, and not implemented yet, the output is returned through the controller and the
+information relevant to the user is displayed on the web application's graphical user interface (not implemented).
+
+- At the Enterprise Business Rules layer are the core components of the application: User, Conversation, Message.
+- At the Application Business Rules layer are the classes UserManager, ConversationManager, MessageManager. The three managers handle Use Cases also in that layer.
+- At the Interface Adapters layer are the controllers. (UserController is implemented and MessageController and ConversationController remain to be implemented)
+- At the Framework & Drivers are the database and the web interface.
 
 ## SOLID Design Principles
 
