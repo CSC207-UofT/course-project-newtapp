@@ -1,6 +1,7 @@
 package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.errors.AlreadyFollowingUser;
 import com.newts.newtapp.api.errors.SameUser;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
@@ -22,11 +23,11 @@ public class Follow extends UserInteractor<Void, Exception> {
     }
 
     /**
-     * Accepts an Follow request.
+     * Accepts a Follow request.
      * @param request   a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws UserNotFound, SameUser {
+    public Void request(RequestModel request) throws UserNotFound, SameUser, AlreadyFollowingUser {
         int userId = (int) request.get(RequestField.USER_ID);
         int otherId = (int) request.get(RequestField.USER_ID_TWO);
 
@@ -38,6 +39,11 @@ public class Follow extends UserInteractor<Void, Exception> {
         // look up the users, if they don't exist throw UserNotFound
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
         User other = userRepository.findById(otherId).orElseThrow(UserNotFound::new);
+
+        // Check if user follows other already
+        if (user.getFollowing().contains(otherId)) {
+            throw new AlreadyFollowingUser();
+        }
 
         // Add userTwo to following of user
         user.addFollowing(other);
