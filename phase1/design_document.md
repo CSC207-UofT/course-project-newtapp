@@ -1,8 +1,8 @@
-# Design Document
+​​# Design Document
 
 ## Updated Specification
 
-   Since Phase 0, our group has completed a number of ciritical comonents for our social media application. We began by completing remaining tasks in our 
+   Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our 
 specification and user stories. These tasks included:
 - Reworking a cleaner approach to our Request and Response Models 
 - Reworking interactors for our improved Input and Output Models
@@ -22,13 +22,13 @@ After completing our specification, we turned our focus to implementing a Web Ap
    
  - Implementing a WebApp
 
-   A key design descision our group made was to focus our Social Media App towards a Web Application, to maximize the reach and scope of our app. We specifically decided to use Spring Boot as our back-end API server, because of it's easy implementation in Java, and PostgreSQL for the implementation of our Databases.
+   A key design decision our group made was to focus our Social Media App towards a Web Application, to maximize the reach and scope of our app. We specifically decided to use Spring Boot as our back-end API server, because of its easy implementation in Java, and PostgreSQL for the implementation of our Databases.
    
  - Int IDs
 
    After working on our code, we decided to change User IDs from a string to a unique integer ID. Originally, we planned to pair non-unique usernames with a unique string userID, consisting of the username itself and a number identifier, such as "alex#01". We wanted to compare the User Dds lexicographically based on the Unicode value of each string character, to be easily able to sort and search through IDs. 
    
-   However, after moving to Spring Boot and implementing Databses for getting and writing data, we found PostgreSQL Databases to offer an easy way of automatically setting unique integer IDs in chronological order, so we decided to utilize PostgreSQL's handy implementation of int ids. 
+   However, after moving to Spring Boot and implementing Databases for getting and writing data, we found PostgreSQL Databases to offer an easy way of automatically setting unique integer IDs in chronological order, so we decided to utilize PostgreSQL's handy implementation of int ids. 
 
 ## Clean Architecture
 
@@ -45,7 +45,7 @@ The use cases implement the input boundary interface to handle the request sent 
 It ensures that use cases do not depend on controllers directly but instead on the input boundary interface.
 Also, since the controllers handle the user's input, the user never directly utilizes the use cases.
 
-Once the use cases accept the request, it fetches the entity/ies from the database using a data access interface. 
+Once the use cases accept the request, it fetches the entities from the database using a data access interface. 
 The data access interface implemented by each repository associated with each entity is an explicit use of dependency inversion to maintain a clean architecture.
 
 Lastly, and not implemented yet, the output is returned through the controller and the
@@ -66,7 +66,7 @@ In the development of our App, we considered many uses of SOLID design principle
 
 - Open/Closed principle
 
-  The second design principle hilights how entities should be open for extension, but closed for modification. In our code, through our implementation of Clean Architecture, Entities within the Enterprise Business Rules portray essential basic components of our program. As such, any additional features to our program exist in the Application Business Rules/Interactors layer, allowing for additonal features to be easily extended as an Interactor.
+  The second design principle highlights how entities should be open for extension, but closed for modification. In our code, through our implementation of Clean Architecture, Entities within the Enterprise Business Rules portray essential basic components of our program. As such, any additional features to our program exist in the Application Business Rules/Interactors layer, allowing for additional features to be easily extended as an Interactor.
 
 - The Liskov substitution principle
 
@@ -74,7 +74,7 @@ In the development of our App, we considered many uses of SOLID design principle
 
 - Interface Segregation principle
 
-   The Interface Segregation principle requires that classes only be able to perform behaviours that are useful to achieve their purpose. In other words, classes do not include behaviours they do not use. In the Application Buisness Rules layer of our code, we used the Facade design pattern to split interactors so that they only implement specific features, limiting their scope to only the behaviours that they use.
+   The Interface Segregation principle requires that classes only be able to perform behaviours that are useful to achieve their purpose. In other words, classes do not include behaviours they do not use. In the Application Business Rules layer of our code, we used the Facade design pattern to split interactors so that they only implement specific features, limiting their scope to only the behaviours that they use.
 
 
 - The Dependency Inversion principle
@@ -84,7 +84,7 @@ In the development of our App, we considered many uses of SOLID design principle
 
 ## Packaging Strategies
 
-   Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting betwen the functionality and purpose of methods. Since our code was created with the purpose of fufilling throughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, consise and organized file sorting. 
+   Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting between the functionality and purpose of methods. Since our code was created with the purpose of fulfilling thoughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, concise and organized file sorting. 
    
 ## Design Patterns
 
@@ -92,11 +92,11 @@ In the development of our App, we considered many uses of SOLID design principle
  
  - Facade Design Pattern
 
-   The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Coversations and Users have a lot of particuilar interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Buisness Rules Layer, which serve as facades to delegate calls to speciifc interactors as needed.
+   The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Conversations and Users have a lot of particular interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Business Rules Layer, which serve as facades to delegate calls to specific interactors as needed.
 
 - Strategy Design Pattern
 
-    The Strategy Design pattern facilitates defining family of algorithms in seperate classes, while still making their objects interchangeable. Our program features the Strategy Design Pattern through our implementation of Conversation sorting for a User’s ConversationQueue Sorting is done either randomly or by an algorithm which takes into account a User’s interests. Both these strategies implement the ConversationSorter interface and can be used interchangeably by ConversationQueue where appropriate.
+    The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. Our program features the Strategy Design Pattern through our implementation of Conversation sorting for a User’s ConversationQueue Sorting is done either randomly or by an algorithm that takes into account a User’s interests. Both these strategies implement the ConversationSorter interface and can be used interchangeably by ConversationQueue where appropriate.
 
     
 ## Progress Report
@@ -106,16 +106,16 @@ Further, Clean Architecture has continued to show its benefits with an easy tran
 
 ## Open Questions
 
-As our group continutes to implement a Web Application, we have come across a few design questions that we are consiering.
+As our group continues to implement a Web Application, we have come across a few design questions that we are considering.
 - Long vs int for user ids
 
-  We noticed SpringBoot and PostgreSQL to use longs as variables by default for ids. Is there an advantage between using longs versus using ints?
+  We noticed SpringBoot and PostgreSQL uses longs as variables by default for ids. Is there an advantage between using longs versus using ints?
 
 - Using Database-set IDs vs setting our own database ids
 
-  We found PostgreSQL's implementation of int IDs to be very useful for databse organization, however, some sources on the web we came across suggested against this, because using Database generated IDs delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
+  We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this, because using Database generated IDs delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
 
-- Making our api publicly available
+- Making our API publicly available
 
 
 ## Work Allocation
@@ -142,6 +142,5 @@ What we plan to work on next:
 - Ted: 
 - Yukthi: 
 - Zachary:
-
 
 
