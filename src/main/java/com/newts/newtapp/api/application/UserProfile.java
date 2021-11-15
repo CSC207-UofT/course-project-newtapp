@@ -6,16 +6,17 @@ import java.util.ArrayList;
 
 /**
  * A condensed view of a User, for passing User information to a client browser without revealing secure information.
+ * This is just a data storage object.
  */
 public class UserProfile {
-    private final int id;
-    private final String username;
-    private final String location;
-    private final ArrayList<String> interests;
-    private final boolean loginStatus;
-    private final ArrayList<Integer> following;
-    private final ArrayList<Integer> followers;
-    private final ArrayList<Integer> conversations;
+    public final int id;
+    public final String username;
+    public final String location;
+    public final ArrayList<String> interests;
+    public final boolean loginStatus;
+    public final ArrayList<Integer> following;
+    public final ArrayList<Integer> followers;
+    public final ArrayList<Integer> conversations;
 
     public UserProfile(User user) {
         this.id = user.getId();
@@ -26,38 +27,5 @@ public class UserProfile {
         this.following = user.getFollowing();
         this.followers = user.getFollowers();
         this.conversations = user.getConversations();
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public ArrayList<String> getInterests() {
-        return interests;
-    }
-
-    public boolean isLoginStatus() {
-        return loginStatus;
-    }
-
-    public ArrayList<Integer> getFollowing() {
-        return following;
-    }
-
-    public ArrayList<Integer> getFollowers() {
-        return followers;
-    }
-
-    public ArrayList<Integer> getConversations() {
-        return conversations;
     }
 }

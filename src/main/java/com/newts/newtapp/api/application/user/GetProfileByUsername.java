@@ -6,7 +6,6 @@ import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.api.application.UserProfile;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
-import java.util.List;
 
 /**
  * Get a UserProfile for a given username.

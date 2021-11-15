@@ -15,8 +15,6 @@ import java.util.ArrayList;
  * RequestModel must provide the conversation id
  */
 public class GetUserList extends ConversationInteractor<ArrayList<UserProfile>, Exception> {
-    private UserRepository userRepository;
-    private ConversationRepository conversationRepository;
 
     /**
      * Initialize a new GetUserList interactor with given ConversationRepository.

@@ -185,7 +185,6 @@ public class ConversationQueue implements Queue<Conversation> {
     }
 
     /**
-     *
      * @param c Collection to check whether this ConversationQueue contains
      * @return  true iff this contains all items in c
      */
@@ -237,7 +236,7 @@ public class ConversationQueue implements Queue<Conversation> {
      * @return  true iff at least one item in this ConversationQueue was not also in c and was removed as a result
      */
     @Override
-    public boolean retainAll(Collection<?> c) {
+    public boolean retainAll(@NonNull Collection<?> c) {
         boolean toReturn = false;
         Iterator<Conversation> old = iterator();
         clear();
@@ -285,7 +284,7 @@ public class ConversationQueue implements Queue<Conversation> {
     }
 
     /**
-     * Retrieves and removes a highest priority Conversation from this ConversationQueue.
+     * Retrieves and removes one highest priority Conversation from this ConversationQueue.
      * @return  highest priority Conversation
      */
     @Override
@@ -298,7 +297,7 @@ public class ConversationQueue implements Queue<Conversation> {
     }
 
     /**
-     * Retrieves and removes a highest priority Conversation from this ConversationQueue.
+     * Retrieves and removes one highest priority Conversation from this ConversationQueue.
      * @return  highest priority Conversation or null if ConversationQueue is empty
      */
     @Override
@@ -314,7 +313,7 @@ public class ConversationQueue implements Queue<Conversation> {
     }
 
     /**
-     * Retrieves but does not remove a highest priority Conversation from this ConversationQueue.
+     * Retrieves but does not remove one highest priority Conversation from this ConversationQueue.
      * @return highest priority Conversation
      */
     @Override
@@ -327,7 +326,7 @@ public class ConversationQueue implements Queue<Conversation> {
     }
 
     /**
-     * Retrieves, but does not remove, a highest priority Conversation from this ConversationQueue- or null if
+     * Retrieves, but does not remove, one highest priority Conversation from this ConversationQueue- or null if
      * the queue is empty.
      * @return  highest priority Conversation or null if empty queue
      */

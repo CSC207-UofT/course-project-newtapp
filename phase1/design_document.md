@@ -36,19 +36,19 @@ After completing our specification, we turned our focus to implementing a Web Ap
    
  - Int IDs
 
-   Originally, we planned to pair non-unique usernames with a unique string userID, consisting of the username itself and a number identifier, such as "evan#10". However, in considering how our data will be stored in a database, we decided it would be much simpler to assign each user a unique integer identifier (and conveniently our database can handle the creation of these values for us). In considering these things, we also decided to enforce unique usernames. As it is was not clear to us how to easily and securely allow a user with a non-unique username to login to their account using their username.
+   Originally, we planned to pair non-unique usernames with a unique string userID, consisting of the username itself and a number identifier, such as "evan#10". However, in considering how our data will be stored in a database, we decided it would be much simpler to assign each user a unique integer identifier (and conveniently our database can handle the creation of these values for us). In considering these things, we also decided to enforce unique usernames. As it is not clear to us how to easily and securely allow a user with a non-unique username to login to their account using their username.
  
 -  Request and Response Models for requests between users and interactors
 
    After implementing an initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
    
-   Originally, we had different requestmodels for each interactor, making sending and recieving requests and responses unnecessarily complex. To adjust this, we created one requestmodel for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
+   Originally, we had different request models for each interactor, making sending and receiving requests and responses unnecessarily complex. To adjust this, we created one request model for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
 
 ## Clean Architecture
 
 Clean architecture plays a fundamental role in our application. 
 As such, we developed our software so that we can easily modify each component of it without affecting other pieces. 
-Nonetheless challenging at first, implementing clean architecture throughout our application proved itself essential and extremely useful. 
+While challenging at first, implementing clean architecture throughout our application proved itself essential and extremely useful. 
 Here is an overview of the architecture of our software:
 
 Our application's first and outermost layer is the web interface, not yet implemented for Phase 1. 
@@ -139,7 +139,7 @@ As our group continues to implement a Web Application, we have come across a few
 We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
 
 - Alex: Refactoring User Interactors for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
-- Spencer: Reworking Request and Response Model, Data Acess Object, Moving to SpringBoot
+- Spencer: Reworking Request and Response Model, Data Access Object, Moving to SpringBoot
 - Will: Refactoring Conversation interactor for new Response Model, Moving to SpringBoot
 - Ted: AddFollower Interface, UserManager, Moving to SpringBoot
 - Yukthi: User Stories, Reworking Interactors for Spring Boot, Slideshow presentation

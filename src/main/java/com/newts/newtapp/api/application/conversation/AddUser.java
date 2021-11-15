@@ -15,8 +15,6 @@ import com.newts.newtapp.api.UserRepository;
  * RequestModel must provide the conversation id and the user id.
  */
 public class AddUser extends ConversationInteractor<Void, Exception> {
-    private ConversationRepository conversationRepository;
-    private UserRepository userRepository;
 
     /**
      * Initialize a new AddUser interactor with given ConversationRepository.
@@ -33,14 +31,14 @@ public class AddUser extends ConversationInteractor<Void, Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
-        int conversationid = (int) request.get(RequestField.CONVERSATION_ID);
-        int userid = (int) request.get(RequestField.USER_ID);
+        int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
+        int userId = (int) request.get(RequestField.USER_ID);
 
         // Fetching the conversation
-        Conversation conversation = conversationRepository.findById(conversationid).orElseThrow(ConversationNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         //Fetching the user to be added
-        User user = userRepository.findById(userid).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
         // Check if the User is above the conversation minimum rating
         if (user.getRating() < conversation.getMinRating()) {

@@ -8,7 +8,7 @@ import com.newts.newtapp.entities.Conversation;
  */
 public class KeyedConversation {
     private final Conversation conversation;
-    private int key = 0;
+    private int key;
 
     /**
      * Create a new KeyedConversation, where key is the number of topic matches.

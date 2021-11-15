@@ -15,7 +15,7 @@ An app for meeting people and having conversations.
 5. Create User, Conversation and Message tables in the database (see SQL commands below).
 6. Assign data source to User, Conversation and Message.
 
-You can do steps 2-4 by running the following in `psql`:
+You can complete steps 2-4 by running the following at the command line in `psql`:
 ```
 CREATE DATABASE newtapp;
 CREATE USER optimisticnewt WITH ENCRYPTED PASSWORD 'newtdb';

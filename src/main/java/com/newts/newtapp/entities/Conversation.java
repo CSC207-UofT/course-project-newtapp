@@ -44,7 +44,7 @@ public class Conversation {
     private String location;
 
     /**
-     * The radius within which users should be able to search for this Conversation. NOT IMPLMEMENTED.
+     * The radius within which users should be able to search for this Conversation. NOT IMPLEMENTED.
      */
     @Column(name = "location_radius", columnDefinition = "int")
     private final int locationRadius;
@@ -253,7 +253,7 @@ public class Conversation {
     }
 
     /**
-     * Remove a topic from this conversation, if this topic is in this conversations topics.
+     * Remove a topic from this conversation, if this topic is in this conversation's topics.
      * @param topic     Topic to remove
      */
     public void removeTopic(String topic) {
@@ -298,15 +298,9 @@ public class Conversation {
     /**
      * Add a user to the conversation.
      * @param user a user to be added
-     * @return true if the user was added
      */
-    public boolean addUser(User user){
-        if (this.users.size() < this.maxSize){
-            this.users.add(user.getId());
-            return true;
-        } else {
-            return false;
-        }
+    public void addUser(User user){
+        this.users.add(user.getId());
     }
 
     /**
@@ -328,13 +322,8 @@ public class Conversation {
     /**
      * Remove a user from a conversation.
      * @param user a user to be removed
-     * @return true if the user was removed
      */
-    public boolean removeUser(User user) {
-        if (users.contains(user.getId())) {
-            users.remove(user.getId());
-            return true;
-        }
-        return false;
+    public void removeUser(User user) {
+        users.remove(user.getId());
     }
 }

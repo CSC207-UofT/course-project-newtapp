@@ -10,7 +10,6 @@ import com.newts.newtapp.entities.Conversation;
  * RequestModel must provide the conversation id
  */
 public class ChangeStatus extends ConversationInteractor<Void, Exception> {
-    private ConversationRepository repository;
 
     /**
      * Initialize a new ChangeStatus interactor with given ConversationRepository.
@@ -27,11 +26,11 @@ public class ChangeStatus extends ConversationInteractor<Void, Exception> {
     public Void request(RequestModel request) throws ConversationNotFound {
         int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
 
-        Conversation conversation = repository.findById(conversationId).orElseThrow(ConversationNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         // Change the status of the conversation
         conversation.toggleIsOpen();
-        repository.save(conversation);
+        conversationRepository.save(conversation);
         return null;
     }
 }

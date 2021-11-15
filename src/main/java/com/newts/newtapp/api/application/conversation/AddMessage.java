@@ -12,13 +12,10 @@ import com.newts.newtapp.entities.*;
 
 
 public class AddMessage extends ConversationInteractor<Void, Exception> {
-    MessageRepository messageRepository;
-    ConversationRepository conversationRepository;
-    UserRepository userRepository;
 
     /**
      * Initialize a new AddMessage interactor with supplied message, conversation and user repositories
-     * @param messageRepository MessagerRepository containing message data
+     * @param messageRepository MessageRepository containing message data
      * @param conversationRepository ConversationRepository containing conversation data
      * @param userRepository UserRepository  containing user data
      */
@@ -48,7 +45,7 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
         }
         else{
             int messageID = ((int) request.get(RequestField.MESSAGE_ID));
-            // Writetime and Updatetime are handled within message constructor
+            // Write time and Update time are handled within message constructor
             Message message  = new Message(messageID, messageBody, user);
             conversation.addMessage(message);
             messageRepository.save(message);

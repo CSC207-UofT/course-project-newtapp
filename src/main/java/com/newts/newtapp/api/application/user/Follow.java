@@ -6,7 +6,6 @@ import com.newts.newtapp.api.errors.SameUser;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.User;
 import com.newts.newtapp.api.UserRepository;
-import com.newts.newtapp.api.application.RequestField;
 
 /**
  * UserInteractor that adds a follow relationship.
