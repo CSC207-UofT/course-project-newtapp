@@ -117,7 +117,7 @@ public class UserController {
      */
 
     @PutMapping("/users/follow/{id1}/{id2}")
-    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser {
+    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser, AlreadyFollowingUser {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id1);
         request.fill(RequestField.USER_ID_TWO, id2);
