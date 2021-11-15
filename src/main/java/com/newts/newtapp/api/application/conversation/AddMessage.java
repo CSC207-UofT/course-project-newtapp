@@ -7,7 +7,6 @@ import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.EmptyMessage;
-import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.*;
 
 

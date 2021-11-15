@@ -5,8 +5,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class UserTest {
     User u;
@@ -16,28 +15,20 @@ public class UserTest {
      */
     @Before
     public void setUp() {
-        ArrayList<String> interests = new ArrayList<String>();
+        ArrayList<String> interests = new ArrayList<>();
         interests.add("Sports");
         interests.add("Music");
         interests.add("Fitness");
-        u = new User(0, "testUser", "password123", interests);
+        u = new User(1, "testUser", "password123", interests);
 
         u.logIn();
-    }
-
-    /**
-     * To be implemented
-     */
-    @Test
-    public void isLoggedIn() {
-        assertTrue(false);
     }
 
     /**
      * Tests the getID method
      */
     @Test
-    public void testGetId() {
+    public void getIdTest() {
         assertEquals(u.getId(), 1);
     }
 
@@ -45,13 +36,13 @@ public class UserTest {
      * Tests getUsername method
      */
     @Test
-    public void testGetUsername() {assertEquals(u.getUsername(), "test_user");}
+    public void getUsernameTest() {assertEquals(u.getUsername(), "testUser");}
 
     /**
      * Tests getSetUsername method
      */
     @Test
-    public void testSetUsername() {
+    public void setUsernameTest() {
         u.setUsername("OptimisticNewt27");
         assertEquals(u.getUsername(), "OptimisticNewt27");
     }
@@ -60,26 +51,27 @@ public class UserTest {
      * Tests getPassword method
      */
     @Test
-    public void testGetPassword() {assertEquals(u.getPassword(), "password123");}
+    public void getPasswordTest() {assertEquals(u.getPassword(), "password123");}
 
     @Test
-    public void testSetPassword() throws EntityExceptions {
+    public void setPasswordTest() throws EntityExceptions {
         u.setPassword("p");
     }
 
     /**
-     * To be implemented
+     * Tests getLocation
      */
     @Test
-    public void testGetLocation() {
-        assertTrue(false);
+    public void getLocationTest() {
+        u.setLocation("Toronto");
+        assertEquals("Toronto", u.getLocation());
     }
 
     /**
      * Tests getInterests method
      */
     @Test
-    public void testGetInterests() {
+    public void getInterestsTest() {
         assertEquals(u.getInterests().get(0), "Sports");
         assertEquals(u.getInterests().get(1), "Music");
         assertEquals(u.getInterests().get(2), "Fitness");
@@ -89,7 +81,7 @@ public class UserTest {
      * Tests addInterests method
      */
     @Test
-    public void addInterests() {
+    public void addInterestsTest() {
         u.addInterests("Stocks");
         assertEquals(u.getInterests().get(3), "Stocks");
     }
@@ -98,7 +90,7 @@ public class UserTest {
      * Tests removeInterest method
      */
     @Test
-    public void removeInterest() {
+    public void removeInterestTest() {
         u.addInterests("Stocks");
         assertEquals(u.getInterests().get(2), "Fitness");
     }
@@ -107,8 +99,8 @@ public class UserTest {
      * Tests getLoginStatus method
      */
     @Test
-    public void testGetLoginStatus() {
-        assertEquals(u.getLoginStatus(), true);
+    public void getLoginStatusTest() {
+        assertTrue(u.getLoginStatus());
     }
 
 
@@ -116,18 +108,9 @@ public class UserTest {
      * Tests logOut method
      */
     @Test
-    public void testLogOut() {
+    public void logOutTest() {
         u.logOut();
-        assertEquals(u.getLoginStatus(), false);
-    }
-
-    /**
-     * Tests logIn method
-     */
-    @Test
-    public void testLogIn() {
-        u.logIn();
-        assertEquals(u.getLoginStatus(), true);
+        assertFalse(u.getLoginStatus());
     }
 
 

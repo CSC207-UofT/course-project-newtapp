@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * A condensed view of a User, for passing User information to a client browser without revealing secure information.
  * This is just a data storage object.
  */
+@SuppressWarnings("unused")
 public class UserProfile {
     public final int id;
     public final String username;

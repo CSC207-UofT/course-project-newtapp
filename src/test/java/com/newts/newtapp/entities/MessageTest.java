@@ -4,7 +4,6 @@ import org.junit.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 

@@ -3,7 +3,6 @@ package com.newts.newtapp.entities;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +68,7 @@ public class ConversationTest {
 
     @Test(timeout = 50)
     public void TestGetUsers() {
-        ArrayList<Integer> expected = new ArrayList<Integer>();
+        ArrayList<Integer> expected = new ArrayList<>();
         expected.add(0);
         assertEquals(expected, c.getUsers());
     }
