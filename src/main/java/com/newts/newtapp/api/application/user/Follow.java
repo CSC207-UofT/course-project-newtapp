@@ -27,6 +27,9 @@ public class Follow extends UserInteractor<Void, Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, SameUser, AlreadyFollowingUser {
+        // Duplicated code warning - duplicate is in Unfollow. We are leaving this as duplicated for now
+        // as we believe these methods may have different reasons to change and as such should not be combined
+        // into one follow/unfollow interactor.
         int userId = (int) request.get(RequestField.USER_ID);
         int otherId = (int) request.get(RequestField.USER_ID_TWO);
 
