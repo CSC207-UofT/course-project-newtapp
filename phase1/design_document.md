@@ -35,6 +35,12 @@ After completing our specification, we turned our focus to implementing a Web Ap
    After working on our code, we decided to change User IDs from a string to a unique integer ID. Originally, we planned to pair non-unique usernames with a unique string userID, consisting of the username itself and a number identifier, such as "alex#01". We wanted to compare the User Dds lexicographically based on the Unicode value of each string character, to be easily able to sort and search through IDs. 
    
    However, after moving to Spring Boot and implementing Databases for getting and writing data, we found PostgreSQL Databases to offer an easy way of automatically setting unique integer IDs in chronological order, so we decided to utilize PostgreSQL's handy implementation of int ids. 
+   
+-  Request and Response Models for requests between users and interactors
+
+   After implementing an initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
+   Originally, we had different requestmodels for each interactor, making sending and recieving requests and responses unnecessarily complex. To adjust this, we created one requestmodel for all interactors.
+   After further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
 
 ## Clean Architecture
 
@@ -142,7 +148,7 @@ Here are some ideas of the next steps in our development:
 - UI/Design choices
 
 What we plan to work on next:
-- Alex: 
+- Alex: Implementing Front End
 - Spencer: 
 - Will: 
 - Ted: 
