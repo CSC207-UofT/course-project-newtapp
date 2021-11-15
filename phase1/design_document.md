@@ -4,20 +4,19 @@
 
    Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our 
 specification and user stories. These tasks included:
-- Reworking a cleaner approach to our Request and Response Models 
-- Reworking interactors for our improved Input and Output Models
-- Conversation Queue
-- Implementing a Gateway for reading constants from a JSON file
-- Changing User IDs to be unique integer ID’s for easier sorting/management in the database
+- Conversation Queues: for sorting conversations based on user interests
+- Changing User IDs to be unique integer IDs for easier sorting/management in the database
 
 
 Some things that we reworked:
-- Request and Response Models for requests between users and interactors
-- Interactors for our improved Requests and Responses
+- Request and Response Models for requests between the controllers and interactors
+- Our Data Access Objects for interacting with the persistence layer
+- Our controller layer to work with Spring Boot and our updated interactors
 
 
 After completing our specification, we turned our focus to implementing a Web Application. This involved:
 - Moving to and configuring Spring Boot
+- Installing PostgreSQL on each of our systems
 - Implementing and configuring a database using PostgreSQL
 - Adjusting our Request/Response models 
 - Linking our entities to read, write and edit from associated Database Repositories
