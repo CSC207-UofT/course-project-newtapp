@@ -2,7 +2,6 @@ package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.application.*;
-import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.entities.Conversation;
 
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
  * RequestModel must provide details for a new conversation
  */
 public class Create extends ConversationInteractor<Void, Exception> {
-    private ConversationRepository repository;
 
     /**
      * Initialize a new Create interactor with given ConversationRepository.
@@ -25,7 +23,7 @@ public class Create extends ConversationInteractor<Void, Exception> {
      * @param request   a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request){
+    public Void request(RequestModel request) {
         String title = (String) request.get(RequestField.TITLE);
         ArrayList<String> topics = new ArrayList<>();
         topics.add((String) request.get(RequestField.TOPIC));
@@ -38,7 +36,7 @@ public class Create extends ConversationInteractor<Void, Exception> {
 
         Conversation conversation = new Conversation(0, title, topics, location,
                 locationRadius, minRating, maxSize, closingTime, creatorId);
-        repository.save(conversation);
+        conversationRepository.save(conversation);
         return null;
     }
 }

@@ -7,7 +7,6 @@ import com.newts.newtapp.api.errors.UserAlreadyExists;
 import com.newts.newtapp.entities.User;
 import java.util.ArrayList;
 
-
 public class Create extends UserInteractor<Void,Exception> {
 
     /**

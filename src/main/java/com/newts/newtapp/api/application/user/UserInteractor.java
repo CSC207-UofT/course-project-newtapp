@@ -4,7 +4,7 @@ import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.InputBoundary;
 
 /**
- * An abstract UserInteractor object. Generally to be extended as a specific User usecase.
+ * An abstract UserInteractor object. Generally to be extended as a specific User use case.
  * Requires simply that an implementing class stores a User object and handles requests.
  */
 public abstract class UserInteractor<ReturnType, ExceptionType extends Exception>

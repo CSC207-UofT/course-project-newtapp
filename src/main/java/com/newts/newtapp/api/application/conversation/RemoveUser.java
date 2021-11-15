@@ -15,7 +15,7 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
     UserRepository userRepository;
 
     /**
-     * Initiaize a new RemoveUser interactor with supplied conversation and user repositories
+     * Initialize a new RemoveUser interactor with supplied conversation and user repositories
      * @param conversationRepository ConversationRepository which contains conversation data
      * @param userRepository UserRepository which contains user data
      */

@@ -1,8 +1,5 @@
 package com.newts.newtapp.entities;
 
-import com.vladmihalcea.hibernate.type.array.ListArrayType;
-import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

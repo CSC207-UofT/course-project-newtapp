@@ -3,17 +3,18 @@ import com.newts.newtapp.api.ConversationRepository;
 import com.newts.newtapp.api.MessageRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.InputBoundary;
-import com.newts.newtapp.entities.Conversation;
 
 /**
- * An abstract ConversationInteractor object. Generally to be extended as a specific Conversation usecase.
+ * An abstract ConversationInteractor object. Generally to be extended as a specific Conversation use case.
  * Requires simply that an implementing class stores a Conversation object and handles requests.
  */
 public abstract class ConversationInteractor<ReturnType, ExceptionType extends Exception>
         implements InputBoundary<ReturnType, ExceptionType>{
-    private final ConversationRepository conversationRepository;
-    private final MessageRepository messageRepository;
-    private final UserRepository userRepository;
+    // These create an error in code inspection because they are not used in this class, but they are created here and
+    // marked as protected so that they can be accessed by subclasses.
+    protected final ConversationRepository conversationRepository;
+    protected MessageRepository messageRepository;
+    protected UserRepository userRepository;
 
     /**
      * Initialize a new ConversationInteractor with all repositories.
@@ -38,16 +39,13 @@ public abstract class ConversationInteractor<ReturnType, ExceptionType extends E
                                   UserRepository userRepository){
         this.conversationRepository = conversationRepository;
         this.userRepository = userRepository;
-        this.messageRepository = null;
     }
 
     /**
      * Initialize a new ConversationInteractor with conversation repository.
-     * @param conversationRepository ConversationRepostory containing conversation data.
+     * @param conversationRepository ConversationRepository containing conversation data.
      */
     public ConversationInteractor(ConversationRepository conversationRepository){
         this.conversationRepository = conversationRepository;
-        this.userRepository = null;
-        this.messageRepository = null;
     }
 }

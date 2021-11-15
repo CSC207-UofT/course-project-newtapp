@@ -1,7 +1,6 @@
 package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.ConversationRepository;
-import com.newts.newtapp.api.MessageRepository;
 import com.newts.newtapp.api.UserRepository;
 import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;

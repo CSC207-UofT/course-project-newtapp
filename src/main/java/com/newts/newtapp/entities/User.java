@@ -5,7 +5,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
