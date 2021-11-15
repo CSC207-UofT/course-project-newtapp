@@ -25,11 +25,54 @@ public class UserController {
      * @return                  UserProfile of User with id
      * @throws UserNotFound     If no user exists with id
      */
-    @GetMapping("/users/{id}")
-    UserProfile one(@PathVariable int id) throws UserNotFound {
+    @GetMapping("/users")
+    UserProfile getById(@RequestParam int id) throws UserNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id);
-        return userManager.getProfile(request);
+        return userManager.getProfileById(request);
+    }
+
+    /**
+     * Returns a UserProfile for the user with given username.
+     * @param username          username of User
+     * @return                  UserProfile of User with username
+     * @throws UserNotFound     If no user exists with username
+     */
+    @GetMapping("/users/{username}")
+    UserProfile getByUsername(@PathVariable String username) throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        return userManager.getProfileByUsername(request);
+    }
+
+    /**
+     * Login user with given id provided password is correct.
+     * @param username              username of user to log in
+     * @param password              password of user to log in
+     * @throws UserNotFound         if no user exists with id
+     * @throws IncorrectPassword    if password is incorrect for user with id
+     */
+    @PutMapping("/users/login/{username}")
+    void login(@PathVariable String username, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.PASSWORD, password);
+        userManager.login(request);
+    }
+
+    /**
+     * Logout user with given id provided password is correct.
+     * @param id                    id of user to log out
+     * @param password              password of user to log out
+     * @throws UserNotFound         if no user exists with id
+     * @throws IncorrectPassword    if password is incorrect for user with id
+     */
+    @PutMapping("/users/logout/{id}")
+    void logout(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, id);
+        request.fill(RequestField.PASSWORD, password);
+        userManager.logout(request);
     }
 
     /**
@@ -72,8 +115,9 @@ public class UserController {
      * @throws UserNotFound     if no such user exists with id1 or id2
      * @throws SameUser         if id1 == id2
      */
-    @PatchMapping("/users/{id1}/{id2}")
-    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser, AlreadyFollowingUser {
+
+    @PutMapping("/users/follow/{id1}/{id2}")
+    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id1);
         request.fill(RequestField.USER_ID_TWO, id2);

@@ -33,9 +33,20 @@ public class UserManager {
      * @return                  UserProfile of corresponding User
      * @throws UserNotFound     if User id does not exist
      */
-    public UserProfile getProfile(RequestModel request) throws UserNotFound {
-        GetProfile getProfile = new GetProfile(userRepository);
-        return getProfile.request(request);
+    public UserProfile getProfileById(RequestModel request) throws UserNotFound {
+        GetProfileById getProfileById = new GetProfileById(userRepository);
+        return getProfileById.request(request);
+    }
+
+    /**
+     * Returns a UserProfile given a username in a RequestModel.
+     * @param request           RequestModel containing username
+     * @return                  UserProfile of corresponding User
+     * @throws UserNotFound     if no user exists with username
+     */
+    public UserProfile getProfileByUsername(RequestModel request) throws UserNotFound {
+        GetProfileByUsername getProfileByUsername = new GetProfileByUsername(userRepository);
+        return getProfileByUsername.request(request);
     }
 
     /**
@@ -48,7 +59,10 @@ public class UserManager {
     }
 
     /**
-     * Logs in a user according to RequestModel information and sets this UserManager's user accordingly.
+     * Logs in a user.
+     * @param request               RequestModel containing User's username and password
+     * @throws UserNotFound         If user does not exist
+     * @throws IncorrectPassword    If user's password is incorrect
      */
     public void login(RequestModel request) throws UserNotFound, IncorrectPassword {
         Login login = new Login(userRepository);
@@ -57,10 +71,10 @@ public class UserManager {
 
     /**
      * Logs out a user.
-     * @param request           RequestModel containing User's id
+     * @param request           RequestModel containing User's id and password
      * @throws UserNotFound     If user does not exist
      */
-    public void logout(RequestModel request) throws UserNotFound {
+    public void logout(RequestModel request) throws UserNotFound, IncorrectPassword {
         Logout logout = new Logout(userRepository);
         logout.request(request);
     }

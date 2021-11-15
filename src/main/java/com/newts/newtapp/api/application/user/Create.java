@@ -23,7 +23,7 @@ public class Create extends UserInteractor<Void,Exception> {
     @Override
     public Void request(RequestModel request) throws InvalidPassword, UserAlreadyExists {
         String username = (String) request.get(RequestField.USERNAME);
-        if (!(userRepository.findByUsernameIgnoreCase(username).isEmpty())) {
+        if (userRepository.findByUsernameIgnoreCase(username).isPresent()) {
             throw new UserAlreadyExists();
         }
         String password = (String) request.get(RequestField.PASSWORD);
@@ -33,8 +33,7 @@ public class Create extends UserInteractor<Void,Exception> {
         ArrayList<String> interests = new ArrayList<>();
         interests.add((String) request.get(RequestField.INTEREST));
 
-        int id = 0; // TODO: ensure id generation works as expected
-        User user = new User(id, username, password, interests);
+        User user = new User(0, username, password, interests);
         userRepository.save(user);
         return null;
     }

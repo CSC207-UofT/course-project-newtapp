@@ -10,19 +10,19 @@ import com.newts.newtapp.entities.User;
 /**
  * Get a UserProfile for a given User.
  */
-public class GetProfile extends UserInteractor<UserProfile, UserNotFound>{
+public class GetProfileById extends UserInteractor<UserProfile, UserNotFound>{
 
     /**
-     * Construct a new GetProfile interactor with given UserRepository.
+     * Construct a new GetProfileById interactor with given UserRepository.
      * @param repository    UserRepository with user data
      */
-    public GetProfile(UserRepository repository) {
+    public GetProfileById(UserRepository repository) {
         super(repository);
     }
 
     /**
-     * Handles a GetProfile request.
-     * @param request           a request stored as a RequestModel
+     * Handles a GetProfileById request.
+     * @param request           a request stored as a RequestModel containing user id
      * @return                  a new UserProfile for the given User
      * @throws UserNotFound     if user does not exist
      */
