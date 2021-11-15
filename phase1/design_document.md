@@ -24,7 +24,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
 - Adjusting our Request/Response models 
 - Linking our entities to read, write and edit from associated Database Repositories
 
-    At the momment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+At the momment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
 
 ## Design Decisions
 
