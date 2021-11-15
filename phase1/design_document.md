@@ -108,11 +108,12 @@ In the development of our App, we considered many uses of SOLID design principle
  
  - Facade Design Pattern
 
-   The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. In our code, Conversations and Users have a lot of particular interactors. To simplify our code, we created manager classes for Conversations and Users in the Application Business Rules Layer, which serve as facades to delegate calls to specific interactors as needed.
+   The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. Conversations and Users have a lot of small interactors, so to simplify our code, we created “manager” facade classes for Conversations and Users to delegate calls to specific interactors as needed, rather than having all of these small interactor methods together in one class.
+
 
 - Strategy Design Pattern
 
-    The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. Our program features the Strategy Design Pattern through our implementation of Conversation sorting for a User’s ConversationQueue. Sorting is done either randomly or by an algorithm that takes into account a User’s interests. Both these strategies implement the ConversationSorter interface and can be used interchangeably by ConversationQueue where appropriate.
+    The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
 
     
 ## Progress Report
@@ -123,15 +124,16 @@ Further, Clean Architecture has continued to show its benefits with an easy tran
 ## Open Questions
 
 As our group continues to implement a Web Application, we have come across a few design questions that we are considering.
-- Long vs int for user ids
+- Are 32 bit integers sufficient for unique User ids?
+We noticed in Evan’s “Intro to Web Apps” example that Java’s long type was used for ids. What are the pros and cons to using long instead of int for ids?
 
-  We noticed SpringBoot and PostgreSQL uses longs as variables by default for ids. Is there an advantage between using longs versus using ints?
 
 - Using Database-set IDs vs setting our own database ids
+We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this because using Database generated IDs delegates an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves? What considerations must we make if we choose to do this?
 
-  We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this, because using Database generated IDs delegate an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves?
 
 - Making our API publicly available
+We hope to have our API publicly available for Phase 2. Where can we host our app? What changes need to be made to our app and database to support running remotely? What security concerns must we address in making our API public?
 
 
 ## Work Allocation
@@ -149,7 +151,8 @@ We are all enjoying seeing the fruits of our labour begin to form a working appl
 Here are some ideas of the next steps in our development:
 - Finalizing our back end
 - Deciding how we want to handle our front end
-- UI/Design choices
+- UI/UX Design choices
+- In the long run: bringing our app live!
 
 What we plan to work on next:
 - Alex: Implementing Front End Design
