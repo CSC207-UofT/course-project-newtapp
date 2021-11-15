@@ -1,5 +1,10 @@
 # Design Document
 
+## Our Mission
+
+Our team is developing an application that facilitates meeting new people with similar interests through conversations.
+We want to give our users the opportunity to connect with other users without experiencing the social pressure induced by social media platforms.
+
 ## Updated Specification
 
    Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our 
@@ -32,8 +37,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
  - Int IDs
 
    Originally, we planned to pair non-unique usernames with a unique string userID, consisting of the username itself and a number identifier, such as "evan#10". However, in considering how our data will be stored in a database, we decided it would be much simpler to assign each user a unique integer identifier (and conveniently our database can handle the creation of these values for us). In considering these things, we also decided to enforce unique usernames. As it is was not clear to us how to easily and securely allow a user with a non-unique username to login to their account using their username.
-
-   
+ 
 -  Request and Response Models for requests between users and interactors
 
    After implementing an initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
@@ -74,13 +78,16 @@ In the development of our App, we considered many uses of SOLID design principle
   
   The single responsibility principle states that each class, module, or function should only have full responsibility for a single functionality of the program. The single responsibility principle is evident in the Application Business Rules/Interactors layer, where each User, Message or Conversation interactor is responsible for a specific feature pertaining to a user, conversation or a message 
 
+
 - Open/Closed principle
 
   The second design principle highlights how entities should be open for extension, but closed for modification. In our code, through our implementation of Clean Architecture, Entities within the Enterprise Business Rules portray essential basic components of our program. As such, any additional features to our program exist in the Application Business Rules/Interactors layer, allowing for additional features to be easily extended as an Interactor.
 
+
 - The Liskov substitution principle
 
    Next, the Liskov substitution principle highlights how objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program. ******
+
 
 - Interface Segregation principle
 
@@ -89,8 +96,7 @@ In the development of our App, we considered many uses of SOLID design principle
 
 - The Dependency Inversion principle
 
-   Finally, the Dependency Inversion Design principle states that high-level modules should depend on abstractions or interfaces rather than low-level modules and that details (like concrete implementations) should depend on abstractions. ******
-
+  Finally, the Dependency Inversion Design principle states that high-level modules should depend on abstractions or interfaces rather than low-level modules and that details (like concrete implementations) should depend on abstractions. In our past implementation, we applied this principle in our output boundary interface, which we used to send data from the use cases to the presenter (inner layer to outer layer). However, we changed our application to a Spring Boot application, and now our data output is handled by Spring Boot. The dependency inversion is also a core element of how we access data in our database. In our current implementation, the use cases fetched entities from the database using a data access interface implemented by the various repository associated with each entity. It ensures that the use cases depend not on the database itself but the data access interface.
 
 ## Packaging Strategies
 
