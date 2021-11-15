@@ -40,9 +40,7 @@ After completing our specification, we turned our focus to implementing a Web Ap
 
    After implementing an initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
    
-   Originally, we had different requestmodels for each interactor, making sending and recieving requests and responses unnecessarily complex. To adjust this, we created one requestmodel for all interactors.
-   
-   After further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
+   Originally, we had different requestmodels for each interactor, making sending and recieving requests and responses unnecessarily complex. To adjust this, we created one requestmodel for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
 
 ## Clean Architecture
 
