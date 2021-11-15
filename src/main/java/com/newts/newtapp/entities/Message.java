@@ -44,15 +44,15 @@ public class Message {
     private String lastUpdatedAt;
 
     /**
-     * Create a new message with given id, body, and author.
-     * @param id        Unique id for this message
-     * @param body      Body of this message
-     * @param author    Author of this message
+     * Create a new message with given id, body, and authorId.
+     * @param id            Unique id for this message
+     * @param body          Body of this message
+     * @param authorId      Author of this message's user id
      */
-    public Message(int id, String body, User author) {
+    public Message(int id, String body, int authorId) {
         this.id = id;
         this.body = body;
-        this.author = author.getId();
+        this.author = authorId;
         DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         this.writtenAt = LocalDateTime.now().format(date);
         this.lastUpdatedAt = LocalDateTime.now().format(date);

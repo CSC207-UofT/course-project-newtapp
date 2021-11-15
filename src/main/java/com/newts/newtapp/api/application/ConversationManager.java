@@ -35,7 +35,7 @@ public class ConversationManager {
      * Creates a conversation using request
      * @param request the filled in RequestModel
      */
-    public void createConversation(RequestModel request) {
+    public void createConversation(RequestModel request) throws InvalidMinRating, InvalidConversationSize {
         Create create = new Create(conversationRepository);
         create.request(request);
     }

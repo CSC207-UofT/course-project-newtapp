@@ -297,10 +297,15 @@ public class Conversation {
 
     /**
      * Add a user to the conversation.
-     * @param user a user to be added
+     * @param user  a user to be added
+     * @return      true iff the user was added to the conversation
      */
-    public void addUser(User user){
-        this.users.add(user.getId());
+    public boolean addUser(User user){
+        if ((users.size() == maxSize) | users.contains(user.getId())) {
+            return false;
+        } else {
+            return users.add(user.getId());
+        }
     }
 
     /**
@@ -321,9 +326,12 @@ public class Conversation {
 
     /**
      * Remove a user from a conversation.
-     * @param user a user to be removed
+     * @param user  a user to be removed
+     * @return      true iff the user was removed
      */
-    public void removeUser(User user) {
-        users.remove(user.getId());
+    public boolean removeUser(User user) {
+        int beforeSize = users.size();
+        users.remove(Integer.valueOf(user.getId()));
+        return beforeSize != users.size();
     }
 }
