@@ -40,11 +40,16 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
 
         // Check that the user is in the conversation
         if (conversation.getUsers().contains(userID)) {
-            // Remove the user from the conversation
-            conversation.removeUser(user);
-            user.removeConversation(conversation);
-            conversationRepository.save(conversation);
-            userRepository.save(user);
+            // Checks to see how many users are in conversation, if 1 delete conversation
+            // else just remove user from conversation.
+            if(conversation.getNumUsers() == 1){
+                conversationRepository.delete(conversation);
+            } else{
+                conversation.removeUser(user);
+                user.removeConversation(conversation);
+                conversationRepository.save(conversation);
+                userRepository.save(user);
+            }
             return null;
         } else {
             throw new UserNotFoundInConversation();

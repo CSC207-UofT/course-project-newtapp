@@ -101,7 +101,7 @@ public class UserController {
      * @throws IncorrectPassword    if password is incorrect
      */
     @DeleteMapping("/users/{id}")
-    void delete(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
+    void delete(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword, ConversationNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id);
         request.fill(RequestField.PASSWORD, password);
@@ -115,6 +115,7 @@ public class UserController {
      * @throws UserNotFound     if no such user exists with id1 or id2
      * @throws SameUser         if id1 == id2
      */
+
     @PutMapping("/users/follow/{id1}/{id2}")
     void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser {
         RequestModel request = new RequestModel();
