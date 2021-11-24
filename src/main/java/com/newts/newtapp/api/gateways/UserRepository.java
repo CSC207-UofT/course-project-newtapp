@@ -1,4 +1,4 @@
-package com.newts.newtapp.api;
+package com.newts.newtapp.api.gateways;
 
 import com.newts.newtapp.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

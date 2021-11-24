@@ -1,6 +1,6 @@
 package com.newts.newtapp.api.application.message;
-import com.newts.newtapp.api.MessageRepository;
-import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.gateways.MessageRepository;
+import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.InputBoundary;
 
 /**
