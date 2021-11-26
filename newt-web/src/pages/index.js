@@ -1,13 +1,20 @@
 import React from 'react'
 import UserSearchForm from '../components/usersearch'
+import {
+    container,
+    heading
+} from './index.module.css'
 
 const IndexPage = () => {
     return (
-        <main>
-            <title>Home Page</title>
-            <h1>Newt Web App!</h1>
-            <UserSearchForm />
-        </main>
+        <div className={container}>
+            <main>
+                <title>Home Page</title>
+                <h1 className={heading}>Newt Web App!</h1>
+                <hr />
+                <UserSearchForm />
+            </main>
+        </div>
     )
 }
 

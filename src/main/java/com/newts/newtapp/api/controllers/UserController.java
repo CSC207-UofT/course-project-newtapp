@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * This Controller handles User related mappings for our API.
  */
+@CrossOrigin    // CORS config may need to be adjusted later depending on our needs.
 @RestController
 public class UserController {
     private final UserManager userManager;
