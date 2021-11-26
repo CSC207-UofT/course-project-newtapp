@@ -12,11 +12,11 @@ import java.util.Optional;
 
 /**
  * A ConversationRepository implemented for testing purposes (Warnings are due to the fact that SpringBoot
- * usually implements this)
+ * usually implements these methods)
  */
 public class TestConversationRepository implements ConversationRepository{
     /**
-     * An arraylist of conversations representing a repository of conversations
+     * An arraylist of conversations representing a repository of conversations.
      */
     private ArrayList<Conversation> Conversations;
 
