@@ -1,5 +1,14 @@
 import React from 'react'
+import UserSearchForm from '../components/usersearch'
 
-export default function Home() {
-    return <h1>Placeholder!</h1>
+const IndexPage = () => {
+    return (
+        <main>
+            <title>Home Page</title>
+            <h1>Newt Web App!</h1>
+            <UserSearchForm />
+        </main>
+    )
 }
+
+export default IndexPage
