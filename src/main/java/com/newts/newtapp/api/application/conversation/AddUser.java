@@ -7,8 +7,8 @@ import com.newts.newtapp.api.errors.UserBelowMinimumRating;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
-import com.newts.newtapp.api.ConversationRepository;
-import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.gateways.ConversationRepository;
+import com.newts.newtapp.api.gateways.UserRepository;
 
 /**
  * ConversationInteractor that adds a user to a conversation.

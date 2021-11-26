@@ -1,6 +1,6 @@
 package com.newts.newtapp.api.application.conversation;
 
-import com.newts.newtapp.api.ConversationRepository;
+import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.entities.Conversation;

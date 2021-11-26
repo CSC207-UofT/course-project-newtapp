@@ -1,6 +1,6 @@
 package com.newts.newtapp.api.application.user;
 
-import com.newts.newtapp.api.UserRepository;
+import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.IncorrectPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
