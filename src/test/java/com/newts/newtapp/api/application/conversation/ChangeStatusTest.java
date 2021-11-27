@@ -27,6 +27,7 @@ public class ChangeStatusTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, -1);
         change.request(r);
+        assertTrue(c.findById(-1).isPresent());
         assertTrue(c.findById(-1).get().getIsOpen());
     }
 }
