@@ -25,11 +25,13 @@ public class GetUserListTest {
     public void setUp() {
         c = new TestConversationRepository();
         u = new TestUserRepository();
+
         Conversation testConversation = new Conversation();
-        c.save(testConversation);
+        testConversation.setMaxSize(1);
         testUser = new User();
         u.save(testUser);
         testConversation.addUser(testUser);
+        c.save(testConversation);
         get = new GetUserList(c, u);
     }
 
@@ -38,8 +40,6 @@ public class GetUserListTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, -1);
         ArrayList<UserProfile> actualList = get.request(r);
-        ArrayList<UserProfile> expectedList = new ArrayList<>();
-        expectedList.add(new UserProfile(testUser));
-        Assert.assertEquals(actualList, expectedList);
+        Assert.assertEquals(actualList.get(0).id, testUser.getId());
     }
 }
