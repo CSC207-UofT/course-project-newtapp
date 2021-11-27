@@ -19,7 +19,7 @@ public class UserTest {
         interests.add("Sports");
         interests.add("Music");
         interests.add("Fitness");
-        u = new User(1, "testUser", "password123", interests);
+        u = new User(1, "testUser", "password123", "", interests);
 
         u.logIn();
     }

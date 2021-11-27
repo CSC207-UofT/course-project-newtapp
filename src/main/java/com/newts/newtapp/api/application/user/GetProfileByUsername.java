@@ -31,7 +31,7 @@ public class GetProfileByUsername extends UserInteractor<UserProfile, UserNotFou
     @Override
     public UserProfile request(RequestModel request) throws UserNotFound {
         String username = (String) request.get(RequestField.USERNAME);
-        User user = userRepository.findByUsernameIgnoreCase(username).orElseThrow(UserNotFound::new);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
         return new UserProfile(user);
     }
 }

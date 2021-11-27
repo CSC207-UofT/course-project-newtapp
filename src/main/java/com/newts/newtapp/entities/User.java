@@ -31,10 +31,16 @@ public class User {
     private String username;
 
     /**
-     * This User's password, used for logging in.
+     * This User's hashed password, used for logging in.
      */
     @Column(name = "password", columnDefinition = "text")
     private String password;
+
+    /**
+     * This is the salt added to the user's password before hashing.
+     */
+    @Column(name = "hash_salt", columnDefinition = "text")
+    private String hashSalt;
 
     /**
      * This User's location, used for finding local conversations.
@@ -98,10 +104,12 @@ public class User {
     public User(int id,
                 String username,
                 String password,
+                String hashSalt,
                 ArrayList<String> interests) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.hashSalt = hashSalt;
         this.interests = interests;
         location = null;
         totalRating = 5;
@@ -118,6 +126,7 @@ public class User {
     public User() {
         username = null;
         password = null;
+        hashSalt = null;
         interests = new ArrayList<>();
         id = 0;
         totalRating = 0;
@@ -175,8 +184,7 @@ public class User {
     public void setUsername(String username) { this.username = username; }
 
     /**
-     * Getter method for user's password.
-     * NOTE: This is probably a bad idea to have.
+     * Getter method for user's hashed password.
      * @return Returns user's password
      */
     public String getPassword(){
@@ -186,12 +194,25 @@ public class User {
     /**
      * Getter method for user's last updated location.
      * NOTE: Wasn't sure what type the location data would be,
-     * using type Object for now, to be changed later.
+     * using type String for now, to be changed later.
      * @return Returns user's last updated location.
      */
     public String getLocation(){
         return location;
     }
+
+    /**
+     * Getter for user's hash salt.
+     * @return  the salt added to this user's password before hashing.
+     */
+    public String getHashSalt() { return hashSalt; }
+
+    /**
+     * Setter for user's hash salt. Exercise caution here: This should not be changed without rehashing this user's
+     * password with the new salt. Changing this without rehashing will cause user to lose account access.
+     * @param salt  new hash salt for this user
+     */
+    public void setHashSalt(String salt) { hashSalt = salt; }
 
     /**
      * Setter method for the user's password
