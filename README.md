@@ -43,7 +43,6 @@ CREATE TABLE users (
     id serial PRIMARY KEY,
     username text NOT NULL UNIQUE,
     password text NOT NULL,
-    hash_salt text NOT NULL,
     location text,
     interests text[],
     total_rating int,

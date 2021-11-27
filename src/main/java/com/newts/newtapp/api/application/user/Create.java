@@ -38,14 +38,13 @@ public class Create extends UserInteractor<Void,Exception> {
         if (((String) request.get(RequestField.PASSWORD)).length() < 6) {
             throw new InvalidPassword();
         }
-        // generate a new salt for this user and then hash their password using BCrypt
-        String salt = BCrypt.gensalt();
-        password = BCrypt.hashpw(password, salt);
+        // hash the provided password with a generated salt
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         ArrayList<String> interests = new ArrayList<>();
         interests.add((String) request.get(RequestField.INTEREST));
 
-        User user = new User(0, username, password, salt, interests);
+        User user = new User(0, username, hashedPassword, interests);
         userRepository.save(user);
         return null;
     }

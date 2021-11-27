@@ -28,11 +28,7 @@ public class Delete extends UserInteractor<Void,Exception> {
 
         // check password
         String password = (String) request.get(RequestField.PASSWORD);
-        String salt = user.getHashSalt();
-        password = BCrypt.hashpw(password, salt);
-        String expected = user.getPassword();
-
-        if (!(password.equals(expected))) {
+        if (!(BCrypt.checkpw(password, user.getPassword()))) {
             throw new IncorrectPassword();
         }
 
