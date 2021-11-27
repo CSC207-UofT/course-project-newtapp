@@ -94,3 +94,5 @@ newt-web/node_modules/
 newt-web/.cache/
 newt-web/public
 
+# build results
+target/
