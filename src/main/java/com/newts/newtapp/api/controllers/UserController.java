@@ -79,7 +79,7 @@ public class UserController {
      * @throws InvalidPassword      If the provided password is invalid
      */
     @PostMapping("/api/users")
-    ResponseEntity<?> create(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound {
+    ResponseEntity<?> create(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, form.getUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());
