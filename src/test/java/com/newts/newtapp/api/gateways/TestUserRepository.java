@@ -84,6 +84,13 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public <S extends User> S save(S entity) {
+        if (entity.getId() == 0) {
+            int newid = 1;
+            while (users.containsKey(newid)) {
+                newid++;
+            }
+            entity.setId(newid);
+        }
         users.put(entity.getId(), entity);
         return entity;
     }

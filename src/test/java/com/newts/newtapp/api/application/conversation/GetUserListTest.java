@@ -28,7 +28,7 @@ public class GetUserListTest {
         Conversation testConversation = new Conversation();
         c.save(testConversation);
         testUser = new User();
-        u.add(testUser);
+        u.save(testUser);
         testConversation.addUser(testUser);
         get = new GetUserList(c, u);
     }

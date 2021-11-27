@@ -6,7 +6,7 @@ import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
 import com.newts.newtapp.api.errors.*;
-import com.newts.newtapp.api.forms.*;
+import com.newts.newtapp.api.forms.CreateUserForm;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
@@ -88,21 +88,21 @@ public class UserController {
         return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
     }
 
-    /**
-     * Delete a user with a given id, provided the given password is correct for said user.
-     * @param form                  DeleteUserForm containing user id and password
-     * @throws UserNotFound         if no such user exists with given id
-     * @throws IncorrectPassword    if given password is incorrect
-     */
-    @DeleteMapping("/api/users")
-    ResponseEntity<?> delete(@RequestBody DeleteUserForm form) throws UserNotFound, IncorrectPassword,
-            ConversationNotFound {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, form.getId());
-        request.fill(RequestField.PASSWORD, form.getPassword());
-        userManager.delete(request);
-        return ResponseEntity.noContent().build();
-    }
+//    /**
+//     * Delete a user with a given id, provided the given password is correct for said user.
+//     * @param form                  DeleteUserForm containing user id and password
+//     * @throws UserNotFound         if no such user exists with given id
+//     * @throws IncorrectPassword    if given password is incorrect
+//     */
+//    @DeleteMapping("/api/users")
+//    ResponseEntity<?> delete(@RequestBody DeleteUserForm form) throws UserNotFound, IncorrectPassword,
+//            ConversationNotFound {
+//        RequestModel request = new RequestModel();
+//        request.fill(RequestField.USER_ID, form.getId());
+//        request.fill(RequestField.PASSWORD, form.getPassword());
+//        userManager.delete(request);
+//        return ResponseEntity.noContent().build();
+//    }
 
 //// These methods need to be remade in a secure and RESTful manner
 //    /**

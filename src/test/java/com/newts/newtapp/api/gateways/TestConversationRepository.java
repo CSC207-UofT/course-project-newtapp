@@ -79,6 +79,13 @@ public class TestConversationRepository implements ConversationRepository{
 
     @Override
     public <S extends Conversation> S save(S entity) {
+        if (entity.getId() == 0) {
+            int newid = 1;
+            while (conversations.containsKey(newid)) {
+                newid++;
+            }
+            entity.setId(newid);
+        }
         conversations.put(entity.getId(), entity);
         return entity;
     }

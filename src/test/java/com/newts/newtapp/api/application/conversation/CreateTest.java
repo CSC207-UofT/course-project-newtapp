@@ -6,8 +6,11 @@ import com.newts.newtapp.api.application.conversation.Create;
 import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
+import com.newts.newtapp.entities.Conversation;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 
@@ -33,7 +36,9 @@ public class CreateTest {
         r.fill(RequestField.CLOSING_TIME, "");
         r.fill(RequestField.USER_ID, -1);
         create.request(r);
-        assertTrue(c.getById(0).getIsOpen());
+        assertTrue(c.findById(1).isPresent());
+        Conversation conversation = c.findById(1).get();
+        assertTrue(conversation.getIsOpen());
     }
 
 
