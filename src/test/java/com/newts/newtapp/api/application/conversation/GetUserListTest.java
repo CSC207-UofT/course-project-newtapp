@@ -1,9 +1,8 @@
-package com.newts.newtapp.api;
+package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.api.application.UserProfile;
-import com.newts.newtapp.api.application.conversation.GetUserList;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;

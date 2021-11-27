@@ -7,53 +7,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * A ConversationRepository implemented for testing purposes (Warnings are due to the fact that SpringBoot
- * usually implements these methods)
+ * A mock ConversationRepository implemented for testing purposes.
  */
 public class TestConversationRepository implements ConversationRepository{
     /**
-     * An arraylist of conversations representing a repository of conversations.
+     * A map from conversation id to conversation entity acting as the persistence layer in our application.
      */
-    private ArrayList<Conversation> Conversations;
+    private final HashMap<Integer, Conversation> conversations;
 
     /**
      * Create a new TestConversationRepository.
      */
     public TestConversationRepository(){
-        this.Conversations = new ArrayList<Conversation>();
-    }
-
-    /**
-     * Add a conversation to the repository (Warnings are just due to SpringBoot)
-     * @param c a conversation to be added
-     * @return null
-     */
-    @Override
-    public Object save(Conversation c){
-        // In the actual save function, it replaces the original c with the new c if it exists,
-        // for testing purposes, we can also just clear it completely since we deal with one
-        // conversation at a time.
-        this.Conversations.clear();
-        this.Conversations.add(c);
-        return null;
-    }
-
-    /**
-     * Find the conversation with the id
-     * @param id the id to search for
-     * @return the conversation with the id
-     */
-    public Conversation findById(int id){
-        for (Conversation c: this.Conversations){
-            if (c.getId() == id) {
-                return c;
-            }
-        }
-        return null;
+        this.conversations = new HashMap<>();
     }
 
     @Override
@@ -107,12 +78,21 @@ public class TestConversationRepository implements ConversationRepository{
     }
 
     @Override
+    public <S extends Conversation> S save(S entity) {
+        conversations.put(entity.getId(), entity);
+        return entity;
+    }
+
+    @Override
     public <S extends Conversation> List<S> saveAll(Iterable<S> entities) {
         return null;
     }
 
     @Override
     public Optional<Conversation> findById(Integer integer) {
+        if (conversations.containsKey(integer)) {
+            return Optional.of(conversations.get(integer));
+        }
         return Optional.empty();
     }
 

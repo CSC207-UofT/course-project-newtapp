@@ -1,6 +1,5 @@
 package com.newts.newtapp.api.gateways;
 
-import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -8,46 +7,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * A UserRepository implemented for testing purposes (Warnings are due to the fact that SpringBoot
- * usually implements these methods)
+ * A mock UserRepository implemented for testing purposes.
  */
 public class TestUserRepository implements UserRepository {
     /**
-     * An arraylist of users representing a repository of users.
+     * A map from user id to user entity to be used in this repository.
      */
-    private ArrayList<User> Users;
+    private final HashMap<Integer, User> users;
 
     /**
      * Create a new TestUserRepository.
      */
     public TestUserRepository(){
-        this.Users = new ArrayList<User>();
-    }
-
-    /**
-     * Add a user to the repository
-     * @param u a conversation to be added
-     */
-    public void add(User u){
-        this.Users.add(u);
-    }
-
-    /**
-     * Find the conversation with the id
-     * @param id the id to search for
-     * @return the conversation with the id
-     */
-    public User findById(int id){
-        for (User u: this.Users){
-            if (u.getId() == id) {
-                return u;
-            }
-        }
-        return null;
+        this.users = new HashMap<>();
     }
 
     @Override
@@ -107,7 +84,8 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public <S extends User> S save(S entity) {
-        return null;
+        users.put(entity.getId(), entity);
+        return entity;
     }
 
     @Override
@@ -117,6 +95,9 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findById(Integer integer) {
+        if (users.containsKey(integer)) {
+            return Optional.of(users.get(integer));
+        }
         return Optional.empty();
     }
 

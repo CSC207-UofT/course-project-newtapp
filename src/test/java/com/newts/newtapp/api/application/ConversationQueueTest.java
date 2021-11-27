@@ -1,4 +1,4 @@
-package com.newts.newtapp.api;
+package com.newts.newtapp.api.application;
 
 import com.newts.newtapp.api.application.ConversationQueue;
 import com.newts.newtapp.api.application.KeyedConversation;
