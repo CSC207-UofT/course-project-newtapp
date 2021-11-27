@@ -2,13 +2,13 @@ package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;
-import com.newts.newtapp.api.application.conversation.ChangeStatus;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.entities.Conversation;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 public class ChangeStatusTest {
     TestConversationRepository c;
@@ -27,6 +27,6 @@ public class ChangeStatusTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, -1);
         change.request(r);
-        assertTrue(c.getById(-1).getIsOpen());
+        assertTrue(c.findById(-1).get().getIsOpen());
     }
 }
