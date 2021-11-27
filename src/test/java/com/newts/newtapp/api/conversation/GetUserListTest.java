@@ -1,4 +1,4 @@
-package com.newts.newtapp.api;
+package com.newts.newtapp.api.conversation;
 
 import com.newts.newtapp.api.application.RequestField;
 import com.newts.newtapp.api.application.RequestModel;
