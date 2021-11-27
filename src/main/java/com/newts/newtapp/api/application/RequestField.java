@@ -15,5 +15,7 @@ public enum RequestField {
     TOPIC,
     USER_ID,
     USER_ID_TWO,
+    USER_KEY,
+    USER_VALUE,
     USERNAME
 }
