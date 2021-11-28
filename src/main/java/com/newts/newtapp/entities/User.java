@@ -91,7 +91,7 @@ public class User {
     /**
      * A list of user identifiers corresponding to the Users that have been blocked by this user.
      */
-    @Column(name = "blockedUsers", columnDefinition = "int[]")
+    @Column(name = "blocked_users", columnDefinition = "int[]")
     @Type(type = "list-array")
     private ArrayList<Integer> blockedUsers;
 
