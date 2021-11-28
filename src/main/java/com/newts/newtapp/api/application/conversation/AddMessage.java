@@ -42,9 +42,8 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
             throw new EmptyMessage();
         }
         else{
-            int messageId = ((int) request.get(RequestField.MESSAGE_ID));
             // Write time and Update time are handled within message constructor
-            Message message  = new Message(messageId, messageBody, userId);
+            Message message = new Message(0, messageBody, userId);
             conversation.addMessage(message);
             messageRepository.save(message);
             conversationRepository.save(conversation);

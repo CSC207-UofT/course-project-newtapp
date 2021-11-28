@@ -334,4 +334,15 @@ public class Conversation {
         users.remove(Integer.valueOf(user.getId()));
         return beforeSize != users.size();
     }
+
+    /**
+     * Delete a message from a conversation.
+     * @param message  a message to be removed
+     * @return      true iff the message was removed
+     */
+    public boolean deleteMessage(Message message) {
+        int beforeSize = messages.size();
+        messages.remove(Integer.valueOf(message.getId()));
+        return beforeSize != messages.size();
+    }
 }

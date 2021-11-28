@@ -42,6 +42,17 @@ public abstract class ConversationInteractor<ReturnType, ExceptionType extends E
     }
 
     /**
+     * Initialize a new ConversationInteractor with conversation and message repositories.
+     * @param conversationRepository ConversationRepository containing conversation data.
+     * @param messageRepository MessageRepository containing user data.
+     */
+    public ConversationInteractor(ConversationRepository conversationRepository,
+                                  MessageRepository messageRepository){
+        this.conversationRepository = conversationRepository;
+        this.messageRepository = messageRepository;
+    }
+
+    /**
      * Initialize a new ConversationInteractor with conversation repository.
      * @param conversationRepository ConversationRepository containing conversation data.
      */
