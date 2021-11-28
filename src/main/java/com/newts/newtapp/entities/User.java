@@ -427,5 +427,11 @@ public class User {
         blockedUsers.remove(userID);
     }
 
+    /**
+     * Sets blockedUsers Arraylist to the ArrayList which has been passed in.
+     * @param blockedUsers ArrayList of blocked users.
+     */
+    public void setBlockedUsers(ArrayList<Integer> blockedUsers){this.blockedUsers = blockedUsers;}
+
 
 }
