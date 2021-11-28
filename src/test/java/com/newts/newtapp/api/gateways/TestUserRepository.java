@@ -27,10 +27,10 @@ public class TestUserRepository implements UserRepository {
         this.users = new HashMap<>();
     }
 
-    @Override
-    public Optional<User> findByUsernameIgnoreCase(String username) {
-        return Optional.empty();
-    }
+//    @Override
+//    public Optional<User> findByUsernameIgnoreCase(String username) {
+//        return Optional.empty();
+//    }
 
     @Override
     public List<User> findAll() {
@@ -181,5 +181,10 @@ public class TestUserRepository implements UserRepository {
     @Override
     public <S extends User> boolean exists(Example<S> example) {
         return false;
+    }
+
+    @Override
+    public Optional<User> findByUsername(String username) {
+        return Optional.empty();
     }
 }
