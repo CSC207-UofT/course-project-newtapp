@@ -89,6 +89,13 @@ public class User {
     private ArrayList<Integer> conversations;
 
     /**
+     * A list of user identifiers corresponding to the Users that have been blocked by this user.
+     */
+    @Column(name = "blockedUsers", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private ArrayList<Integer> blockedUsers;
+
+    /**
      * Create a new User with given User information.
      * @param username  The user's username.
      * @param password  The user's password.
@@ -395,4 +402,30 @@ public class User {
     public void setConversations(ArrayList<Integer> conversations){
         this.conversations = conversations;
     }
+
+    /**
+     * Getter method for User's block list
+     * @return Arraylist of Strings containing usernames of all blocked users.
+     */
+    public ArrayList<Integer> getBlockedUsers(){
+        return blockedUsers;
+    }
+
+    /**
+     * Adds specified user to this User's block list
+     * @param userID Identifier of user to be blocked.
+     */
+    public void addBlockedUser(int userID){
+        blockedUsers.add(userID);
+    }
+
+    /**
+     * Removes specified user from this User's block list
+     * @param userID Identifier of user to be unblocked.
+     */
+    public void removeBlockedUser(int userID){
+        blockedUsers.remove(userID);
+    }
+
+
 }
