@@ -7,6 +7,7 @@ import com.newts.newtapp.api.errors.IncorrectPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Delete extends UserInteractor<Void,Exception> {
 
@@ -23,10 +24,11 @@ public class Delete extends UserInteractor<Void,Exception> {
     @Override
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword, ConversationNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
-        String password = (String) request.get(RequestField.PASSWORD);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
-        if (!(user.getPassword().equals(password))) {
+        // check password
+        String password = (String) request.get(RequestField.PASSWORD);
+        if (!(BCrypt.checkpw(password, user.getPassword()))) {
             throw new IncorrectPassword();
         }
 

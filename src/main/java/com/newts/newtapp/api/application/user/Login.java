@@ -25,7 +25,7 @@ public class Login extends UserInteractor<Void,Exception> {
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword {
         String username = (String) request.get(RequestField.USERNAME);
 
-        User user = userRepository.findByUsernameIgnoreCase(username).orElseThrow(UserNotFound::new);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         if (!(user.getPassword().equals(request.get(RequestField.PASSWORD)))) {
             throw new IncorrectPassword();
