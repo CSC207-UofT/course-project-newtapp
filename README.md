@@ -42,7 +42,7 @@ CREATE TABLE conversations (
 CREATE TABLE users (
     id serial PRIMARY KEY,
     username text NOT NULL UNIQUE,
-    password text,
+    password text NOT NULL,
     location text,
     interests text[],
     total_rating int,

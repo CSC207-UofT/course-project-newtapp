@@ -53,7 +53,7 @@ public class UserManager {
      * Creates a new user according to the given RequestModel and sets this UserManager's user accordingly.
      * @param request   RequestModel containing new User information.
      */
-    public void create(RequestModel request) throws InvalidPassword, UserAlreadyExists {
+    public void create(RequestModel request) throws InvalidPassword, UserAlreadyExists, InvalidUsername {
         Create create = new Create(userRepository);
         create.request(request);
     }

@@ -6,8 +6,8 @@ import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
 import com.newts.newtapp.api.errors.*;
-import com.newts.newtapp.api.forms.CreateUserForm;
-import com.newts.newtapp.api.forms.DeleteUserForm;
+import com.newts.newtapp.api.controllers.forms.CreateUserForm;
+import com.newts.newtapp.api.controllers.forms.DeleteUserForm;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  * This Controller handles User related mappings for our API.
  */
+@CrossOrigin    // CORS config may need to be adjusted later depending on our needs.
 @RestController
 public class UserController {
     private final UserManager userManager;
@@ -78,7 +79,7 @@ public class UserController {
      * @throws InvalidPassword      If the provided password is invalid
      */
     @PostMapping("/api/users")
-    ResponseEntity<?> create(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound {
+    ResponseEntity<?> create(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, form.getUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());

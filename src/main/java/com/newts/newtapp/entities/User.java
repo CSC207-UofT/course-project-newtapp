@@ -31,7 +31,7 @@ public class User {
     private String username;
 
     /**
-     * This User's password, used for logging in.
+     * This User's hashed password, used for logging in.
      */
     @Column(name = "password", columnDefinition = "text")
     private String password;
@@ -175,8 +175,7 @@ public class User {
     public void setUsername(String username) { this.username = username; }
 
     /**
-     * Getter method for user's password.
-     * NOTE: This is probably a bad idea to have.
+     * Getter method for user's hashed password.
      * @return Returns user's password
      */
     public String getPassword(){
@@ -186,7 +185,7 @@ public class User {
     /**
      * Getter method for user's last updated location.
      * NOTE: Wasn't sure what type the location data would be,
-     * using type Object for now, to be changed later.
+     * using type String for now, to be changed later.
      * @return Returns user's last updated location.
      */
     public String getLocation(){
