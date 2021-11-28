@@ -143,6 +143,12 @@ public class Conversation {
     public int getId(){ return this.id; }
 
     /**
+     * Sets the id of this conversation.
+     * @param id    new id
+     */
+    public void setId(int id){ this.id = id; }
+
+    /**
      * Return the title of the conversation.
      * @return a string representing the title
      */
