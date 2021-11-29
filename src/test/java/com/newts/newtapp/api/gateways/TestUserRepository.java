@@ -59,12 +59,16 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public void deleteById(Integer integer) {
-
+        if (users.containsKey(integer)){
+            users.remove(integer);
+        }
     }
 
     @Override
     public void delete(User entity) {
-
+        if (users.containsKey(entity.getId())){
+            users.remove(entity.getId());
+        }
     }
 
     @Override
@@ -150,7 +154,7 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public User getById(Integer integer) {
-        return null;
+       return null;
     }
 
     @Override
@@ -185,6 +189,11 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public Optional<User> findByUsername(String username) {
+        for(User user:users.values()){
+            if(user.getUsername().equals(username)){
+                return Optional.of(users.get(user.getId()));
+            }
+        }
         return Optional.empty();
     }
 }
