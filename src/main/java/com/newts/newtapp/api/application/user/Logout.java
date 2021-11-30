@@ -30,7 +30,7 @@ public class Logout extends UserInteractor<Void,Exception> {
         String password = (String) request.get(RequestField.PASSWORD);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
-        if (!BCrypt.checkpw(password, user.getPassword())) {
+        if (!password.equals(user.getPassword())) {
             throw new IncorrectPassword();
         }
 

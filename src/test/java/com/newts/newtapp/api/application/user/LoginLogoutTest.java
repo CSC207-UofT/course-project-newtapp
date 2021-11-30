@@ -30,14 +30,15 @@ public class LoginLogoutTest {
 
     @Test(timeout = 500)
     public void testLoginLogout() throws UserNotFound, IncorrectPassword {
+        User user = testUserRepository.findByUsername("test").get();
         RequestModel r2 = new RequestModel();
         r2.fill(RequestField.USERNAME, "test");
         r2.fill(RequestField.PASSWORD, "test1234");
         RequestModel r3 = new RequestModel();
         r3.fill(RequestField.USER_ID, 1);
-        r3.fill(RequestField.PASSWORD, "test1234");
+        r3.fill(RequestField.PASSWORD, user.getPassword());
         login.request(r2);
-        User user = testUserRepository.findByUsername("test").get();
+
         assertTrue(user.getLoginStatus());
         logout.request(r3);
         assertFalse(user.getLoginStatus());
