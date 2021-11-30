@@ -89,6 +89,12 @@ public class Conversation {
     private ArrayList<Integer> users;
 
     /**
+     * The id of the author of the conversation.
+     */
+    @Column(name = "authorID", columnDefinition = "int")
+    private int authorID;
+
+    /**
      * Create a new Conversation object.
      * @param id                Unique id of this conversation
      * @param title             Conversation's title
@@ -340,4 +346,16 @@ public class Conversation {
         users.remove(Integer.valueOf(user.getId()));
         return beforeSize != users.size();
     }
+
+    /**
+     * Returns the id of the conversation author
+     * @return
+     */
+    public int getAuthorID(){return authorID;}
+
+    /**
+     * Sets author of conversation
+     * @param authorID
+     */
+    public void setAuthorID(int authorID){this.authorID = authorID;}
 }

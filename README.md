@@ -50,7 +50,8 @@ CREATE TABLE users (
     login_status boolean,
     following int[],
     followers int[],
-    conversations int[]
+    conversations int[],
+    blocked_users int[]
 )
 
 CREATE TABLE messages (
