@@ -7,12 +7,14 @@ import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
+import com.newts.newtapp.api.application.user.Unfollow;
 
 import static org.junit.Assert.*;
-public class FollowTest {
+public class FollowUnfollowTest {
     TestUserRepository testUserRepository;
     Create create;
     Follow follow;
+    Unfollow unfollow;
 
     @Before
     public void setUp() throws UserNotFound, SameUser, AlreadyFollowingUser, InvalidUsername, UserAlreadyExists,
@@ -20,6 +22,7 @@ public class FollowTest {
         testUserRepository = new TestUserRepository();
         create = new com.newts.newtapp.api.application.user.Create(testUserRepository);
         follow = new com.newts.newtapp.api.application.user.Follow(testUserRepository);
+        unfollow = new com.newts.newtapp.api.application.user.Unfollow(testUserRepository);
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
@@ -42,6 +45,8 @@ public class FollowTest {
         follow.request(r3);
         assertTrue(user1.getFollowing().contains(2));
         assertTrue(user2.getFollowers().contains(1));
-        assertTrue(testUserRepository.findById(1).isPresent());
+        unfollow.request(r3);
+        assertFalse(user1.getFollowing().contains(2));
+        assertFalse(user2.getFollowers().contains(1));
     }
 }
