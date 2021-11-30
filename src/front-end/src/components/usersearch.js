@@ -1,10 +1,11 @@
 import React from "react"
 import UserProfile from "./userprofile";
+import newtApi from "../api.js"
 
 class UserSearchForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {value: '', userData: []};
+        this.state = {value: '', userData: {}};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -13,28 +14,10 @@ class UserSearchForm extends React.Component {
         this.setState({value: event.target.value});
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        fetch('http://localhost:8080/api/users/' + this.state.value)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('failed to fetch user data');
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log(data);
-                this.setState({userData: [
-                        data.id,
-                        data.username,
-                        data.location,
-                        data.interests,
-                        data.loginStatus,
-                        data.followers,
-                        data.following,
-                        data.conversations
-                    ]});
-            })
+        const data = await newtApi.getUser(this.state.value);
+        this.setState({userData: data});
     }
 
     render() {
