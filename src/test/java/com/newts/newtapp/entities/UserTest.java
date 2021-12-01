@@ -54,7 +54,7 @@ public class UserTest {
     public void getPasswordTest() {assertEquals(u.getPassword(), "password123");}
 
     @Test
-    public void setPasswordTest() throws EntityExceptions {
+    public void setPasswordTest() {
         u.setPassword("p");
     }
 
