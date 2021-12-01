@@ -1,6 +1,9 @@
 package com.newts.newtapp.api.gateways;
 
 import com.newts.newtapp.entities.User;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +17,8 @@ import java.util.Optional;
 /**
  * A mock UserRepository implemented for testing purposes.
  */
+@Configuration
+@ConditionalOnMissingBean
 public class TestUserRepository implements UserRepository {
     /**
      * A map from user id to user entity to be used in this repository.

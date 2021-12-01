@@ -1,30 +1,26 @@
 package com.newts.newtapp.api.security;
 
-import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-@Service
+import java.util.Optional;
+
 public class NewtUserDetailsService implements UserDetailsService {
+    UserRepository repository;
 
-    private final UserRepository userRepository;
-
-    public NewtUserDetailsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public NewtUserDetailsService(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        User user = null;
-        try {
-            user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
-        } catch (UserNotFound ignored) {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> user = repository.findByUsername(username);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("Username not found.");
         }
-
-        return new NewtUserPrincipal(user);
+        return user.get();
     }
 }

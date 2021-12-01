@@ -1,4 +1,6 @@
-package com.newts.newtapp.api.application;
+package com.newts.newtapp.api.application.boundary;
+
+import com.newts.newtapp.api.application.boundary.RequestField;
 
 import java.util.HashMap;
 import java.util.Map;

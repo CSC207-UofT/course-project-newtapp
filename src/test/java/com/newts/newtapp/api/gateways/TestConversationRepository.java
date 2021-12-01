@@ -1,6 +1,8 @@
 package com.newts.newtapp.api.gateways;
 
 import com.newts.newtapp.entities.Conversation;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,8 @@ import java.util.Optional;
 /**
  * A mock ConversationRepository implemented for testing purposes.
  */
+@Configuration
+@ConditionalOnMissingBean
 public class TestConversationRepository implements ConversationRepository{
     /**
      * A map from conversation id to conversation entity acting as the persistence layer in our application.

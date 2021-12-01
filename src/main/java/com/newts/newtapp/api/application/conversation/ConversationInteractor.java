@@ -2,7 +2,7 @@ package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.InputBoundary;
+import com.newts.newtapp.api.application.boundary.InputBoundary;
 
 /**
  * An abstract ConversationInteractor object. Generally to be extended as a specific Conversation use case.

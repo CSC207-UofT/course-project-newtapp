@@ -1,16 +1,18 @@
 package com.newts.newtapp.api.controllers;
 
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
+import com.newts.newtapp.api.controllers.forms.UserAuthForm;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
-import com.newts.newtapp.api.controllers.forms.DeleteUserForm;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,47 +32,17 @@ public class UserController {
 
     /**
      * Returns a UserProfile for the user with given id.
-     * @param id                Id of User
-     * @return                  UserProfile of User with id
+     * @param username          Username of User
+     * @return                  EntityModel containing User data
      * @throws UserNotFound     If no user exists with id
      */
-    @GetMapping("/api/users/{id}")
-    public EntityModel<UserProfile> get(@PathVariable int id) throws UserNotFound {
+    @GetMapping("/api/users/{username}")
+    public EntityModel<UserProfile> get(@PathVariable String username) throws UserNotFound {
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, id);
-        UserProfile profile = userManager.getProfileById(request);
+        request.fill(RequestField.USERNAME, username);
+        UserProfile profile = userManager.getProfileByUsername(request);
         return profileAssembler.toModel(profile);
     }
-//// These methods need to be remade in a secure and RESTful manner
-//    /**
-//     * Login user with given id provided password is correct.
-//     * @param username              username of user to log in
-//     * @param password              password of user to log in
-//     * @throws UserNotFound         if no user exists with id
-//     * @throws IncorrectPassword    if password is incorrect for user with id
-//     */
-//    @PutMapping("/api/users/login/{username}")
-//    void login(@PathVariable String username, @RequestParam String password) throws UserNotFound, IncorrectPassword {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.USERNAME, username);
-//        request.fill(RequestField.PASSWORD, password);
-//        userManager.login(request);
-//    }
-//
-//    /**
-//     * Logout user with given id provided password is correct.
-//     * @param id                    id of user to log out
-//     * @param password              password of user to log out
-//     * @throws UserNotFound         if no user exists with id
-//     * @throws IncorrectPassword    if password is incorrect for user with id
-//     */
-//    @PutMapping("/api/users/logout/{id}")
-//    void logout(@PathVariable int id, @RequestParam String password) throws UserNotFound, IncorrectPassword {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.USER_ID, id);
-//        request.fill(RequestField.PASSWORD, password);
-//        userManager.logout(request);
-//    }
 
     /**
      * Create a new user.
@@ -91,17 +63,21 @@ public class UserController {
     }
 
     /**
-     * Delete a user with a given id, provided the given password is correct for said user.
-     * @param form                  DeleteUserForm containing user id and password
+     * Delete the account of the currently authenticated user, provided the given password is correct for said user.
+     * We require the user to resubmit their password here for security reasons.
+     * @param password              user's password
      * @throws UserNotFound         if no such user exists with given id
      * @throws IncorrectPassword    if given password is incorrect
      */
     @DeleteMapping("/api/users")
-    ResponseEntity<?> delete(@RequestBody DeleteUserForm form) throws UserNotFound, IncorrectPassword,
+    ResponseEntity<?> delete(@RequestBody String password) throws UserNotFound, IncorrectPassword,
             ConversationNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, form.getId());
-        request.fill(RequestField.PASSWORD, form.getPassword());
+        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.PASSWORD, password);
         userManager.delete(request);
         return ResponseEntity.noContent().build();
     }

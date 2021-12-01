@@ -1,16 +1,13 @@
 package com.newts.newtapp.api.application.conversation;
 
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
-import com.newts.newtapp.api.application.conversation.Create;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.entities.Conversation;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Optional;
 
 import static org.junit.Assert.assertTrue;
 

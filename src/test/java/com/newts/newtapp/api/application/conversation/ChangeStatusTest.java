@@ -1,7 +1,7 @@
 package com.newts.newtapp.api.application.conversation;
 
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.entities.Conversation;

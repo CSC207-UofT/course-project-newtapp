@@ -1,6 +1,7 @@
 package com.newts.newtapp.api.application.conversation;
 
-import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
