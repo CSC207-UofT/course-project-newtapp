@@ -1,4 +1,5 @@
 package com.newts.newtapp.api.application;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.errors.*;
@@ -56,27 +57,6 @@ public class UserManager {
     public void create(RequestModel request) throws InvalidPassword, UserAlreadyExists, InvalidUsername {
         Create create = new Create(userRepository);
         create.request(request);
-    }
-
-    /**
-     * Logs in a user.
-     * @param request               RequestModel containing User's username and password
-     * @throws UserNotFound         If user does not exist
-     * @throws IncorrectPassword    If user's password is incorrect
-     */
-    public void login(RequestModel request) throws UserNotFound, IncorrectPassword {
-        Login login = new Login(userRepository);
-        login.request(request);
-    }
-
-    /**
-     * Logs out a user.
-     * @param request           RequestModel containing User's id and password
-     * @throws UserNotFound     If user does not exist
-     */
-    public void logout(RequestModel request) throws UserNotFound, IncorrectPassword {
-        Logout logout = new Logout(userRepository);
-        logout.request(request);
     }
 
     /**

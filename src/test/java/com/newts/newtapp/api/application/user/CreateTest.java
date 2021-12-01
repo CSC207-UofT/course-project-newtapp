@@ -1,6 +1,6 @@
 package com.newts.newtapp.api.application.user;
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.api.errors.InvalidUsername;
 import com.newts.newtapp.api.errors.UserAlreadyExists;

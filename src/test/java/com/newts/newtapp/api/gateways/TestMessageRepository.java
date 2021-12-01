@@ -1,6 +1,8 @@
 package com.newts.newtapp.api.gateways;
 
 import com.newts.newtapp.entities.Message;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,8 @@ import java.util.Optional;
 /**
  * A mock MessageRepository implemented for testing purposes.
  */
+@Configuration
+@ConditionalOnMissingBean
 public class TestMessageRepository implements MessageRepository{
     /**
      * A map message id to message entity acting as the persistence layer in our application.

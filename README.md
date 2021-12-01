@@ -47,11 +47,11 @@ CREATE TABLE users (
     interests text[],
     total_rating int,
     num_ratings int,
-    login_status boolean,
     following int[],
     followers int[],
+    blocked_users int[],
     conversations int[],
-    blocked_users int[]
+    authorities text[]
 )
 
 CREATE TABLE messages (

@@ -1,11 +1,10 @@
 package com.newts.newtapp.api.application.user;
 
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserProfile;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestUserRepository;
-import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

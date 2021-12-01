@@ -1,7 +1,7 @@
 package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.InputBoundary;
+import com.newts.newtapp.api.application.boundary.InputBoundary;
 
 /**
  * An abstract UserInteractor object. Generally to be extended as a specific User use case.

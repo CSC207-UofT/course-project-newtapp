@@ -1,11 +1,8 @@
 package com.newts.newtapp.api.application.conversation;
 
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
-import com.newts.newtapp.api.errors.ConversationFull;
-import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.UserBelowMinimumRating;
-import com.newts.newtapp.api.errors.UserNotFound;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.Conversation;
@@ -42,7 +39,8 @@ public class AddUserTest {
     }
 
     @Test(timeout = 50)
-    public void testAddUser() throws UserBelowMinimumRating, UserNotFound, ConversationFull, ConversationNotFound {
+    public void testAddUser()
+            throws UserBelowMinimumRating, UserNotFound, ConversationFull, ConversationNotFound, UserBlocked {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, testConversation.getId());
         r.fill(RequestField.USER_ID, testUser.getId());

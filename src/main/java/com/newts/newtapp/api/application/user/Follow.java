@@ -1,6 +1,7 @@
 package com.newts.newtapp.api.application.user;
 
-import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.AlreadyFollowingUser;
 import com.newts.newtapp.api.errors.SameUser;
 import com.newts.newtapp.api.errors.UserNotFound;

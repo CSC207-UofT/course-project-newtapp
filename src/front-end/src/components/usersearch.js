@@ -25,7 +25,7 @@ class UserSearchForm extends React.Component {
             <main>
                 <h2>Look up a user</h2>
                 <form onSubmit={this.handleSubmit}>
-                    <input type="text" placeholder="User's id" value={this.state.value} onChange={this.handleChange} />
+                    <input type="text" placeholder="Username" value={this.state.value} onChange={this.handleChange} />
                     <input type="submit" value="Submit" />
                 </form>
                 <UserProfile userData={this.state.userData} />
