@@ -73,5 +73,5 @@ nav {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  height: 5000px;
+  min-height: 80%;
 }

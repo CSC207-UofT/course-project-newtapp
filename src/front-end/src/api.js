@@ -5,13 +5,18 @@ const newtApi = {
      * @param id        id of user to fetch
      * @returns {*}
      */
-    async getUser(id) {
-        const response = await fetch(`http://localhost:8080/api/users/${id}`)
+    async getUser(username) {
+        const response = await fetch(`http://localhost:8080/api/users/${username}`)
         const data = await response.json()
         console.log(data)
         return data
     },
 
+    /**
+     *
+     * @param form
+     * @returns {Promise<number|*>}
+     */
      async createUser(form) {
          const response = await fetch('http://localhost:8080/api/users',
              {
