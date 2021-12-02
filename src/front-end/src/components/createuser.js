@@ -25,18 +25,15 @@ class CreateUserForm extends React.Component {
 
     render() {
         return(
-            <main>
-                <h2>Create an account!</h2>
-                <form onSubmit={this.handleSubmit}>
-                    <input name="username" type="text" required="required" placeholder="Username"
-                           value={this.state.username} onChange={this.handleChange} /> <br />
-                    <input name="password" type="password" minLength="6" required="required" placeholder="Password"
-                           value={this.state.password} onChange={this.handleChange} /> <br />
-                    <input name="interest" type="text" required="required" placeholder="Something you're interested in"
-                           value={this.state.interest} onChange={this.handleChange} /> <br/>
-                    <input type="submit" value="Submit" />
-                </form>
-            </main>
+            <form onSubmit={this.handleSubmit}>
+                <input name="username" type="text" required="required" placeholder="Username"
+                       value={this.state.username} onChange={this.handleChange} /> <br />
+                <input name="password" type="password" minLength="6" required="required" placeholder="Password"
+                       value={this.state.password} onChange={this.handleChange} /> <br />
+                <input name="interest" type="text" required="required" placeholder="Something you're interested in"
+                       value={this.state.interest} onChange={this.handleChange} /> <br/>
+                <input type="submit" value="Submit" />
+            </form>
         );
     }
 }
