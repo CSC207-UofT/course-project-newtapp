@@ -7,7 +7,6 @@ import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,11 +14,12 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertTrue;
 
-public class AddUserTest {
+public class RemoveUserTest {
     TestConversationRepository c;
     TestUserRepository u;
-    AddUser a;
+    RemoveUser r;
     User testUser;
+    User testAuthor;
     Conversation testConversation;
 
     @Before
@@ -34,25 +34,31 @@ public class AddUserTest {
 
         u.save(testUser);
         u.save(testAuthor);
+
         testConversation.addUser(testAuthor);
+        testConversation.addUser(testUser);
         testConversation.setAuthorID(2);
 
         c.save(testConversation);
 
-        a = new AddUser(c, u);
+        r = new RemoveUser(c, u);
     }
 
     @Test(timeout = 50)
-    public void testAddUser()
-            throws UserBelowMinimumRating, UserNotFound, ConversationFull, ConversationNotFound, UserBlocked {
-        RequestModel r = new RequestModel();
-        r.fill(RequestField.CONVERSATION_ID, testConversation.getId());
-        r.fill(RequestField.USER_ID, testUser.getId());
-        a.request(r);
-        assertTrue(c.findById(-1).isPresent());
-        Conversation checkConversation = c.findById(-1).get();
+    public void testRemoveUser() throws UserNotFound, UserNotFoundInConversation, ConversationNotFound {
+        RequestModel testRequest = new RequestModel();
+
+        testRequest.fill(RequestField.USER_ID, 1);
+        testRequest.fill(RequestField.CONVERSATION_ID, testConversation.getId());
+
+        r.request(testRequest);
+
+        assertTrue(c.findById(testConversation.getId()).isPresent());
+        Conversation checkConversation = c.findById(testConversation.getId()).get();
         ArrayList<Integer> userList = checkConversation.getUsers();
-        int actualUserId = userList.get(1);
-        Assert.assertEquals(1, actualUserId);
+        int actualUserId = testUser.getId();
+
+        assertTrue(userList.contains(actualUserId));
     }
+
 }
