@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
 public class AuthController {
     private AuthenticationManager authManager;
     private JwtTokenUtil jwtTokenUtil;
@@ -42,7 +41,7 @@ public class AuthController {
      * @param form  A UserAuthForm containing user's credentials
      * @return      ResponseEntity containing whether the login was successful.
      */
-    @PostMapping("login")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody UserAuthForm form) throws UserNotFound {
         try {
             // Try to authenticate with provided credentials

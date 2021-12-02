@@ -1,6 +1,6 @@
 import '../App.css';
 import CreateUserForm from "../components/createuser";
-import Layout from "../components/Layout";
+import Layout from "../components/layout";
 
 export default function CreateUser() {
     return (

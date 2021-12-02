@@ -1,7 +1,7 @@
 import '../App.css';
 import Layout from "../components/layout";
 
-export default function Login() {
+export default function Browse() {
     return (
         <Layout>
 
