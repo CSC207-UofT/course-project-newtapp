@@ -48,7 +48,7 @@ public class RemoveUserTest {
     public void testRemoveUser() throws UserNotFound, UserNotFoundInConversation, ConversationNotFound {
         RequestModel testRequest = new RequestModel();
 
-        testRequest.fill(RequestField.USER_ID, 1);
+        testRequest.fill(RequestField.USER_ID, 2);
         testRequest.fill(RequestField.CONVERSATION_ID, testConversation.getId());
 
         r.request(testRequest);
