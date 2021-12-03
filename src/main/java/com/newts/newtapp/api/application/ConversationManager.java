@@ -83,7 +83,8 @@ public class ConversationManager {
      * Edits a conversation using request
      * @param request the filled in RequestModel
      */
-    public void editConversation(RequestModel request) throws ConversationNotFound {
+    public void editConversation(RequestModel request) throws ConversationNotFound, InvalidMinRating, WrongAuthor,
+            InvalidConversationSize {
         Edit edit = new Edit(conversationRepository);
         edit.request(request);
     }
