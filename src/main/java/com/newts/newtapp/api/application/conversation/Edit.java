@@ -26,10 +26,15 @@ public class Edit extends ConversationInteractor<Void,Exception>{
         int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
 
         Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
-
-
         String title = (String) request.get(RequestField.TITLE);
-        ArrayList<String> topics = (ArrayList<String>) request.get(RequestField.TOPICS);
+        // Cast TOPICS to ArrayList of String
+        ArrayList<?> topics = (ArrayList<?>) request.get(RequestField.TOPICS);
+        ArrayList<String> topicsList = new ArrayList<>();
+        for (Object o : topics) {
+            if (o instanceof String) {
+                topicsList.add((String) o);
+            }
+        }
         String location = (String) request.get(RequestField.LOCATION);
         int locationRadius = (int) request.get(RequestField.LOCATION_RADIUS);
         int minRating = (int) request.get(RequestField.MIN_RATING);
@@ -39,7 +44,7 @@ public class Edit extends ConversationInteractor<Void,Exception>{
         conversation.setLocation(location);
         conversation.setLocationRadius(locationRadius);
         conversation.setMinRating(minRating);
-        conversation.setTopics(topics);
+        conversation.setTopics(topicsList);
         return null;
     }
 }
