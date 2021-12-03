@@ -29,7 +29,7 @@ public class Edit extends ConversationInteractor<Void,Exception>{
 
 
         String title = (String) request.get(RequestField.TITLE);
-        ArrayList<String> topics = (ArrayList<String>) request.get(RequestField.TOPIC);
+        ArrayList<String> topics = (ArrayList<String>) request.get(RequestField.TOPICS);
         String location = (String) request.get(RequestField.LOCATION);
         int locationRadius = (int) request.get(RequestField.LOCATION_RADIUS);
         int minRating = (int) request.get(RequestField.MIN_RATING);
