@@ -16,7 +16,7 @@ class CreateUserForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const newId = await newtApi.createUser(this.state);
+        const newId = await newtApi.createUser(this.state.username, this.state.password, this.state.interest);
         if (newId != null) {
             // redirect to login page or log in the new user or something else not sure
             console.log(newId)

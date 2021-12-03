@@ -11,8 +11,6 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
 public class RemoveUser extends ConversationInteractor<Void, Exception> {
-    ConversationRepository conversationRepository;
-    UserRepository userRepository;
 
     /**
      * Initialize a new RemoveUser interactor with supplied conversation and user repositories

@@ -12,6 +12,7 @@ import UserProfile from "./routes/userProfile";
 
 const rootElement = document.getElementById("root");
 render(
+
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<App />} />

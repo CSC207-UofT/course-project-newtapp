@@ -31,12 +31,12 @@ public class AddMessageTest {
         m = new TestMessageRepository();
         u = new TestUserRepository();
 
-        a = new AddMessage(c,m,u);
-
         testConversation = new Conversation();
         testUser = new User();
         c.save(testConversation);
         u.save(testUser);
+
+        a = new AddMessage(c,m,u);
     }
 
     @Test(timeout = 50)

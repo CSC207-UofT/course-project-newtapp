@@ -1,0 +1,104 @@
+--- NEWT API INTERNAL DOCUMENTATION ---
+
+Authentication API:
+	Login - POST /api/login
+		body: {
+			"username": username
+			"password": password
+		}
+
+
+User API:
+	User by username - GET /api/users/{username}
+
+	User by id - GET /api/users/id/{id}
+
+	Create User - POST /api/users
+		body: {
+			"username": username
+			"password": password
+			"interest": interest
+		}
+
+	Edit User - POST /api/users/edit
+		header: authentication
+		body: {
+			"username": username
+			"location": location
+			"interests": [interest1, interest2, ...]
+		}
+
+	Change Password - POST /api/users/edit/password
+		header: authentication
+		body: {
+			"password": password
+			"newPassword": newPassword
+		}
+
+	Delete User - DELETE /api/users
+		header: authentication
+		body: password (string)
+
+	Follow User - POST /api/users/{username}/follow
+		header: authentication
+
+	Unfollow User - POST /api/users/{username}/unfollow
+		header: authentication
+
+	Relevant Conversations - GET /api/relevant/conversations
+		header: authentication
+
+	Friends' Conversations - GET /api/friends/conversations
+		header: authentication
+
+	Block User - POST /api/users/{username}/block
+		header: authentication
+
+
+Conversation API:
+	ConversationProfile by id - GET /api/conversations/{id}
+
+	ConversationData by id - GET /api/conversations/{id}/view
+		header: authentication
+
+	Join Conversation - POST /api/conversations/{id}/join
+		header: authentication
+
+	Leave Conversation - POST /api/conversations/{id}/leave
+		header: authentication
+
+	Create Conversation - POST /api/conversations/
+		header: authentication
+		body: {
+			"title": title,
+			"topic": topic,
+			"location": location,
+			"locationRadius": locationRadius,
+			"minRating": minRating,
+			"maxSize": maxSize,
+		}
+
+	Edit Conversation - POST /api/conversations/{id}/edit
+		header: authentication
+		body: {
+			"title": title,
+			"topic": topic,
+			"location": location,
+			"locationRadius": locationRadius,
+			"minRating": minRating,
+			"maxSize": maxSize,
+		}
+
+	Toggle Open status - POST /api/conversations/{id}/open
+		header: authentication
+
+	Post a message - POST /api/conversations/{id}/messages
+		header: authentication
+		body: Message body (string)
+
+	Edit a message - POST /api/conversations/{cid}/messages/{id}/edit
+		header: authentication
+		body: New Message body (string)
+
+	Delete a message - DELETE /api/conversations/{cid}/messages/{id}
+		header: authentication

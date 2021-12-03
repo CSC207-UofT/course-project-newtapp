@@ -32,7 +32,7 @@ public class DeleteTest {
     @Test(timeout = 500)
     public void testDelete() throws UserNotFound, IncorrectPassword, ConversationNotFound{
         RequestModel r2 = new RequestModel();
-        r2.fill(RequestField.USER_ID, 1);
+        r2.fill(RequestField.USERNAME, "test");
         r2.fill(RequestField.PASSWORD, "test123");
         delete.request(r2);
         assertFalse(testUserRepository.findById(1).isPresent());

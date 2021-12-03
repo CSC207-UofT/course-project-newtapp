@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react'
 import Header from "./header";
+import newtApi from "../api";
 
-const Layout = ({ children }) => {
+const LoginLayout = ({ children }) => {
     return(
         <>
-            <Header />
-            <main className="mainContainer">
+            <main className="loginMain">
                 {children}
             </main>
         </>
     )
 }
 
-export default Layout
+export default LoginLayout
