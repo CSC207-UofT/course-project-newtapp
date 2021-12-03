@@ -1,10 +1,18 @@
 package com.newts.newtapp.entities;
 
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
+import javassist.Loader;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -15,7 +23,7 @@ import javax.persistence.*;
 @Table(name = "users")
 // Custom type for ArrayLists
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
-public class User {
+public class User implements UserDetails {
     /**
      * This User's unique identifier.
      */
@@ -62,12 +70,6 @@ public class User {
     private int numRatings;
 
     /**
-     * True if and only if this user is currently logged in.
-     */
-    @Column(name = "login_status", columnDefinition = "boolean")
-    private boolean loginStatus;
-
-    /**
      * A list of unique user identifiers corresponding to the Users that this User follows.
      */
     @Column(name = "following", columnDefinition = "int[]")
@@ -82,11 +84,22 @@ public class User {
     private ArrayList<Integer> followers;
 
     /**
+     * A list of user identifiers corresponding to the Users that have been blocked by this user.
+     */
+    @Column(name = "blocked_users", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private ArrayList<Integer> blockedUsers;
+
+    /**
      * A list of unique conversation identifiers corresponding to this User's active conversations.
      */
     @Column(name = "conversations", columnDefinition = "int[]")
     @Type(type = "list-array")
     private ArrayList<Integer> conversations;
+
+    @Column(name = "authorities", columnDefinition = "text[]")
+    @Type(type = "list-array")
+    private ArrayList<String> authorities;
 
     /**
      * Create a new User with given User information.
@@ -106,10 +119,12 @@ public class User {
         location = null;
         totalRating = 5;
         numRatings = 1;
-        loginStatus = false;
         following = new ArrayList<>();
         followers = new ArrayList<>();
+        blockedUsers = new ArrayList<>();
         conversations = new ArrayList<>();
+        authorities = new ArrayList<>();
+        authorities.add("ROLE_USER");
     }
 
     /**
@@ -122,26 +137,12 @@ public class User {
         id = 0;
         totalRating = 0;
         numRatings = 0;
-        loginStatus = false;
         following = new ArrayList<>();
         followers = new ArrayList<>();
+        blockedUsers = new ArrayList<>();
         conversations = new ArrayList<>();
-    }
-
-    /**
-     * Getter methods for the login status of the user
-     * @return Returns loginStatus of user.
-     */
-    public boolean getLoginStatus(){
-        return loginStatus;
-    }
-
-    /**
-     * Set this User's loginStatus.
-     * @param loginStatus   True iff this user is logged in
-     */
-    public void setLoginStatus(boolean loginStatus) {
-        this.loginStatus = loginStatus;
+        authorities = new ArrayList<>();
+        authorities.add("ROLE_USER");
     }
 
     /**
@@ -173,6 +174,43 @@ public class User {
      * @param username Username to be set
      */
     public void setUsername(String username) { this.username = username; }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (String auth : authorities) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(auth));
+        }
+        return grantedAuthorities;
+    }
+
+    /**
+     *  Sets a users authorities.
+     * @param authorities   ArrayList of String authorities.
+     */
+    public void setAuthorities(ArrayList<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     /**
      * Getter method for user's hashed password.
@@ -291,20 +329,6 @@ public class User {
     }
 
     /**
-     * Sets user loginStatus to True
-     */
-    public void logIn(){
-        loginStatus = true;
-    }
-
-    /**
-     * Sets user loginStatus to false
-     */
-    public void logOut(){
-        loginStatus = false;
-    }
-
-    /**
      * Adds a User to this User's following list.
      * @param other     User to add
      */
@@ -394,4 +418,35 @@ public class User {
     public void setConversations(ArrayList<Integer> conversations){
         this.conversations = conversations;
     }
+
+    /**
+     * Getter method for User's block list
+     * @return Arraylist of Strings containing usernames of all blocked users.
+     */
+    public ArrayList<Integer> getBlockedUsers(){
+        return blockedUsers;
+    }
+
+    /**
+     * Adds specified user to this User's block list
+     * @param userID Identifier of user to be blocked.
+     */
+    public void addBlockedUser(int userID){
+        blockedUsers.add(userID);
+    }
+
+    /**
+     * Removes specified user from this User's block list
+     * @param userID Identifier of user to be unblocked.
+     */
+    public void removeBlockedUser(int userID){
+        blockedUsers.remove(userID);
+    }
+
+    /**
+     * Sets blockedUsers Arraylist to the ArrayList which has been passed in.
+     * @param blockedUsers ArrayList of blocked users.
+     */
+    public void setBlockedUsers(ArrayList<Integer> blockedUsers){this.blockedUsers = blockedUsers;}
+
 }

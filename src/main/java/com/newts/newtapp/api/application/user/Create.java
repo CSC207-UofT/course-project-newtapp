@@ -1,16 +1,13 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.InvalidPassword;
 import com.newts.newtapp.api.errors.InvalidUsername;
 import com.newts.newtapp.api.errors.UserAlreadyExists;
 import com.newts.newtapp.entities.User;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 

@@ -1,7 +1,7 @@
 package com.newts.newtapp.api.application.message;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.InputBoundary;
+import com.newts.newtapp.api.application.boundary.InputBoundary;
 
 /**
  * An abstract MessageInteractor object. Generally to be extended as a specific Message use case.

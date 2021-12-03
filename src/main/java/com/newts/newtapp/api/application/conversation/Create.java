@@ -1,7 +1,8 @@
 package com.newts.newtapp.api.application.conversation;
 
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.gateways.ConversationRepository;
-import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
 import com.newts.newtapp.entities.Conversation;

@@ -47,10 +47,11 @@ CREATE TABLE users (
     interests text[],
     total_rating int,
     num_ratings int,
-    login_status boolean,
     following int[],
     followers int[],
-    conversations int[]
+    blocked_users int[],
+    conversations int[],
+    authorities text[]
 )
 
 CREATE TABLE messages (
@@ -61,3 +62,13 @@ CREATE TABLE messages (
     last_updated_at text
 )
 ```
+
+---
+
+**Start up the Web Interface**
+
+1. Install Node.js if you do not already have it.
+2. Navigate to `src/front-end/` from the project directory.
+3. `npm start`.
+
+
