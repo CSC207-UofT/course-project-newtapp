@@ -120,7 +120,9 @@ public class UserController {
         request.fill(RequestField.PASSWORD, password);
         request.fill(RequestField.NEW_PASSWORD, newPassword);
         userManager.delete(request);
-        return ResponseEntity.noContent().build();
+        // Build response
+        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
     }
 
     /**
@@ -159,7 +161,9 @@ public class UserController {
         request.fill(RequestField.USERNAME, usernameFollowing);
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.follow(request);
-        return ResponseEntity.noContent().build();
+        // Build response
+        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
     }
 
     /**
@@ -177,6 +181,51 @@ public class UserController {
         request.fill(RequestField.USERNAME, usernameFollowing);
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.unfollow(request);
-        return ResponseEntity.noContent().build();
+        // Build response
+        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
     }
+
+    /**
+     * Return a list of conversations in which users' are user is following are
+     */
+    @GetMapping("/api/following/conversations")
+    ResponseEntity<?> followingConversation() {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        return userManager.followingConversations(request);
+    }
+
+    /**
+     * Have a user follow another.
+     * @param username               username of the user to block
+     * @throws UserNotFound          if no such user exists with id1 or id2
+     * @throws UserAlreadyBlocked    if the user is already blocked
+     */
+    @PostMapping("/api/users/{username}/block")
+    ResponseEntity<?> block(@PathVariable String username) throws UserNotFound, UserAlreadyBlocked  {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String user = userDetails.getUsername();
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, user);
+        request.fill(RequestField.USERNAME_TWO, username);
+        userManager.Block(request);
+        // Build response
+        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+    }
+
+//// These methods need to be remade in a secure and RESTful manner
+//    @GetMapping("/api/users/getRelevantConversations")
+//    Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
+//            throws UserNotFound {
+//        RequestModel request = new RequestModel();
+//        request.fill(RequestField.USER_ID, userId);
+//        request.fill(RequestField.LOCATION_RADIUS, locationRadius);
+//        return userManager.getRelevantConversations(request);
+//    }
 }

@@ -26,27 +26,27 @@ public class Block extends UserInteractor<Void, Exception>{
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, UserAlreadyBlocked {
-        int userID = (int) request.get(RequestField.USER_ID);
-        int blockedUserID = (int) request.get(RequestField.USER_ID_TWO);
+        String username = (String) request.get(RequestField.USERNAME);
+        String blockedUsername = (String) request.get(RequestField.USERNAME_TWO);
 
-        User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
-        User blockedUser = userRepository.findById(blockedUserID).orElseThrow(UserNotFound::new);
-        if(!user.getBlockedUsers().contains(blockedUserID)){
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
+        User blockedUser = userRepository.findByUsername(blockedUsername).orElseThrow(UserNotFound::new);
+        if(!user.getBlockedUsers().contains(blockedUser.getId())){
             throw new UserAlreadyBlocked();
         }
 
-        user.addBlockedUser(blockedUserID);
+        user.addBlockedUser(blockedUser.getId());
 
         // Checks to see if user is being followed by blocked user, and makes the blocked user unfollow
         // user. Also, appropriately removes the blocked user from the user's following list.
-        if(user.getFollowing().contains(blockedUserID)){
+        if(user.getFollowing().contains(blockedUser.getId())){
             blockedUser.removeFollower(user);
             user.removeFollowing(blockedUser);
         }
 
         // Checks to see if user is following the blocked user, and makes the user unfollow the blocked user.
         // Also, appropriately removes the user from the blockedUser's following list.
-        if(user.getFollowers().contains(blockedUserID)){
+        if(user.getFollowers().contains(blockedUser.getId())){
             blockedUser.removeFollowing(user);
             user.removeFollower(blockedUser);
         }
