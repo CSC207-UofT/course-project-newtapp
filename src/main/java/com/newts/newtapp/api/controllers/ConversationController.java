@@ -88,6 +88,7 @@ public class ConversationController {
      * @throws InvalidConversationSize    If the provided conversation size is out of range
      * @throws InvalidMinRating           If the provided minimum rating is out of range
      * @throws UserNotFound               If no user exists with id
+     * @throws ConversationNotFound       If no conversation exists with id
      */
     @PostMapping("/api/conversations")
     ResponseEntity<?> create(@RequestBody CreateConversationForm form) throws InvalidMinRating, InvalidConversationSize,
@@ -102,7 +103,6 @@ public class ConversationController {
         request.fill(RequestField.LOCATION_RADIUS, form.getLocationRadius());
         request.fill(RequestField.MIN_RATING, form.getMinRating());
         request.fill(RequestField.MAX_SIZE, form.getMaxSize());
-
         //fill in the userId
         request.fill(RequestField.USER_ID, returnId());
 
@@ -123,22 +123,21 @@ public class ConversationController {
      * @throws ConversationNotFound       If no conversation exists with id
      */
     @PostMapping("/api/conversations/{id}/join")
-    public EntityModel<UserProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound, UserBlocked, ConversationFull, ConversationNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-
-        // use the username to get the userId
-        RequestModel request0 = new RequestModel();
-        request0.fill(RequestField.USERNAME, username);
-        UserProfile userProfile = userManager.getProfileByUsername(request0);
-        int userId = userProfile.id;
-
+    public EntityModel<ConversationProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
+            UserBlocked, ConversationFull, ConversationNotFound {
+        //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
+
+        //fill in the conversationId
         request.fill(RequestField.CONVERSATION_ID, id);
-        request.fill(RequestField.USER_ID, userId);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
         conversationManager.addUser(request);
-        // Build response
+
+        // Build response TODO Profile vs Data
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
     }
 
 
