@@ -47,7 +47,7 @@ public class Conversation {
      * The radius within which users should be able to search for this Conversation. NOT IMPLEMENTED.
      */
     @Column(name = "location_radius", columnDefinition = "int")
-    private final int locationRadius;
+    private int locationRadius;
 
     /**
      * The minimum rating a user must have to join this Conversation.
@@ -348,6 +348,17 @@ public class Conversation {
     }
 
     /**
+     * Delete a message from a conversation.
+     * @param message  a message to be removed
+     * @return      true iff the message was removed
+     */
+    public boolean deleteMessage(Message message) {
+        int beforeSize = messages.size();
+        messages.remove(Integer.valueOf(message.getId()));
+        return beforeSize != messages.size();
+    }
+
+    /**
      * Returns the id of the conversation author
      * @return
      */
@@ -358,4 +369,12 @@ public class Conversation {
      * @param authorID
      */
     public void setAuthorID(int authorID){this.authorID = authorID;}
+
+    /**
+     * Sets location radius
+     * @param locationRadius Integer for new location radius
+     */
+    public void setLocationRadius(int locationRadius){
+        this.locationRadius = locationRadius;
+    }
 }

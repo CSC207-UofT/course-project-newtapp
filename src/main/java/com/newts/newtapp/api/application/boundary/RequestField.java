@@ -14,7 +14,7 @@ public enum RequestField {
     PASSWORD,
     PASSWORD_TWO,
     TITLE,
-    TOPIC,
+    TOPICS,
     USER_ID,
     USER_ID_TWO,
     USERNAME

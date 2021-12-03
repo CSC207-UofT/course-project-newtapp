@@ -29,7 +29,7 @@ public class Create extends ConversationInteractor<Void, Exception> {
     public Void request(RequestModel request) throws InvalidConversationSize, InvalidMinRating {
         String title = (String) request.get(RequestField.TITLE);
         ArrayList<String> topics = new ArrayList<>();
-        topics.add((String) request.get(RequestField.TOPIC));
+        topics.add((String) request.get(RequestField.TOPICS));
         String location = (String) request.get(RequestField.LOCATION);
         int locationRadius = (int) request.get(RequestField.LOCATION_RADIUS);
         int minRating = (int) request.get(RequestField.MIN_RATING);
