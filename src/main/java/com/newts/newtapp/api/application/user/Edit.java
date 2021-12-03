@@ -1,6 +1,8 @@
 package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.application.*;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.entities.User;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -39,7 +41,7 @@ public class Edit extends UserInteractor<Void, Exception> {
         if (username.contains(" ")) {
             throw new InvalidUsername();
         }
-        if (userRepository.findByUsernameIgnoreCase(username).isPresent()) {
+        if (userRepository.findByUsername(username).isPresent()) {
             throw new UserAlreadyExists();
         }
 

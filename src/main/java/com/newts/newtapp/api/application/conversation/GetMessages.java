@@ -1,10 +1,10 @@
 package com.newts.newtapp.api.application.conversation;
 
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.MessageNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.Message;

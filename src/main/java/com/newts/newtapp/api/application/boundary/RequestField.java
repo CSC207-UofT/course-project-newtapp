@@ -12,6 +12,7 @@ public enum RequestField {
     MESSAGE_ID,
     MIN_RATING,
     PASSWORD,
+    PASSWORD_TWO,
     TITLE,
     TOPICS,
     USER_ID,
