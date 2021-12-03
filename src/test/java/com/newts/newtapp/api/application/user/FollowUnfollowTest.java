@@ -8,6 +8,8 @@ import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 public class FollowUnfollowTest {
     TestUserRepository testUserRepository;
@@ -25,12 +27,14 @@ public class FollowUnfollowTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
-        r.fill(RequestField.INTEREST, "tests");
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("tests");
+        r.fill(RequestField.INTERESTS, interests);
         create.request(r);
         RequestModel r2 = new RequestModel();
         r2.fill(RequestField.USERNAME, "test2");
         r2.fill(RequestField.PASSWORD, "test123");
-        r2.fill(RequestField.INTEREST, "tests");
+        r2.fill(RequestField.INTERESTS, interests);
         create.request(r2);
     }
 
