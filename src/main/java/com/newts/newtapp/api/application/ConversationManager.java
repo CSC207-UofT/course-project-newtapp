@@ -1,8 +1,9 @@
 package com.newts.newtapp.api.application;
 
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
-import com.newts.newtapp.api.application.conversation.GetProfileById;
+import com.newts.newtapp.api.application.conversation.GetConversationProfile;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -42,9 +43,22 @@ public class ConversationManager {
      * @return                          ConversationProfile of corresponding Conversation
      * @throws ConversationNotFound     If Conversation id does not exist
      */
-    public ConversationProfile getProfileById(RequestModel request) throws ConversationNotFound {
-        GetProfileById getProfileById = new GetProfileById(conversationRepository);
+    public ConversationProfile getProfile(RequestModel request) throws ConversationNotFound {
+        GetConversationProfile getProfileById = new GetConversationProfile(conversationRepository);
         return getProfileById.request(request);
+    }
+
+    /**
+     * Returns a ConversationData given a Conversation id in a RequestModel.
+     * @param request                   RequestModel containing Conversation's id
+     * @return                          ConversationData of corresponding Conversation
+     * @throws ConversationNotFound     If Conversation id does not exist
+     */
+    public ConversationData getData(RequestModel request) throws ConversationNotFound, UserNotFound,
+            MessageNotFound, IncorrectPassword {
+        GetConversationData getDataById = new GetConversationData(conversationRepository, messageRepository,
+                userRepository);
+        return getDataById.request(request);
     }
 
     /**
