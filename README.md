@@ -62,3 +62,16 @@ CREATE TABLE messages (
     last_updated_at text
 )
 ```
+
+
+**React Setup Instructions**
+
+1. Download and install react on your machine. 
+2. In a terminal, navigate to src/front-end. To install react, type:
+``npm install``
+3. Install React Routes by typing
+``npm install react-router-dom``
+4. Lastly, run
+``npm start`` to run the app in development mode.
+
+
