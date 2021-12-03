@@ -9,6 +9,8 @@ import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 public class CreateTest {
@@ -26,7 +28,9 @@ public class CreateTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
-        r.fill(RequestField.INTEREST, "tests");
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("tests");
+        r.fill(RequestField.INTERESTS, interests);
         create.request(r);
         assertTrue(testUserRepository.findById(1).isPresent());
         User u = testUserRepository.findById(1).get();

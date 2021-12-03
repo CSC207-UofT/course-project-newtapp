@@ -70,6 +70,15 @@ public class UserManager {
     }
 
     /**
+     * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
+     * @param request   RequestModel containing delete User information.
+     */
+    public void edit(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
+        Edit edit = new Edit(userRepository);
+        edit.request(request);
+    }
+
+    /**
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFollow User information.
      */
@@ -86,6 +95,20 @@ public class UserManager {
     public void unfollow(RequestModel request) throws UserNotFound, SameUser{
         Unfollow unfollow = new Unfollow(userRepository);
         unfollow.request(request);
+    }
+
+    /**
+     * Following conversation method, implemented on other branch
+     */
+     public void followingConversations(RequestModel request) {}
+
+    /**
+     * Block a given user
+     * @param request   RequestModel containing the user and the user to block.
+     */
+    public void block(RequestModel request) throws UserNotFound, UserAlreadyBlocked {
+        Block block = new Block(userRepository, conversationRepository);
+        block.request(request);
     }
 
     public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
