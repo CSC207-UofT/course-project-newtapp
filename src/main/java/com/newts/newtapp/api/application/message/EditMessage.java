@@ -29,7 +29,7 @@ public class EditMessage extends MessageInteractor<Void, Exception> {
         int userID = (int) request.get(RequestField.USER_ID);
         String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
 
-        //Fetching the message to remove from conversation
+        //Fetching the message to edit from conversation
         Message message = messageRepository.findById(messageID).orElseThrow(MessageNotFound::new);
 
         //Check if the message is written by the given userID
