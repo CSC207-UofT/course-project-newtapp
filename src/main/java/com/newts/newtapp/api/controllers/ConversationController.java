@@ -2,11 +2,14 @@ package com.newts.newtapp.api.controllers;
 
 import com.newts.newtapp.api.application.ConversationManager;
 import com.newts.newtapp.api.application.UserManager;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.CreateConversationForm;
 import com.newts.newtapp.api.errors.*;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -14,14 +17,32 @@ import org.springframework.web.bind.annotation.*;
 /**
  * This Controller handles Conversation related mappings for our API.
  */
+@CrossOrigin    // CORS config may need to be adjusted later depending on our needs.
 @RestController
 public class ConversationController {
     private final ConversationManager conversationManager;
     private final UserManager userManager;
+    private final ConversationProfileModelAssembler profileAssembler;
 
-    public ConversationController(ConversationManager conversationManager, UserManager userManager) {
+    public ConversationController(ConversationManager conversationManager, UserManager userManager,
+                                  ConversationProfileModelAssembler profileAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
+        this.profileAssembler = profileAssembler;
+    }
+
+    /**
+     * Returns a ConversationProfile for the Conversation with given id.
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     */
+    @GetMapping("/api/users/id/{id}")
+    public EntityModel<ConversationProfile> get(@PathVariable int id) throws ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, id);
+        ConversationProfile profile = conversationManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
