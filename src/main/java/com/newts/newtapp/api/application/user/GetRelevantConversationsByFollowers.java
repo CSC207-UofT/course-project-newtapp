@@ -23,10 +23,11 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
     }
 
     /**
-     *
-     * @param request   Accepts a GetRelevantConversations Request
-     * @return An array of Conversations
-     * @throws UserNotFound if the user can not be found
+     * Completes a GetRelevantConversations request.
+     * Looks for relevant conversations by sorting through conversations of a user's followers.
+     * @param request   a request stored as a RequestModel
+     * @return ArrayList of Conversations containing conversations of a user's followers, as sorted by InterestSorter.
+     * @throws UserNotFound if the user in the request can not be found.
      */
     @Override
     public Conversation[] request(RequestModel request) throws UserNotFound {
@@ -42,8 +43,9 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
 
         ArrayList<Integer> followers = user.getFollowers();
         for (int i : followers) {
-            if (conversationRepository.getById(i).getIsOpen() == Boolean.TRUE) {
-                followerConversations.add(conversationRepository.getById(i));
+            Conversation userConversationID = conversationRepository.getById(i);
+            if (userConversationID.getIsOpen()) {
+                followerConversations.add(userConversationID);
             }
         }
 
