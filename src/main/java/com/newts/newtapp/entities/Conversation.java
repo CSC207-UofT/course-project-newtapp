@@ -358,14 +358,14 @@ public class Conversation {
         return beforeSize != messages.size();
     }
 
-     * Returns the id of the conversation author
-     * @return
+     /**
+     * @return Returns the id of the conversation author
      */
     public int getAuthorID(){return authorID;}
 
     /**
      * Sets author of conversation
-     * @param authorID
+     * @param authorID userID of author
      */
     public void setAuthorID(int authorID){this.authorID = authorID;}
 }
