@@ -33,9 +33,8 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
     public Void request(RequestModel request) throws ConversationNotFound, EmptyMessage, UserNotFoundInConversation {
         int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
         int userId = (int) request.get(RequestField.USER_ID);
-        String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
 
-        // Fetching conversation that the message is being added to and user writing message
+        // Fetching conversation that the message is being added to
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         // Check if the user is in the conversation.
@@ -43,7 +42,9 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
             throw new UserNotFoundInConversation();
         }
 
-        // Checks if message is empty
+        String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
+
+        // Checks if message is empty. If not add to conversation
         if(messageBody.isEmpty()){
             throw new EmptyMessage();
         }
