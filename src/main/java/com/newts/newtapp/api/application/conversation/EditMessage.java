@@ -1,9 +1,8 @@
-package com.newts.newtapp.api.application.message;
+package com.newts.newtapp.api.application.conversation;
 
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
-import com.newts.newtapp.api.application.conversation.ConversationInteractor;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
