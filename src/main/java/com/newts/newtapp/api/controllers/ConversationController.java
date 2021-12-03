@@ -172,9 +172,11 @@ public class ConversationController {
      * @throws InvalidMinRating           If the provided minimum rating is out of range
      * @throws UserNotFound               If no user exists with id
      * @throws ConversationNotFound       If no conversation exists with id
+     * @throws WrongAuthor                If the given user didn't create the given conversation
      */
     @PostMapping("/api/conversations/{id}/edit")
-    ResponseEntity<?> edit(@PathVariable int id, @RequestBody CreateConversationForm form) throws UserNotFound {
+    public EntityModel<ConversationProfile> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
+            throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -190,11 +192,63 @@ public class ConversationController {
         //fill in the userId
         request.fill(RequestField.USER_ID, returnId());
 
-        conversationManager.Edit(request);
+        conversationManager.editConversation(request);
 
-        // Build response
-        EntityModel<ConversationProfile> profileModel = profileAssembler.toModel(conversationManager.getProfile(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        // Build response TODO Profile vs Data
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
     }
+
+    /**
+     * change a conversation's status.
+     * @param id                          Conversation with id
+     * @throws UserNotFound               If no user exists with id
+     * @throws ConversationNotFound       If no conversation exists with id
+     * @throws WrongAuthor                If the given user didn't create the given conversation
+     */
+    @PostMapping("/api/conversations/{id}/open")
+    public EntityModel<ConversationProfile> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
+            ConversationNotFound {
+        //initiate a request model requesting the conversationId and the userId.
+        RequestModel request = new RequestModel();
+
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.changeConversationStatus(request);
+
+        // Build response TODO Profile vs Data
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Add a message to a conversation.
+     * @param messageBody                 the string body of the given message
+     * @throws UserNotFound               If no user exists with id
+     */
+    @PostMapping("/api/conversations/{id}/messages")
+    public EntityModel<ConversationProfile> addMessage(@PathVariable int id, @RequestBody String messageBody)
+            throws UserNotFound, ConversationNotFound {
+        //initiate a request model requesting the body, conversationId and the userId.
+        RequestModel request = new RequestModel();
+
+        //fill in the body
+        request.fill(RequestField.MESSAGE_BODY, messageBody);
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.addMessage(request);
+
+        // Build response TODO Profile vs Data
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
+    }
+
+
 
 }
