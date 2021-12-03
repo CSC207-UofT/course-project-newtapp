@@ -120,7 +120,7 @@ public class ConversationManager {
      * Adds message to the conversation specified by the user
      * @param request the filled in RequestModel
      */
-    public void AddMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
+    public void addMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
         AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
         addMessage.request(request);
     }
