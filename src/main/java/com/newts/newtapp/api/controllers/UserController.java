@@ -144,28 +144,58 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-// These methods need to be remade in a secure and RESTful manner
     /**
      * Have a user follow another.
-     * @param id1               user with id1 wants to follow id2
-     * @param id2               user with id2 will be followed by id1
-     * @throws UserNotFound     if no such user exists with id1 or id2
-     * @throws SameUser         if id1 == id2
+     * @param username               username of the user to follow
+     * @throws UserNotFound          if no such user exists with id1 or id2
+     * @throws SameUser              if id1 == id2
+     * @throws AlreadyFollowingUser  if user follows other user already
      */
-    @PutMapping("/api/users/follow/{id1}/{id2}")
-    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser, AlreadyFollowingUser {
+    @PostMapping("/api/users/{username}/follow")
+    ResponseEntity<?> follow(@PathVariable String username) throws UserNotFound, SameUser, AlreadyFollowingUser {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, id1);
-        request.fill(RequestField.USER_ID_TWO, id2);
+        request.fill(RequestField.USERNAME, usernameFollowing);
+        request.fill(RequestField.USERNAME_TO_FOLLOW, username);
         userManager.follow(request);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/api/users/getRelevantConversations")
-    Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
-            throws UserNotFound {
+    /**
+     * Have a user unfollow another.
+     * @param  username              username of the user to unfollow
+     * @throws UserNotFound          if no such user exists with id1 or id2
+     * @throws SameUser              if id1 == id2
+     */
+    @PostMapping("/api/users/{username}/unfollow")
+    ResponseEntity<?> unfollow(@PathVariable String username) throws UserNotFound, SameUser {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USER_ID, userId);
-        request.fill(RequestField.LOCATION_RADIUS, locationRadius);
-        return userManager.getRelevantConversations(request);
+        request.fill(RequestField.USERNAME, usernameFollowing);
+        request.fill(RequestField.USERNAME_TO_UNFOLLOW, username);
+        userManager.unfollow(request);
+        return ResponseEntity.noContent().build();
     }
+
+
+//    This method need to be remade in a secure and RESTful manner
+//    /**
+//    * Get the relevant conversation to a user.
+//    * @param username               username of the user
+//    * @throws UserNotFound          if no such user exists with id1 or id2
+//    * @throws SameUser              if id1 == id2
+//    * @throws AlreadyFollowingUser  if user follows other user already
+//    */
+//    @GetMapping("/api/users/getRelevantConversations")
+//    ResponseEntity<?> relevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
+//           throws UserNotFound {
+//       RequestModel request = new RequestModel();
+//      request.fill(RequestField.USER_ID, userId);
+//      request.fill(RequestField.LOCATION_RADIUS, locationRadius);
+//     return userManager.getRelevantConversations(request);
+//    }
 }

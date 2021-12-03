@@ -31,20 +31,20 @@ public class Follow extends UserInteractor<Void, Exception> {
         // Duplicated code warning - duplicate is in Unfollow. We are leaving this as duplicated for now
         // as we believe these methods may have different reasons to change and as such should not be combined
         // into one follow/unfollow interactor.
-        int userId = (int) request.get(RequestField.USER_ID);
-        int otherId = (int) request.get(RequestField.USER_ID_TWO);
+        String usernameFollowing = (String) request.get(RequestField.USERNAME);
+        String usernameToFollow = (String) request.get(RequestField.USERNAME_TO_FOLLOW);
+
+        // look up the users, if they don't exist throw UserNotFound
+        User user = userRepository.findByUsername(usernameFollowing).orElseThrow(UserNotFound::new);
+        User other = userRepository.findByUsername(usernameToFollow).orElseThrow(UserNotFound::new);
 
         // Check if users are the same
-        if (userId == otherId) {
+        if (user.getId() == other.getId()) {
             throw new SameUser();
         }
 
-        // look up the users, if they don't exist throw UserNotFound
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
-        User other = userRepository.findById(otherId).orElseThrow(UserNotFound::new);
-
         // Check if user follows other already
-        if (user.getFollowing().contains(otherId)) {
+        if (user.getFollowing().contains(other.getId())) {
             throw new AlreadyFollowingUser();
         }
 

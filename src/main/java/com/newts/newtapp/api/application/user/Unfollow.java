@@ -21,23 +21,26 @@ public class Unfollow extends UserInteractor<Void, Exception>{
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, SameUser {
-        int userId = (int) request.get(RequestField.USER_ID);
-        int otherId = (int) request.get(RequestField.USER_ID_TWO);
+        String usernameFollowing = (String) request.get(RequestField.USERNAME);
+        String usernameToFollow = (String) request.get(RequestField.USERNAME_TO_FOLLOW);
+
+        // look up the users, if they don't exist throw UserNotFound
+        User user = userRepository.findByUsername(usernameFollowing).orElseThrow(UserNotFound::new);
+        User other = userRepository.findByUsername(usernameToFollow).orElseThrow(UserNotFound::new);
 
         // Check if users are the same
-        if (userId == otherId) {
+        if (user.getId() == other.getId()) {
             throw new SameUser();
         }
 
-        // look up the users, if they don't exist throw UserNotFound
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
-        User other = userRepository.findById(otherId).orElseThrow(UserNotFound::new);
-
         // Check if user is following other
-        if (user.getFollowing().contains(otherId)){user.removeFollowing(other);}
+        if (user.getFollowing().contains(other.getId())){user.removeFollowing(other);}
+        else { throw new UserNotFound();}
+
 
         // Check if other has user as a follower
-        if(other.getFollowers().contains(userId)){other.removeFollower(user);}
+        if(other.getFollowers().contains(user.getId())){other.removeFollower(user);}
+        else { throw new UserNotFound();}
 
         return null;
     }
