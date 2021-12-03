@@ -62,3 +62,13 @@ CREATE TABLE messages (
     last_updated_at text
 )
 ```
+
+---
+
+**Start up the Web Interface**
+
+1. Install Node.js if you do not already have it.
+2. Navigate to `src/front-end/` from the project directory.
+3. `npm start`.
+
+

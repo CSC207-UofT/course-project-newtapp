@@ -1,12 +1,81 @@
-.App {
-  text-align: center;
+body {
+  margin: 50px 0 0;
+  font-family: sans-serif;
+  color: #FFFFFF;
+  background-color: #252525;
 }
 
-.container {
-  margin: auto;
-  max-width: 500px;
-  font-family: sans-serif;
+nav {
+  position: fixed;
+  top: 0;
+  margin: 0;
+  background-color: #992F05;
+  height: 50px;
+  width: 100%;
+  box-shadow: 0 -2px 25px black;
 }
-.heading {
-  color: seagreen;
+
+.navLinks {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.navLink {
+  margin: 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.navLink:hover {
+  background-color: #FFFFFF;
+  color: #992F05;
+  cursor: pointer;
+}
+
+.navLogo {
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 30%;
+}
+
+.navUserPhoto {
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  background-color: #FFFFFF;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 14px;
+  border-radius: 50%;
+}
+
+.navUserPhoto:hover {
+  background-color: #FFFFFF;
+  padding: 2px;
+  right: 12px;
+}
+
+.mainContainer {
+  z-index: -1;
+  width: 100%;
+  max-width: 1500px;
+  background-color: #252525;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  min-height: 80%;
+}
+
+.loginMain {
+  margin: -50px 0 0;
 }
