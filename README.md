@@ -33,7 +33,6 @@ CREATE TABLE conversations (
     location_radius int,
     min_rating int,
     max_size int,
-    closing_time text,
     is_open boolean,
     messages int[],
     users int[],

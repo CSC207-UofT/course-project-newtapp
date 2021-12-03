@@ -28,8 +28,14 @@ public class Create extends ConversationInteractor<Void, Exception> {
     @Override
     public Void request(RequestModel request) throws InvalidConversationSize, InvalidMinRating {
         String title = (String) request.get(RequestField.TITLE);
-        ArrayList<String> topics = new ArrayList<>();
-        topics.add((String) request.get(RequestField.TOPICS));
+        // Cast Topics to Arraylist of String
+        ArrayList<?> topics = (ArrayList<?>) request.get(RequestField.TOPICS);
+        ArrayList<String> topicsList = new ArrayList<>();
+        for (Object o : topics) {
+            if (o instanceof String) {
+                topicsList.add((String) o);
+            }
+        }
         String location = (String) request.get(RequestField.LOCATION);
         int locationRadius = (int) request.get(RequestField.LOCATION_RADIUS);
         int minRating = (int) request.get(RequestField.MIN_RATING);
@@ -40,11 +46,10 @@ public class Create extends ConversationInteractor<Void, Exception> {
         if (maxSize < 1) {
             throw new InvalidConversationSize();
         }
-        String closingTime = (String) request.get(RequestField.CLOSING_TIME);
         int creatorId = (int) request.get(RequestField.USER_ID);
 
-        Conversation conversation = new Conversation(0, title, topics, location,
-                locationRadius, minRating, maxSize, closingTime, creatorId);
+        Conversation conversation = new Conversation(0, title, topicsList, location,
+                locationRadius, minRating, maxSize, creatorId);
         conversationRepository.save(conversation);
         return null;
     }
