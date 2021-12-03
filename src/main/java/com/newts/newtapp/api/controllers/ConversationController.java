@@ -7,6 +7,7 @@ import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.controllers.assemblers.ConversationDataModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.CreateConversationForm;
 import com.newts.newtapp.api.errors.*;
@@ -24,12 +25,14 @@ public class ConversationController {
     private final ConversationManager conversationManager;
     private final UserManager userManager;
     private final ConversationProfileModelAssembler profileAssembler;
+    private final ConversationDataModelAssembler dataAssembler;
 
     public ConversationController(ConversationManager conversationManager, UserManager userManager,
-                                  ConversationProfileModelAssembler profileAssembler) {
+                                  ConversationProfileModelAssembler profileAssembler, ConversationDataModelAssembler dataAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
+        this.dataAssembler = dataAssembler;
     }
 
     /**
@@ -42,7 +45,7 @@ public class ConversationController {
     public EntityModel<ConversationProfile> getProfile(@PathVariable int id) throws ConversationNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
-        ConversationProfile profile = conversationManager.getProfileById(request);
+        ConversationProfile profile = conversationManager.getProfile(request);
         return profileAssembler.toModel(profile);
     }
 
@@ -53,11 +56,11 @@ public class ConversationController {
      * @throws ConversationNotFound     If no Conversation exists with id
      */
     @GetMapping("/api/conversations/{id}/view")
-    public EntityModel<ConversationProfile> getData(@PathVariable int id) throws ConversationNotFound {
+    public EntityModel<ConversationData> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound, MessageNotFound, IncorrectPassword {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
-        ConversationData data = conversationManager.getDataById(request);
-        return profileAssembler.toModel(data);
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
     }
 
     /**
