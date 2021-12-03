@@ -12,6 +12,8 @@ import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAsse
 import com.newts.newtapp.api.controllers.forms.CreateConversationForm;
 import com.newts.newtapp.api.errors.*;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +66,23 @@ public class ConversationController {
     }
 
     /**
+     * A helper method that returns the ID of the currently authenticated user
+     * @return                  Currently authenticated user's id
+     * @throws UserNotFound     If no User exists with username
+     */
+    private int returnId() throws UserNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // use the username to get the userId
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        UserProfile userProfile = userManager.getProfileByUsername(request);
+        return userProfile.id;
+    }
+
+    /**
      * Create a new conversation.
      * @param form                        A filled in CreateConversationForm
      * @throws InvalidConversationSize    If the provided conversation size is out of range
@@ -71,28 +90,27 @@ public class ConversationController {
      * @throws UserNotFound               If no user exists with id
      */
     @PostMapping("/api/conversations")
-    void create(@RequestBody CreateConversationForm form) throws InvalidMinRating, InvalidConversationSize, UserNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-
-        // use the username to get the userId
-        RequestModel request0 = new RequestModel();
-        request0.fill(RequestField.USERNAME, username);
-        UserProfile userProfile = userManager.getProfileByUsername(request0);
-        int userId = userProfile.id;
-
-        // use the userId and the form to create a conversation
+    ResponseEntity<?> create(@RequestBody CreateConversationForm form) throws InvalidMinRating, InvalidConversationSize,
+            UserNotFound, ConversationNotFound {
+        //initiate a request model requesting the body and the userId.
         RequestModel request = new RequestModel();
+
+        //fill in the body
         request.fill(RequestField.TITLE, form.getTitle());
         request.fill(RequestField.TOPICS, form.getTopics());
         request.fill(RequestField.LOCATION, form.getLocation());
         request.fill(RequestField.LOCATION_RADIUS, form.getLocationRadius());
         request.fill(RequestField.MIN_RATING, form.getMinRating());
         request.fill(RequestField.MAX_SIZE, form.getMaxSize());
-        request.fill(RequestField.USER_ID, userId);
+
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
         conversationManager.createConversation(request);
+
         // Build response
+        EntityModel<ConversationProfile> profileModel = profileAssembler.toModel(conversationManager.getProfile(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
     }
 
     /**
@@ -105,7 +123,7 @@ public class ConversationController {
      * @throws ConversationNotFound       If no conversation exists with id
      */
     @PostMapping("/api/conversations/{id}/join")
-    void join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound, UserBlocked, ConversationFull, ConversationNotFound {
+    public EntityModel<UserProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound, UserBlocked, ConversationFull, ConversationNotFound {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
