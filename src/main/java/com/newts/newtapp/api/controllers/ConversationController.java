@@ -37,8 +37,8 @@ public class ConversationController {
      * @return                          EntityModel containing Conversation data
      * @throws ConversationNotFound     If no Conversation exists with id
      */
-    @GetMapping("/api/users/id/{id}")
-    public EntityModel<ConversationProfile> get(@PathVariable int id) throws ConversationNotFound {
+    @GetMapping("/api/conversations/{id}")
+    public EntityModel<ConversationProfile> getProfile(@PathVariable int id) throws ConversationNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
         ConversationProfile profile = conversationManager.getProfileById(request);
