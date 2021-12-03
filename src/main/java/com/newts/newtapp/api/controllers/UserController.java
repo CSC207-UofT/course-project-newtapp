@@ -50,7 +50,7 @@ public class UserController {
      * @throws UserNotFound     If no user exists with id
      */
     @GetMapping("/api/users/id/{id}")
-    public EntityModel<UserProfile> getById(@PathVariable String id) throws UserNotFound {
+    public EntityModel<UserProfile> getById(@PathVariable int id) throws UserNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id);
         UserProfile profile = userManager.getProfileById(request);
@@ -86,7 +86,7 @@ public class UserController {
      * @throws InvalidUsername      If the provided username is not valid
      */
     @PostMapping("/api/users/edit")
-    ResponseEntity<?> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
+    public EntityModel<UserProfile> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
@@ -98,8 +98,8 @@ public class UserController {
         userManager.create(request);
         request.fill(RequestField.USERNAME, form.getUsername());
         // Build response
-        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
@@ -110,7 +110,8 @@ public class UserController {
      * @throws IncorrectPassword    if given password is incorrect
      */
     @PostMapping("/api/users/edit/password")
-    ResponseEntity<?> changePassword(@RequestBody String password, @RequestBody String newPassword) throws UserNotFound, IncorrectPassword,
+    // TODO Check that parameters work as expect
+    public EntityModel<UserProfile> changePassword(@RequestBody String password, @RequestBody String newPassword) throws UserNotFound, IncorrectPassword,
             ConversationNotFound {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -121,8 +122,8 @@ public class UserController {
         request.fill(RequestField.NEW_PASSWORD, newPassword);
         userManager.delete(request);
         // Build response
-        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
@@ -153,7 +154,7 @@ public class UserController {
      * @throws AlreadyFollowingUser  if user follows other user already
      */
     @PostMapping("/api/users/{username}/follow")
-    ResponseEntity<?> follow(@PathVariable String username) throws UserNotFound, SameUser, AlreadyFollowingUser {
+    public EntityModel<UserProfile> follow(@PathVariable String username) throws UserNotFound, SameUser, AlreadyFollowingUser {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameFollowing = userDetails.getUsername();
@@ -162,8 +163,8 @@ public class UserController {
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.follow(request);
         // Build response
-        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
@@ -173,7 +174,7 @@ public class UserController {
      * @throws SameUser              if id1 == id2
      */
     @PostMapping("/api/users/{username}/unfollow")
-    ResponseEntity<?> unfollow(@PathVariable String username) throws UserNotFound, SameUser {
+    public EntityModel<UserProfile> unfollow(@PathVariable String username) throws UserNotFound, SameUser {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameFollowing = userDetails.getUsername();
@@ -182,8 +183,8 @@ public class UserController {
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.unfollow(request);
         // Build response
-        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
