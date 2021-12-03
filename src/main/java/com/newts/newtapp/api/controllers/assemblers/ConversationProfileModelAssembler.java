@@ -1,6 +1,7 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.controllers.ConversationController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -28,7 +29,7 @@ public class ConversationProfileModelAssembler
         ArrayList<Link> links = new ArrayList<>();
         try {
             // Add appropriate links from this ConversationProfile
-            links.add(linkTo(methodOn(ConversationController.class).getByUsername(profile.id)).withSelfRel());
+            links.add(linkTo(methodOn(ConversationController.class).getProfile(profile.id)).withSelfRel());
         } catch (Exception e) {
             // No exception will ever be thrown at this point in normal use of this class as an exception would have
             // been thrown earlier during application logic.
