@@ -34,7 +34,7 @@ public class CreateUserForm {
     public ArrayList<String> getInterests() {
         return interests;
     }
-    public String getgetLocation() {
+    public String getLocation() {
         return location;
     }
 }

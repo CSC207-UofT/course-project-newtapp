@@ -37,10 +37,24 @@ public class UserController {
      * @throws UserNotFound     If no user exists with id
      */
     @GetMapping("/api/users/{username}")
-    public EntityModel<UserProfile> get(@PathVariable String username) throws UserNotFound {
+    public EntityModel<UserProfile> getByUsername(@PathVariable String username) throws UserNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, username);
         UserProfile profile = userManager.getProfileByUsername(request);
+        return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Returns a UserProfile for the user with given id.
+     * @param id                id of User
+     * @return                  EntityModel containing User data
+     * @throws UserNotFound     If no user exists with id
+     */
+    @GetMapping("/api/users/id/{id}")
+    public EntityModel<UserProfile> getByID(@PathVariable String id) throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, id);
+        UserProfile profile = userManager.getProfileById(request);
         return profileAssembler.toModel(profile);
     }
 
@@ -49,9 +63,31 @@ public class UserController {
      * @param form                  A filled in CreateUserForm
      * @throws UserAlreadyExists    If a user with the provided username already exists
      * @throws InvalidPassword      If the provided password is invalid
+     * @throws UserNotFound         If no user exists with id
+     * @throws InvalidUsername      If the provided username is not valid
      */
     @PostMapping("/api/users")
     ResponseEntity<?> create(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, form.getUsername());
+        request.fill(RequestField.PASSWORD, form.getPassword());
+        request.fill(RequestField.INTEREST, form.getInterest());
+        userManager.create(request);
+        // Build response
+        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+    }
+
+    /**
+     * Edit a user.
+     * @param form                  A filled in CreateUserForm
+     * @throws UserAlreadyExists    If a user with the provided username already exists
+     * @throws InvalidPassword      If the provided password is invalid
+     * @throws UserNotFound         If no user exists with id
+     * @throws InvalidUsername      If the provided username is not valid
+     */
+    @PostMapping("/api/users/edit")
+    ResponseEntity<?> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, form.getUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());
@@ -82,28 +118,28 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-//// These methods need to be remade in a secure and RESTful manner
-//    /**
-//     * Have a user follow another.
-//     * @param id1               user with id1 wants to follow id2
-//     * @param id2               user with id2 will be followed by id1
-//     * @throws UserNotFound     if no such user exists with id1 or id2
-//     * @throws SameUser         if id1 == id2
-//     */
-//    @PutMapping("/api/users/follow/{id1}/{id2}")
-//    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser, AlreadyFollowingUser {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.USER_ID, id1);
-//        request.fill(RequestField.USER_ID_TWO, id2);
-//        userManager.follow(request);
-//    }
-//
-//    @GetMapping("/api/users/getRelevantConversations")
-//    Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
-//            throws UserNotFound {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.USER_ID, userId);
-//        request.fill(RequestField.LOCATION_RADIUS, locationRadius);
-//        return userManager.getRelevantConversations(request);
-//    }
+// These methods need to be remade in a secure and RESTful manner
+    /**
+     * Have a user follow another.
+     * @param id1               user with id1 wants to follow id2
+     * @param id2               user with id2 will be followed by id1
+     * @throws UserNotFound     if no such user exists with id1 or id2
+     * @throws SameUser         if id1 == id2
+     */
+    @PutMapping("/api/users/follow/{id1}/{id2}")
+    void follow(@PathVariable int id1, @PathVariable int id2) throws UserNotFound, SameUser, AlreadyFollowingUser {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, id1);
+        request.fill(RequestField.USER_ID_TWO, id2);
+        userManager.follow(request);
+    }
+
+    @GetMapping("/api/users/getRelevantConversations")
+    Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
+            throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USER_ID, userId);
+        request.fill(RequestField.LOCATION_RADIUS, locationRadius);
+        return userManager.getRelevantConversations(request);
+    }
 }
