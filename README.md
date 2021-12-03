@@ -63,15 +63,12 @@ CREATE TABLE messages (
 )
 ```
 
+---
 
-**React Setup Instructions**
+**Start up the Web Interface**
 
-1. Download and install react on your machine. 
-2. In a terminal, navigate to src/front-end. To install react, type:
-``npm install``
-3. Install React Routes by typing
-``npm install react-router-dom``
-4. Lastly, run
-``npm start`` to run the app in development mode.
+1. Install Node.js if you do not already have it.
+2. Navigate to `src/front-end/` from the project directory.
+3. `npm start`.
 
 
