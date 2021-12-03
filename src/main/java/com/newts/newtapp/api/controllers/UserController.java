@@ -190,13 +190,13 @@ public class UserController {
      * Return a list of conversations in which users' are user is following are
      */
     @GetMapping("/api/following/conversations")
-    ResponseEntity<?> followingConversation() {
+    void followingConversation() {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, username);
-        return userManager.followingConversations(request);
+        userManager.followingConversations(request);
     }
 
     /**
@@ -213,7 +213,7 @@ public class UserController {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, user);
         request.fill(RequestField.USERNAME_TWO, username);
-        userManager.Block(request);
+        userManager.block(request);
         // Build response
         EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
         return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);

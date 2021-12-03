@@ -97,6 +97,20 @@ public class UserManager {
         unfollow.request(request);
     }
 
+    /**
+     * Following conversation method, implemented on other branch
+     */
+     public void followingConversations(RequestModel request) {}
+
+    /**
+     * Block a given user
+     * @param request   RequestModel containing the user and the user to block.
+     */
+    public void block(RequestModel request) throws UserNotFound, UserAlreadyBlocked {
+        Block block = new Block(userRepository, conversationRepository);
+        block.request(request);
+    }
+
     public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
