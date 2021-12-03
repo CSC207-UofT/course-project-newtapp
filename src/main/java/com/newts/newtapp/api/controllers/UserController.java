@@ -88,9 +88,13 @@ public class UserController {
      */
     @PostMapping("/api/users/edit")
     ResponseEntity<?> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, form.getUsername());
-        request.fill(RequestField.PASSWORD, form.getPassword());
+        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.NEW_USERNAME, form.getUsername());
+        request.fill(RequestField.LOCATION, form.getLocation());
         request.fill(RequestField.INTERESTS, form.getInterests());
         userManager.create(request);
         // Build response

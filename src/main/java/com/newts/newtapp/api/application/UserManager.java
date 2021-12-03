@@ -69,6 +69,15 @@ public class UserManager {
     }
 
     /**
+     * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
+     * @param request   RequestModel containing delete User information.
+     */
+    public void edit(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
+        Edit edit = new Edit(userRepository);
+        edit.request(request);
+    }
+
+    /**
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFollow User information.
      */
