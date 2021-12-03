@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application.conversation;
 
+import com.newts.newtapp.api.errors.UserNotFoundInConversation;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -29,7 +30,7 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
      * @param request a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws ConversationNotFound, EmptyMessage {
+    public Void request(RequestModel request) throws ConversationNotFound, EmptyMessage, UserNotFoundInConversation {
         int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
         int userId = (int) request.get(RequestField.USER_ID);
         String messageBody = ((String) request.get(RequestField.MESSAGE_BODY));
@@ -37,7 +38,12 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
         // Fetching conversation that the message is being added to and user writing message
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
-        //Checks if message is empty
+        // Check if the user is in the conversation.
+        if(!(conversation.getUsers().contains(userId))) {
+            throw new UserNotFoundInConversation();
+        }
+
+        // Checks if message is empty
         if(messageBody.isEmpty()){
             throw new EmptyMessage();
         }
