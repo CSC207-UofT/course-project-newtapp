@@ -2,13 +2,15 @@ package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.RequestField;
-import com.newts.newtapp.api.application.RequestModel;
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.sorters.InterestSorter;
 import com.newts.newtapp.api.application.ConversationQueue;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
+
+import java.util.ArrayList;
 
 public class GetRelevantConversations extends UserInteractor<Conversation[],UserNotFound>  {
 
@@ -38,6 +40,14 @@ public class GetRelevantConversations extends UserInteractor<Conversation[],User
 
         conversationQueue.addAll(conversationRepository.findAll());
 
-        return conversationQueue.toArray();
+        ArrayList<Conversation> filteredConversations = new ArrayList<>();
+
+        // Removing any converasations authored by users on the user's blocked list
+        for(Conversation c:conversationQueue.toArray()){
+            if(!user.getBlockedUsers().contains(c.getAuthorID())){
+                filteredConversations.add(c);
+            }
+        }
+        return filteredConversations.toArray(Conversation[]::new);
     }
 }

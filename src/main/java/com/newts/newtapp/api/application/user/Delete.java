@@ -1,12 +1,14 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.application.boundary.RequestField;
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.gateways.UserRepository;
-import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.IncorrectPassword;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 public class Delete extends UserInteractor<Void,Exception> {
 
@@ -22,11 +24,12 @@ public class Delete extends UserInteractor<Void,Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, IncorrectPassword, ConversationNotFound {
-        int userId = (int) request.get(RequestField.USER_ID);
-        String password = (String) request.get(RequestField.PASSWORD);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        String username = (String) request.get(RequestField.USERNAME);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
-        if (!(user.getPassword().equals(password))) {
+        // check password
+        String password = (String) request.get(RequestField.PASSWORD);
+        if (!(BCrypt.checkpw(password, user.getPassword()))) {
             throw new IncorrectPassword();
         }
 
@@ -51,6 +54,9 @@ public class Delete extends UserInteractor<Void,Exception> {
             if (conversation.getNumUsers() == 1){
                 conversationRepository.delete(conversation);
             } else{
+                if (conversation.getAuthorID() == user.getId()){
+                    conversation.setAuthorID(conversation.getUsers().get(1));
+                }
                 conversation.removeUser(user);
                 conversationRepository.save(conversation);
             }

@@ -14,7 +14,6 @@ public class UserProfile {
     public final String username;
     public final String location;
     public final ArrayList<String> interests;
-    public final boolean loginStatus;
     public final ArrayList<Integer> following;
     public final ArrayList<Integer> followers;
     public final ArrayList<Integer> conversations;
@@ -24,7 +23,6 @@ public class UserProfile {
         this.username = user.getUsername();
         this.location = user.getLocation();
         this.interests = user.getInterests();
-        this.loginStatus = user.getLoginStatus();
         this.following = user.getFollowing();
         this.followers = user.getFollowers();
         this.conversations = user.getConversations();

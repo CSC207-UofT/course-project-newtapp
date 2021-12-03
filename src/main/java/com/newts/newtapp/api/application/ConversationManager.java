@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application;
 
+import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -53,7 +54,7 @@ public class ConversationManager {
      * Adds the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
-    public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull {
+    public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull, UserBlocked {
         AddUser addUser = new AddUser(conversationRepository, userRepository);
         addUser.request(request);
     }

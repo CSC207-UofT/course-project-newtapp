@@ -1,4 +1,4 @@
-package com.newts.newtapp.api.application;
+package com.newts.newtapp.api.application.boundary;
 
 public enum RequestField {
     CLOSING_TIME,

@@ -20,8 +20,6 @@ public class UserTest {
         interests.add("Music");
         interests.add("Fitness");
         u = new User(1, "testUser", "password123", interests);
-
-        u.logIn();
     }
 
     /**
@@ -54,7 +52,7 @@ public class UserTest {
     public void getPasswordTest() {assertEquals(u.getPassword(), "password123");}
 
     @Test
-    public void setPasswordTest() throws EntityExceptions {
+    public void setPasswordTest() {
         u.setPassword("p");
     }
 
@@ -94,24 +92,4 @@ public class UserTest {
         u.addInterests("Stocks");
         assertEquals(u.getInterests().get(2), "Fitness");
     }
-
-    /**
-     * Tests getLoginStatus method
-     */
-    @Test
-    public void getLoginStatusTest() {
-        assertTrue(u.getLoginStatus());
-    }
-
-
-    /**
-     * Tests logOut method
-     */
-    @Test
-    public void logOutTest() {
-        u.logOut();
-        assertFalse(u.getLoginStatus());
-    }
-
-
 }

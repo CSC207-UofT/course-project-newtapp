@@ -1,4 +1,4 @@
-package com.newts.newtapp.api.application;
+package com.newts.newtapp.api.application.boundary;
 
 /**
  * An Input Boundary interface. Defines a standard input method by which to pass RequestModel objects.
