@@ -51,7 +51,7 @@ public class UserController {
      * @throws UserNotFound     If no user exists with id
      */
     @GetMapping("/api/users/id/{id}")
-    public EntityModel<UserProfile> getByID(@PathVariable String id) throws UserNotFound {
+    public EntityModel<UserProfile> getById(@PathVariable String id) throws UserNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USER_ID, id);
         UserProfile profile = userManager.getProfileById(request);
@@ -97,9 +97,31 @@ public class UserController {
         request.fill(RequestField.LOCATION, form.getLocation());
         request.fill(RequestField.INTERESTS, form.getInterests());
         userManager.create(request);
+        request.fill(RequestField.USERNAME, form.getUsername());
         // Build response
         EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
         return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+    }
+
+    /**
+     * Change the password of the currently authenticated user, provided the given current password is correct for said user.
+     * We require the user to resubmit their password here for security reasons.
+     * @param password              user's password
+     * @throws UserNotFound         if no such user exists with given id
+     * @throws IncorrectPassword    if given password is incorrect
+     */
+    @PostMapping("/api/users/edit/password")
+    ResponseEntity<?> changePassword(@RequestBody String password, @RequestBody String newPassword) throws UserNotFound, IncorrectPassword,
+            ConversationNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.PASSWORD, password);
+        request.fill(RequestField.NEW_PASSWORD, newPassword);
+        userManager.delete(request);
+        return ResponseEntity.noContent().build();
     }
 
     /**

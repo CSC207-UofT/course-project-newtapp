@@ -6,6 +6,7 @@ public enum RequestField {
     INTERESTS,
     LOCATION,
     LOCATION_RADIUS,
+    NEW_PASSWORD,
     NEW_USERNAME,
     MAX_SIZE,
     MESSAGE_BODY,
@@ -16,5 +17,5 @@ public enum RequestField {
     TOPIC,
     USER_ID,
     USER_ID_TWO,
-    USERNAME;
+    USERNAME,
 }
