@@ -48,7 +48,7 @@ User API:
 	Relevant Conversations - GET /api/relevant/conversations
 		header: authentication
 
-	Friends' Conversations - GET /api/friends/conversations
+	Following's Conversations - GET /api/following/conversations
 		header: authentication
 
 	Block User - POST /api/users/{username}/block

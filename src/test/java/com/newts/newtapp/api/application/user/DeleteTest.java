@@ -5,8 +5,11 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +28,9 @@ public class DeleteTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
-        r.fill(RequestField.INTEREST, "tests");
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("tests");
+        r.fill(RequestField.INTERESTS, interests);
         create.request(r);
     }
 

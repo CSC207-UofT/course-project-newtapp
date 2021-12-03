@@ -7,6 +7,9 @@ import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 public class GetProfileByIDTest {
     TestUserRepository testUserRepository;
@@ -22,7 +25,9 @@ public class GetProfileByIDTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
-        r.fill(RequestField.INTEREST, "tests");
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("tests");
+        r.fill(RequestField.INTERESTS, interests);
         create.request(r);
     }
 
