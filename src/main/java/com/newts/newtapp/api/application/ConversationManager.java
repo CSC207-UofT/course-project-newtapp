@@ -1,15 +1,19 @@
 package com.newts.newtapp.api.application;
 
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.application.conversation.GetProfileById;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.*;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * An object representing a ConversationManager of the application.
  */
+@Configuration
 public class ConversationManager {
     /**
      * The ConversationRepository, MessageRepository and UserRepository this UserManager is working with.
@@ -30,6 +34,17 @@ public class ConversationManager {
         this.conversationRepository = conversationRepository;
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
+    }
+
+    /**
+     * Returns a ConversationProfile given a Conversation id in a RequestModel.
+     * @param request                   RequestModel containing Conversation's id
+     * @return                          ConversationProfile of corresponding Conversation
+     * @throws ConversationNotFound     If Conversation id does not exist
+     */
+    public ConversationProfile getProfileById(RequestModel request) throws ConversationNotFound {
+        GetProfileById getProfileById = new GetProfileById(conversationRepository);
+        return getProfileById.request(request);
     }
 
     /**
