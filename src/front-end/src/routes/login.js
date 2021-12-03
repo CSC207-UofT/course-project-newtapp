@@ -1,10 +1,13 @@
 import '../App.css';
-import Layout from "../components/layout";
+import React from 'react';
+import LoginLayout from "../components/loginLayout";
 
-export default function Login() {
+function Login () {
     return (
-        <Layout>
-
-        </Layout>
+        <LoginLayout>
+            <h1>test</h1>
+        </LoginLayout>
     );
 }
+
+export default Login

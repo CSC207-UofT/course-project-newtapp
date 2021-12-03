@@ -3,8 +3,7 @@ import Layout from "../components/layout";
 
 export default function Browse() {
     return (
-        <Layout>
-
+        <Layout title="Browse" >
         </Layout>
     );
 }

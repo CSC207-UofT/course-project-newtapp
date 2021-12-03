@@ -12,6 +12,7 @@ nav {
   background-color: #992F05;
   height: 50px;
   width: 100%;
+  box-shadow: 0 -2px 25px black;
 }
 
 .navLinks {
@@ -40,7 +41,6 @@ nav {
 
 .navLogo {
   width: 40px;
-  background-color: #FFFFFF;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -74,4 +74,8 @@ nav {
   left: 50%;
   transform: translateX(-50%);
   min-height: 80%;
+}
+
+.loginMain {
+  margin: -50px 0 0;
 }
