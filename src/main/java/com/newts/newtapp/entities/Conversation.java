@@ -91,7 +91,7 @@ public class Conversation {
     /**
      * The id of the author of the conversation.
      */
-    @Column(name = "authorID", columnDefinition = "int")
+    @Column(name = "author_id", columnDefinition = "int")
     private int authorID;
 
     /**

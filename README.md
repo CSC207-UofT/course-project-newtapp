@@ -36,7 +36,8 @@ CREATE TABLE conversations (
     closing_time text,
     is_open boolean,
     messages int[],
-    users int[]
+    users int[],
+    author_id int
 )
 
 CREATE TABLE users (
