@@ -18,7 +18,5 @@ public enum RequestField {
     USER_ID,
     USER_ID_TWO,
     USERNAME,
-    USERNAME_TO_FOLLOW,
-    USERNAME_TO_UNFOLLOW,
-    ;
+    USERNAME_TWO
 }

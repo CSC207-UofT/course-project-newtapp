@@ -32,7 +32,7 @@ public class Follow extends UserInteractor<Void, Exception> {
         // as we believe these methods may have different reasons to change and as such should not be combined
         // into one follow/unfollow interactor.
         String usernameFollowing = (String) request.get(RequestField.USERNAME);
-        String usernameToFollow = (String) request.get(RequestField.USERNAME_TO_FOLLOW);
+        String usernameToFollow = (String) request.get(RequestField.USERNAME_TWO);
 
         // look up the users, if they don't exist throw UserNotFound
         User user = userRepository.findByUsername(usernameFollowing).orElseThrow(UserNotFound::new);

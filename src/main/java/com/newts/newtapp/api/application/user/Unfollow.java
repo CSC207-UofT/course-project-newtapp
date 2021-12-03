@@ -22,7 +22,7 @@ public class Unfollow extends UserInteractor<Void, Exception>{
     @Override
     public Void request(RequestModel request) throws UserNotFound, SameUser {
         String usernameFollowing = (String) request.get(RequestField.USERNAME);
-        String usernameToFollow = (String) request.get(RequestField.USERNAME_TO_FOLLOW);
+        String usernameToFollow = (String) request.get(RequestField.USERNAME_TWO);
 
         // look up the users, if they don't exist throw UserNotFound
         User user = userRepository.findByUsername(usernameFollowing).orElseThrow(UserNotFound::new);

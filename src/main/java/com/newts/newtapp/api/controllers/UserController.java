@@ -158,7 +158,7 @@ public class UserController {
         String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, usernameFollowing);
-        request.fill(RequestField.USERNAME_TO_FOLLOW, username);
+        request.fill(RequestField.USERNAME_TWO, username);
         userManager.follow(request);
         return ResponseEntity.noContent().build();
     }
@@ -176,26 +176,8 @@ public class UserController {
         String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, usernameFollowing);
-        request.fill(RequestField.USERNAME_TO_UNFOLLOW, username);
+        request.fill(RequestField.USERNAME_TWO, username);
         userManager.unfollow(request);
         return ResponseEntity.noContent().build();
     }
-
-
-//    This method need to be remade in a secure and RESTful manner
-//    /**
-//    * Get the relevant conversation to a user.
-//    * @param username               username of the user
-//    * @throws UserNotFound          if no such user exists with id1 or id2
-//    * @throws SameUser              if id1 == id2
-//    * @throws AlreadyFollowingUser  if user follows other user already
-//    */
-//    @GetMapping("/api/users/getRelevantConversations")
-//    ResponseEntity<?> relevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
-//           throws UserNotFound {
-//       RequestModel request = new RequestModel();
-//      request.fill(RequestField.USER_ID, userId);
-//      request.fill(RequestField.LOCATION_RADIUS, locationRadius);
-//     return userManager.getRelevantConversations(request);
-//    }
 }
