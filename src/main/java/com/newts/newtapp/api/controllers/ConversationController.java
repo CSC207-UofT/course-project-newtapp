@@ -2,6 +2,7 @@ package com.newts.newtapp.api.controllers;
 
 import com.newts.newtapp.api.application.ConversationManager;
 import com.newts.newtapp.api.application.UserManager;
+import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
@@ -43,6 +44,20 @@ public class ConversationController {
         request.fill(RequestField.CONVERSATION_ID, id);
         ConversationProfile profile = conversationManager.getProfileById(request);
         return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Returns a ConversationData for the Conversation with given id.
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     */
+    @GetMapping("/api/conversations/{id}/view")
+    public EntityModel<ConversationProfile> getData(@PathVariable int id) throws ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, id);
+        ConversationData data = conversationManager.getDataById(request);
+        return profileAssembler.toModel(data);
     }
 
     /**
