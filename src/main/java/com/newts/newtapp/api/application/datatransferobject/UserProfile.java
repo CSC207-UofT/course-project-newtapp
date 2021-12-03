@@ -1,4 +1,4 @@
-package com.newts.newtapp.api.application;
+package com.newts.newtapp.api.application.datatransferobject;
 
 import com.newts.newtapp.entities.User;
 

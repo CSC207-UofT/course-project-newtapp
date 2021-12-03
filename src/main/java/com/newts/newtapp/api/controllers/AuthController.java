@@ -1,7 +1,7 @@
 package com.newts.newtapp.api.controllers;
 
 import com.newts.newtapp.api.application.UserManager;
-import com.newts.newtapp.api.application.UserProfile;
+import com.newts.newtapp.api.application.datatransferobject.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
@@ -18,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

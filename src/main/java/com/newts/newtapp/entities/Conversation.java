@@ -91,7 +91,7 @@ public class Conversation {
     /**
      * The id of the author of the conversation.
      */
-    @Column(name = "authorID", columnDefinition = "int")
+    @Column(name = "author_id", columnDefinition = "int")
     private int authorID;
 
     /**
@@ -348,14 +348,24 @@ public class Conversation {
     }
 
     /**
-     * Returns the id of the conversation author
-     * @return
+     * Delete a message from a conversation.
+     * @param message  a message to be removed
+     * @return      true iff the message was removed
+     */
+    public boolean deleteMessage(Message message) {
+        int beforeSize = messages.size();
+        messages.remove(Integer.valueOf(message.getId()));
+        return beforeSize != messages.size();
+    }
+    /**
+     /**
+     * @return Returns the id of the conversation author
      */
     public int getAuthorID(){return authorID;}
 
     /**
      * Sets author of conversation
-     * @param authorID
+     * @param authorID userID of author
      */
     public void setAuthorID(int authorID){this.authorID = authorID;}
 }
