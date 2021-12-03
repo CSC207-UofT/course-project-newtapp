@@ -80,6 +80,15 @@ public class ConversationManager {
     }
 
     /**
+     * Edits a conversation using request
+     * @param request the filled in RequestModel
+     */
+    public void editConversation(RequestModel request) throws ConversationNotFound {
+        Edit edit = new Edit(conversationRepository);
+        edit.request(request);
+    }
+
+    /**
      * Adds the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
