@@ -1,9 +1,7 @@
-package com.newts.newtapp.api.application.datatransferobject;
+package com.newts.newtapp.api.application.datatransfer;
 
 
 import com.newts.newtapp.entities.Message;
-
-import java.util.ArrayList;
 
 public class MessageData {
     public int id;

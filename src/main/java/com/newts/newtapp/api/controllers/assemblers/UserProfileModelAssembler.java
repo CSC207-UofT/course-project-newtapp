@@ -1,6 +1,6 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
-import com.newts.newtapp.api.application.datatransferobject.UserProfile;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.UserController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;

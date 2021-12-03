@@ -1,4 +1,4 @@
-package com.newts.newtapp.api.application.datatransferobject;
+package com.newts.newtapp.api.application.datatransfer;
 
 import com.newts.newtapp.entities.Conversation;
 

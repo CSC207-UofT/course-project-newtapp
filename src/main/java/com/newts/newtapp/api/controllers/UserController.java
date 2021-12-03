@@ -3,7 +3,7 @@ package com.newts.newtapp.api.controllers;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
-import com.newts.newtapp.api.application.datatransferobject.UserProfile;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
