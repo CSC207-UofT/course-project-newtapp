@@ -140,6 +140,61 @@ public class ConversationController {
         return profileAssembler.toModel(profile);
     }
 
+    /**
+     * Leave a conversation.
+     * @param id                          Conversation with id
+     * @throws UserNotFoundInConversation If the user with given is not in the conversation with given id
+     * @throws UserNotFound               If no user exists with id
+     * @throws ConversationNotFound       If no conversation exists with id
+     */
+    @PostMapping("/api/conversations/{id}/leave")
+    public EntityModel<ConversationProfile> leave(@PathVariable int id) throws UserNotFound, UserNotFoundInConversation,
+            ConversationNotFound {
+        //initiate a request model requesting the conversationId and the userId.
+        RequestModel request = new RequestModel();
 
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.removeUser(request);
+
+        // Build response TODO Profile vs Data
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Edit a conversation.
+     * @param form                        A filled in CreateConversationForm
+     * @throws InvalidConversationSize    If the provided conversation size is out of range
+     * @throws InvalidMinRating           If the provided minimum rating is out of range
+     * @throws UserNotFound               If no user exists with id
+     * @throws ConversationNotFound       If no conversation exists with id
+     */
+    @PostMapping("/api/conversations/{id}/edit")
+    ResponseEntity<?> edit(@PathVariable int id, @RequestBody CreateConversationForm form) throws UserNotFound {
+        //initiate a request model requesting the body, conversationId and the userId.
+        RequestModel request = new RequestModel();
+
+        //fill in the body
+        request.fill(RequestField.TITLE, form.getTitle());
+        request.fill(RequestField.TOPICS, form.getTopics());
+        request.fill(RequestField.LOCATION, form.getLocation());
+        request.fill(RequestField.LOCATION_RADIUS, form.getLocationRadius());
+        request.fill(RequestField.MIN_RATING, form.getMinRating());
+        request.fill(RequestField.MAX_SIZE, form.getMaxSize());
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.Edit(request);
+
+        // Build response
+        EntityModel<ConversationProfile> profileModel = profileAssembler.toModel(conversationManager.getProfile(request));
+        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+    }
 
 }
