@@ -26,42 +26,27 @@ public class Edit extends UserInteractor<Void, Exception> {
      * @param request   a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws UserNotFound, InvalidUsername, InvalidPassword, AlreadyFollowingUser {
+    public Void request(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
         int userId = (int) request.get(RequestField.USER_ID);
 
         // look up the user, if it doesn't exist throw UserNotFound
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
-        String userKey = (String) request.get(RequestField.USER_KEY);
+        String username = (String) request.get(RequestField.USERNAME);
+        String location = (String) request.get(RequestField.LOCATION);
+        ArrayList<String> interests = ((ArrayList<String>) request.get(RequestField.INTERESTS));
 
-        if (userKey.equals("editUsername")) {
-            String username = (String) request.get(RequestField.USER_VALUE);
-            // check if the requested username is valid
-            if (username.contains(" ")) {
-                throw new InvalidUsername();
-            }
-            user.setUsername(username);
-        } else if (userKey.equals("editPassword")) {
-            String password = (String) request.get(RequestField.USER_VALUE);
-            // check if the requested password is valid
-            if (password.length() < 6) {
-                throw new InvalidPassword();
-            }
-            // hash the provided password with a generated salt
-            String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-            user.setPassword(hashedPassword);
-        } else if (userKey.equals("addInterest")) {
-            ArrayList<String> interests = user.getInterests();
-            String interest = (String) request.get(RequestField.USER_VALUE);
-            interests.add(interest);
-        } else if (userKey.equals("deleteInterest")) {
-            ArrayList<String> interests = user.getInterests();
-            String interest = (String) request.get(RequestField.USER_VALUE);
-            interests.remove(interest);
-        } else if (userKey.equals("editLocation")) {
-            String location = (String) request.get(RequestField.USER_VALUE);
-            user.setLocation(location);
+        if (username.contains(" ")) {
+            throw new InvalidUsername();
         }
+        if (userRepository.findByUsernameIgnoreCase(username).isPresent()) {
+            throw new UserAlreadyExists();
+        }
+
+        user.setUsername(username);
+        user.setLocation(location);
+        user.setInterests(interests);
+
         userRepository.save(user);
         return null;
     }
