@@ -10,18 +10,18 @@ import com.newts.newtapp.entities.Conversation;
 /**
  * Get a ConversationProfile for a given Conversation.
  */
-public class GetProfileById extends ConversationInteractor<ConversationProfile, ConversationNotFound>{
+public class GetConversationProfile extends ConversationInteractor<ConversationProfile, ConversationNotFound>{
 
     /**
-     * Construct a new GetProfileById interactor with given ConversationRepository.
+     * Construct a new GetConversationProfile interactor with given ConversationRepository.
      * @param repository    ConversationRepository with user data
      */
-    public GetProfileById(ConversationRepository repository) {
+    public GetConversationProfile(ConversationRepository repository) {
         super(repository);
     }
 
     /**
-     * Handles a GetProfileById request.
+     * Handles a GetConversationProfile request.
      * @param request           a request stored as a RequestModel containing Conversation id
      * @return                  a new ConversationProfile for the given Conversation
      * @throws ConversationNotFound     if Conversation does not exist
