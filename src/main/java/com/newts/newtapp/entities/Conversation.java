@@ -348,6 +348,16 @@ public class Conversation {
     }
 
     /**
+     * Delete a message from a conversation.
+     * @param message  a message to be removed
+     * @return      true iff the message was removed
+     */
+    public boolean deleteMessage(Message message) {
+        int beforeSize = messages.size();
+        messages.remove(Integer.valueOf(message.getId()));
+        return beforeSize != messages.size();
+    }
+
      * Returns the id of the conversation author
      * @return
      */
