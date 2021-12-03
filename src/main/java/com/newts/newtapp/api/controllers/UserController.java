@@ -187,6 +187,7 @@ public class UserController {
         return profileAssembler.toModel(profile);
     }
 
+    // TODO implement followingConversation
     /**
      * Return a list of conversations in which users' are user is following are
      */
@@ -207,7 +208,7 @@ public class UserController {
      * @throws UserAlreadyBlocked    if the user is already blocked
      */
     @PostMapping("/api/users/{username}/block")
-    ResponseEntity<?> block(@PathVariable String username) throws UserNotFound, UserAlreadyBlocked  {
+    EntityModel<UserProfile> block(@PathVariable String username) throws UserNotFound, UserAlreadyBlocked  {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String user = userDetails.getUsername();
@@ -216,8 +217,8 @@ public class UserController {
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.block(request);
         // Build response
-        EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
-        return ResponseEntity.created(profileModel.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(profileModel);
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
     }
 
 //// These methods need to be remade in a secure and RESTful manner
