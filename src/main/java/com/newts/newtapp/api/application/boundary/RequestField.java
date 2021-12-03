@@ -1,7 +1,6 @@
 package com.newts.newtapp.api.application.boundary;
 
 public enum RequestField {
-    CLOSING_TIME,
     CONVERSATION_ID,
     INTERESTS,
     LOCATION,
@@ -13,8 +12,9 @@ public enum RequestField {
     MESSAGE_ID,
     MIN_RATING,
     PASSWORD,
+    PASSWORD_TWO,
     TITLE,
-    TOPIC,
+    TOPICS,
     USER_ID,
     USER_ID_TWO,
     USERNAME,

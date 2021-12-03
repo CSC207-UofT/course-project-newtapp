@@ -47,7 +47,7 @@ public class Conversation {
      * The radius within which users should be able to search for this Conversation. NOT IMPLEMENTED.
      */
     @Column(name = "location_radius", columnDefinition = "int")
-    private final int locationRadius;
+    private int locationRadius;
 
     /**
      * The minimum rating a user must have to join this Conversation.
@@ -60,12 +60,6 @@ public class Conversation {
      */
     @Column(name = "max_size", columnDefinition = "int")
     private int maxSize;
-
-    /**
-     * The time at which this Conversation's isOpen status should change automatically to closed.
-     */
-    @Column(name = "closing_time", columnDefinition = "text")
-    private String closingTime;
 
     /**
      * Boolean value indicating whether this conversation should appear in search and allow new users to join.
@@ -91,7 +85,7 @@ public class Conversation {
     /**
      * The id of the author of the conversation.
      */
-    @Column(name = "authorID", columnDefinition = "int")
+    @Column(name = "author_id", columnDefinition = "int")
     private int authorID;
 
     /**
@@ -103,14 +97,13 @@ public class Conversation {
      * @param locationRadius    Radius in km where people should be able to see this conversation
      * @param minRating         Minimum rating a user must have in order to join this conversation
      * @param maxSize           Max number of users in this conversation
-     * @param closingTime       Time at which this conversation will not accept new users
      * @param creatorId         The id of the creator of this conversation
      */
     public Conversation(int id, String title,
                         ArrayList<String> topics, String location,
                         int locationRadius,
                         int minRating, int maxSize,
-                        String closingTime, int creatorId) {
+                        int creatorId) {
         this.id = id;
         this.title = title;
         this.topics = topics;
@@ -118,7 +111,6 @@ public class Conversation {
         this.locationRadius = locationRadius;
         this.minRating = minRating;
         this.maxSize = maxSize;
-        this.closingTime = closingTime;
         isOpen = true;
         messages = new ArrayList<>();
         users = new ArrayList<>();
@@ -136,7 +128,6 @@ public class Conversation {
         this.locationRadius = 0;
         this.minRating = 0;
         this.maxSize = 0;
-        this.closingTime = "";
         this.isOpen = false;
         this.messages = new ArrayList<>();
         this.users = new ArrayList<>();
@@ -202,14 +193,6 @@ public class Conversation {
      */
     public int getMaxSize(){
         return this.maxSize;
-    }
-
-    /**
-     * Return the time the conversation closes.
-     * @return a string representing the closing time of the conversation
-     */
-    public String getClosingTime(){
-        return this.closingTime;
     }
 
     /**
@@ -291,12 +274,6 @@ public class Conversation {
     public void setMaxSize(int maxSize){ this.maxSize = maxSize; }
 
     /**
-     * Set the closing time for the conversation.
-     * @param closingTime the closing time to be set
-     */
-    public void setClosingTime(String closingTime){ this.closingTime = closingTime; }
-
-    /**
      * Set the status of the conversation.
      */
     public void toggleIsOpen(){ this.isOpen = !this.isOpen; }
@@ -349,8 +326,8 @@ public class Conversation {
 
     /**
      * Delete a message from a conversation.
-     * @param message  a message to be removed
-     * @return      true iff the message was removed
+     * @param message   a message to be removed
+     * @return          true iff the message was removed
      */
     public boolean deleteMessage(Message message) {
         int beforeSize = messages.size();
@@ -360,13 +337,21 @@ public class Conversation {
 
     /**
      * Returns the id of the conversation author
-     * @return
+     * @return  Author's userid.
      */
     public int getAuthorID(){return authorID;}
 
     /**
      * Sets author of conversation
-     * @param authorID
+     * @param authorID  Author's userid
      */
     public void setAuthorID(int authorID){this.authorID = authorID;}
+
+    /**
+     * Sets location radius
+     * @param locationRadius Integer for new location radius
+     */
+    public void setLocationRadius(int locationRadius){
+        this.locationRadius = locationRadius;
+    }
 }

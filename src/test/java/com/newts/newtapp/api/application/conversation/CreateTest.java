@@ -25,12 +25,11 @@ public class CreateTest {
     public void testCreate() throws InvalidMinRating, InvalidConversationSize {
         RequestModel r = new RequestModel();
         r.fill(RequestField.TITLE, "");
-        r.fill(RequestField.TOPIC, "");
+        r.fill(RequestField.TOPICS, "");
         r.fill(RequestField.LOCATION, "");
         r.fill(RequestField.LOCATION_RADIUS, 0);
         r.fill(RequestField.MIN_RATING, 0);
         r.fill(RequestField.MAX_SIZE, 1);
-        r.fill(RequestField.CLOSING_TIME, "");
         r.fill(RequestField.USER_ID, -1);
         create.request(r);
         assertTrue(c.findById(1).isPresent());
