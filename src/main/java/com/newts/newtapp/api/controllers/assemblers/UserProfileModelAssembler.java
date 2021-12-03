@@ -1,8 +1,7 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
-import com.newts.newtapp.api.application.UserProfile;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.UserController;
-import com.newts.newtapp.api.errors.UserNotFound;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
