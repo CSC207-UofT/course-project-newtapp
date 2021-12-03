@@ -8,16 +8,14 @@ import java.util.ArrayList;
 public class CreateUserForm {
     private final String username;
     private final String password;
-    private final String interest;
-    private final ArrayList<String> interests;
     private final String location;
+    private final ArrayList<String> interests;
 
-    public CreateUserForm(String username, String password, String interest, ArrayList<String> interests, String location) {
+    public CreateUserForm(String username, String password,  String location, ArrayList<String> interests) {
         this.username = username;
         this.password = password;
-        this.interest = interest;
-        this.interests = interests;
         this.location = location;
+        this.interests = interests;
     }
 
     public String getUsername() {
@@ -28,13 +26,11 @@ public class CreateUserForm {
         return password;
     }
 
-    public String getInterest() {
-        return interest;
-    }
-    public ArrayList<String> getInterests() {
-        return interests;
-    }
     public String getLocation() {
         return location;
+    }
+
+    public ArrayList<String> getInterests() {
+        return interests;
     }
 }

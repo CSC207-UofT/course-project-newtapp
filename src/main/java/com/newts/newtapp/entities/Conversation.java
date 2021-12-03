@@ -358,6 +358,7 @@ public class Conversation {
         return beforeSize != messages.size();
     }
 
+    /**
      * Returns the id of the conversation author
      * @return
      */

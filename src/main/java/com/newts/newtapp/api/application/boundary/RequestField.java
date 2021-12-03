@@ -3,7 +3,6 @@ package com.newts.newtapp.api.application.boundary;
 public enum RequestField {
     CLOSING_TIME,
     CONVERSATION_ID,
-    INTEREST,
     INTERESTS,
     LOCATION,
     LOCATION_RADIUS,

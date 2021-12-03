@@ -71,7 +71,7 @@ public class UserController {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, form.getUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());
-        request.fill(RequestField.INTEREST, form.getInterest());
+        request.fill(RequestField.INTERESTS, form.getInterests());
         userManager.create(request);
         // Build response
         EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
@@ -91,7 +91,7 @@ public class UserController {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, form.getUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());
-        request.fill(RequestField.INTEREST, form.getInterest());
+        request.fill(RequestField.INTERESTS, form.getInterests());
         userManager.create(request);
         // Build response
         EntityModel<UserProfile> profileModel = profileAssembler.toModel(userManager.getProfileByUsername(request));
