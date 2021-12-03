@@ -74,7 +74,7 @@ public class ConversationManager {
      * Changes the status of a conversation specified by request
      * @param request the filled in RequestModel
      */
-    public void changeConversationStatus(RequestModel request) throws Exception {
+    public void changeConversationStatus(RequestModel request) throws WrongAuthor, ConversationNotFound {
         ChangeStatus changeStatus = new ChangeStatus(conversationRepository);
         changeStatus.request(request);
     }
