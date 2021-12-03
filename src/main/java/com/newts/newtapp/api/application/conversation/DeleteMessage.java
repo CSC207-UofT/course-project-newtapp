@@ -9,8 +9,6 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.Message;
 
 public class DeleteMessage extends ConversationInteractor<Void, Exception> {
-    ConversationRepository conversationRepository;
-    MessageRepository messageRepository;
 
     /**
      * Initialize a new DeleteMessage interactor with supplied conversation and message repositories
@@ -48,7 +46,6 @@ public class DeleteMessage extends ConversationInteractor<Void, Exception> {
             conversation.deleteMessage(message);
             messageRepository.delete(message);
             conversationRepository.save(conversation);
-            messageRepository.save(message);
             return null;
         } else {
             throw new MessageNotFoundInConversation();

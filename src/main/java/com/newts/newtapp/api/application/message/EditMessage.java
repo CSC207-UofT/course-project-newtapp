@@ -9,8 +9,6 @@ import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.Message;
 
 public class EditMessage extends MessageInteractor<Void, Exception> {
-    UserRepository userRepository;
-    MessageRepository messageRepository;
 
     /**
      * Initialize a new EditMessage interactor with supplied user and message repositories
