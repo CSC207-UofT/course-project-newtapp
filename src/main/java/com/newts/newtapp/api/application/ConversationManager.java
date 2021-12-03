@@ -4,6 +4,7 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
+import com.newts.newtapp.api.application.message.EditMessage;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -123,5 +124,14 @@ public class ConversationManager {
     public void addMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
         AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
         addMessage.request(request);
+    }
+
+    /**
+     * Edits a message in the conversation from the user
+     * @param request the filled in RequestModel
+     */
+    public void editMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage {
+        EditMessage editMessage = new EditMessage(messageRepository, userRepository);
+        editMessage.request(request);
     }
 }
