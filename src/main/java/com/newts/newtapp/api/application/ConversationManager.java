@@ -4,7 +4,7 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
-import com.newts.newtapp.api.application.message.EditMessage;
+import com.newts.newtapp.api.application.conversation.EditMessage;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -121,8 +121,9 @@ public class ConversationManager {
      * Adds message to the conversation specified by the user
      * @param request the filled in RequestModel
      */
-    public void addMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage{
-        AddMessage addMessage = new AddMessage(conversationRepository, messageRepository, userRepository);
+    public void addMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage,
+            UserNotFoundInConversation {
+        AddMessage addMessage = new AddMessage(conversationRepository, messageRepository);
         addMessage.request(request);
     }
 
@@ -130,8 +131,19 @@ public class ConversationManager {
      * Edits a message in the conversation from the user
      * @param request the filled in RequestModel
      */
-    public void editMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage {
-        EditMessage editMessage = new EditMessage(messageRepository, userRepository);
+    public void editMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage,
+            UserNotFoundInConversation, ConversationNotFound, MessageNotFoundInConversation {
+        EditMessage editMessage = new EditMessage(conversationRepository, messageRepository);
         editMessage.request(request);
+    }
+
+    /**
+     * deletes a message in the conversation from the user
+     * @param request the filled in RequestModel
+     */
+    public void deleteMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage,
+            UserNotFoundInConversation, ConversationNotFound, MessageNotFoundInConversation {
+        DeleteMessage deleteMessage = new DeleteMessage(conversationRepository, messageRepository);
+        deleteMessage.request(request);
     }
 }
