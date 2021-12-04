@@ -360,21 +360,21 @@ public class ConversationController {
         return ResponseEntity.noContent().build();
     }
 
-    /**
-     * Returns a MessageData for the Message with given id.
-     * @param cid                       Conversation with cid
-     * @param id                        id of Conversation
-     * @return                          EntityModel containing Conversation data
-     * @throws ConversationNotFound     If no Conversation exists with id
-     */
-    @GetMapping("/api/conversations/{cid}/messages/{id}")
-    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id)
-            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.CONVERSATION_ID, cid);
-        request.fill(RequestField.MESSAGE_ID, id);
-        MessageData data = conversationManager.getMessageData(request);
-        return messageDataModelAssembler.toModel(data);
-    }
+//    /**
+//     * Returns a MessageData for the Message with given id.
+//     * @param cid                       Conversation with cid
+//     * @param id                        id of Conversation
+//     * @return                          EntityModel containing Conversation data
+//     * @throws ConversationNotFound     If no Conversation exists with id
+//     */
+//    @GetMapping("/api/conversations/{cid}/messages/{id}")
+//    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id)
+//            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
+//        RequestModel request = new RequestModel();
+//        request.fill(RequestField.CONVERSATION_ID, cid);
+//        request.fill(RequestField.MESSAGE_ID, id);
+//        MessageData data = conversationManager.getMessageData(request);
+//        return messageDataModelAssembler.toModel(data);
+//    }
 
 }
