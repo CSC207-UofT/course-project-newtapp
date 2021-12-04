@@ -19,7 +19,6 @@ import static org.junit.Assert.assertTrue;
 
 public class AddMessageTest {
     TestConversationRepository c;
-    TestUserRepository u;
     TestMessageRepository m;
     AddMessage a;
     Conversation testConversation;
@@ -29,18 +28,16 @@ public class AddMessageTest {
     public void setUp() {
         c = new TestConversationRepository();
         m = new TestMessageRepository();
-        u = new TestUserRepository();
 
         testConversation = new Conversation();
         testUser = new User();
         c.save(testConversation);
-        u.save(testUser);
 
-        a = new AddMessage(c,m,u);
+        a = new AddMessage(c,m);
     }
 
     @Test(timeout = 50)
-    public void testAddUser() throws ConversationNotFound, EmptyMessage {
+    public void testAddUser() throws ConversationNotFound, EmptyMessage, UserNotFoundInConversation {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, testConversation.getId());
         r.fill(RequestField.USER_ID, testUser.getId());

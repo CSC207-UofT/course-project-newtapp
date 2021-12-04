@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.ConversationNotFound;
+import com.newts.newtapp.api.errors.WrongAuthor;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.entities.Conversation;
 import org.junit.Before;
@@ -23,7 +24,7 @@ public class ChangeStatusTest {
     }
 
     @Test(timeout = 50)
-    public void testChangeStatus() throws ConversationNotFound {
+    public void testChangeStatus() throws ConversationNotFound, WrongAuthor {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, -1);
         change.request(r);
