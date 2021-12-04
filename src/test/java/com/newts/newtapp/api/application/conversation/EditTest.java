@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertTrue;
+
 
 public class EditTest {
     TestConversationRepository c;
@@ -26,6 +28,7 @@ public class EditTest {
         testConversation = new Conversation();
         testConversation.setId(1);
         testConversation.setTitle("old");
+        testConversation.setLocation("USA");
 
         c.save(testConversation);
 
@@ -43,11 +46,10 @@ public class EditTest {
         r.fill(RequestField.LOCATION_RADIUS, 1);
         r.fill(RequestField.MIN_RATING,1);
 
+        e.request(r);
 
-        System.out.println(testConversation);
-        d.request(r);
-
-
-        Assert.assertEquals(1, c.findById(1).get().getMessages().size());
+        assertTrue(c.findById(1).isPresent());
+        Assert.assertEquals("new", c.findById(1).get().getTitle());
+        Assert.assertEquals("Toronto", c.findById(1).get().getLocation());
     }
 }
