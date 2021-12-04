@@ -1,12 +1,10 @@
 package com.newts.newtapp.api.application.conversation;
 
-
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
-import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.Message;
 
@@ -16,10 +14,9 @@ public class EditMessage extends ConversationInteractor<Void, Exception> {
      * Initialize a new EditMessage interactor with supplied user, conversation and message repositories
      * @param conversationRepository ConversationRepository which contains conversation data
      * @param messageRepository MessageRepository which contains message data
-     * @param userRepository UserRepository which contains user data
      */
-    public EditMessage(ConversationRepository conversationRepository, MessageRepository messageRepository, UserRepository userRepository){
-        super(conversationRepository, messageRepository, userRepository);
+    public EditMessage(ConversationRepository conversationRepository, MessageRepository messageRepository){
+        super(conversationRepository, messageRepository;
     }
 
     /**
