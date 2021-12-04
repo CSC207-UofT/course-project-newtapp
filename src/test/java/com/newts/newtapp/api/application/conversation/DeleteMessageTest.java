@@ -15,6 +15,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 
 public class DeleteMessageTest {
     TestConversationRepository c;
@@ -58,6 +60,7 @@ public class DeleteMessageTest {
 
         d.request(r);
 
+        assertTrue(c.findById(1).isPresent());
         Assert.assertEquals(1, c.findById(1).get().getMessages().size());
     }
 }
