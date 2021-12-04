@@ -56,9 +56,7 @@ public class DeleteMessageTest {
         r.fill(RequestField.MESSAGE_ID, 2);
         r.fill(RequestField.USER_ID, 3);
 
-        System.out.println(testConversation);
         d.request(r);
-
 
         Assert.assertEquals(1, c.findById(1).get().getMessages().size());
     }
