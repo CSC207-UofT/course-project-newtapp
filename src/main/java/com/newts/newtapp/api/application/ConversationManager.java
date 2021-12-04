@@ -121,8 +121,7 @@ public class ConversationManager {
      * Adds message to the conversation specified by the user
      * @param request the filled in RequestModel
      */
-    public void addMessage(RequestModel request) throws UserNotFound, ConversationNotFound, EmptyMessage,
-            UserNotFoundInConversation {
+    public void addMessage(RequestModel request) throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound {
         AddMessage addMessage = new AddMessage(conversationRepository, messageRepository);
         addMessage.request(request);
     }
@@ -131,8 +130,8 @@ public class ConversationManager {
      * Edits a message in the conversation from the user
      * @param request the filled in RequestModel
      */
-    public void editMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage,
-            UserNotFoundInConversation, ConversationNotFound, MessageNotFoundInConversation {
+    public void editMessage(RequestModel request) throws UserNotFoundInConversation, WrongAuthor, MessageNotFound,
+            EmptyMessage, ConversationNotFound, MessageNotFoundInConversation {
         EditMessage editMessage = new EditMessage(conversationRepository, messageRepository);
         editMessage.request(request);
     }
@@ -141,8 +140,8 @@ public class ConversationManager {
      * deletes a message in the conversation from the user
      * @param request the filled in RequestModel
      */
-    public void deleteMessage(RequestModel request) throws WrongAuthor, MessageNotFound, EmptyMessage,
-            UserNotFoundInConversation, ConversationNotFound, MessageNotFoundInConversation {
+    public void deleteMessage(RequestModel request) throws UserNotFoundInConversation, WrongAuthor, MessageNotFound,
+            ConversationNotFound, MessageNotFoundInConversation {
         DeleteMessage deleteMessage = new DeleteMessage(conversationRepository, messageRepository);
         deleteMessage.request(request);
     }
