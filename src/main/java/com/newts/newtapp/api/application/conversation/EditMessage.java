@@ -16,7 +16,7 @@ public class EditMessage extends ConversationInteractor<Void, Exception> {
      * @param messageRepository MessageRepository which contains message data
      */
     public EditMessage(ConversationRepository conversationRepository, MessageRepository messageRepository){
-        super(conversationRepository, messageRepository;
+        super(conversationRepository, messageRepository);
     }
 
     /**
