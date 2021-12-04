@@ -7,24 +7,21 @@ We want to give our users the opportunity to connect with other users without ex
 
 ## Updated Specification
 
-   Since Phase 0, our group has completed a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. These tasks included:
-- Conversation Queues: for sorting conversations based on user interests
-- Changing User IDs to be unique integer IDs for easier sorting/management in the database
-
+   Since Phase 2, our group worked towards completing a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. These tasks included:
+   
+- Implementing Authentication 
+- Password Encryption
 
 Some things that we reworked:
-- Request and Response Models for requests between the controllers and interactors
-- Our Data Access Objects for interacting with the persistence layer
-- Our controller layer to work with Spring Boot and our updated interactors
+- 
+- 
 
-After completing our specification, we turned our focus to implementing a Web Application. This involved:
-- Moving to and configuring Spring Boot
-- Installing PostgreSQL on each of our systems
-- Implementing and configuring a database using PostgreSQL
-- Adjusting our Request/Response models 
-- Linking our entities to read, write and edit from associated Database Repositories
-
-
+In Phase 2, we continued working on our implementation of our Web Application. This involved:
+- Moving to and configuring React
+- Familiarizing ourselves with  JavaScript and CSS
+- Deciding essential components of our front-end
+- Using React Routes to enable navigation among views of various components
+- 
 ## SOLID Design Principles
 
 In the development of our App, we considered many uses of SOLID design principles to better demonstrate effective, well-designed code.
@@ -54,9 +51,6 @@ In the development of our App, we considered many uses of SOLID design principle
 
   Finally, the Dependency Inversion Design principle states that high-level modules should depend on abstractions or interfaces rather than low-level modules and that details (like concrete implementations) should depend on abstractions. In our past implementation, we applied this principle in our output boundary interface, which we used to send data from the use cases to the presenter (inner layer to outer layer). However, we changed our application to a Spring Boot application, and now our data output is handled by Spring Boot. The dependency inversion is also a core element of how we access data in our database. In our current implementation, the use cases fetched entities from the database using a data access interface implemented by the various repository associated with each entity. It ensures that the use cases depend not on the database itself but the data access interface.
 
-
-
-
 ## Clean Architecture
 
 Clean architecture plays a fundamental role in our application. 
@@ -83,6 +77,11 @@ information relevant to the user is displayed on the web application's graphical
 - At the Interface Adapters layer are the controllers. (UserController is implemented and MessageController and ConversationController remain to be implemented)
 - At the Framework & Drivers are the database and the web interface.
 
+Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional funcionalities. Along the way, 
+- Moving to SpringBoot: Clean Architecture meant we could largely plug in our existing back-end on top of SpringBoot's functionality
+- Implementing PostGres: The use of a gateway meant we could easily move from a mock databse to using PosgGreSql
+- Implemnenting our front-end using React: The structure of our code allowed us to build our front-end on top of our existing code.
+
 
 ## Design Patterns
 
@@ -96,7 +95,9 @@ information relevant to the user is displayed on the web application's graphical
 - Strategy Design Pattern
 
     The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
-
+    
+- Singleton Design Pattern:
+ JWT Token #TODO
 
 ## Design Decisions
 
@@ -115,7 +116,11 @@ information relevant to the user is displayed on the web application's graphical
    After implementing initial Request and Response models for communication between our Presenters and Interfaces, we decided to redesign our input and output models for more simplicity and to implement a cleaner design. 
    
    Originally, we had different request models for each interactor, making sending and receiving requests and responses unnecessarily complex. To adjust this, we created one request model for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
+   
+-  Implemenmting our Front-End
 
+   When implementing our front-end, we originally wanted to use Gatsby for implementing a fast and efficient front-end. However, after further research, we realized Gatsby to be static. As such, we decided to simply stick to React for our front end, as we want our app to be able to update as new chats, conversations, and friends come in.
+   
 ## Use of GitHub Features
 
    Throughout the development of our web app our group has been making use of several features available on GitHub. One such feature is branching. So far we have been making separate branches for each new feature that we implement. Once the feature has been implemented, we used the pull request feature on GitHub to ensure that other members of the group have a chance to review the code before the branch is merged into our main branch. 
@@ -139,6 +144,7 @@ At the moment, we have a bunch of IntelliJ warnings across our project, but plea
 ## Packaging Strategies
 
    Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting between the functionality and purpose of methods. Since our code was created with the purpose of fulfilling thoughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, concise and organized file sorting. 
+   In Phase 2, we further decided to nest specific layers of Architecture, to make code organization and location faster and more efficient. 
 
 ## Refactoring
 
@@ -154,52 +160,37 @@ We did a fair share of refactoring for Phase 1.  Here are three examples of refa
 
 - Constant (https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/35): We refactored our constants' name to fit naming convention.
 
-
-## Progress Report
-
-Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a team in communicating amidst ourselves and in dividing the work between us.
-Further, Clean Architecture has continued to show its benefits with an easy transfer of specific components into SpringBoot. 
-
 ## Open Questions
 
-As our group continues to implement a Web Application, we have come across a few design questions that we are considering.
-- Are 32-bit integers sufficient for unique User ids?
-    
-    We noticed in Evan’s “Intro to Web Apps” example that Java’s long type was used for ids. What are the pros and cons to using long instead of int for ids?
+As our group worked towards our final product for Phase 2, we have learnt a lot about Web Apps, Databases and their implementations and relations. As such, we have some further questions about what next steps in the development pipeline could look like.
+
+- Bringing an app to the public
+
+Based on our already existing front and back ends, what are the steps to finally bring an app to the public? 
+   - What kind of database would we use in a real implementation of our app? What are the best database hosting platforms?
+   - How and where would we host the website itself?
+   - Are there any remaining security or functionality considerations we would need to make?
+
+## Progress Report and Work Allocation
+
+In Phase 2, we worked towards finaliing all the remaining fundamental components of our application, and turned our development to transferring/implementing a Web App front-end using React.
+
+Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a group in communicating amidst ourselves and in dividing the work between us.
+
+- Alex: In Phase 2, I focused on helping to develop our front-end. I worked on implementing DataTransfer Objects for Conversation and Message Data, as secure ways of transfering information from higher layers of the program to the Front-End. I also implemented more sorting algorithyms for our ConversationSorter Strategy Design Pattern. Lastly, I worked on final changes for the DesignDocument, and prepared slides for our presentation.
+   An important Pull Request I made Throughout this project was with 
+
+- Spencer: 
+
+- Will: 
+
+- Ted: 
+
+- Yukthi: 
+
+- Zachary: A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pr still play significant roles in the functionality of the program currently.
+   https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/6
 
 
-- Using Database-set IDs vs setting our own database ids
-    
-    We found PostgreSQL's implementation of int IDs to be very useful for database organization, however, some sources on the web we came across suggested against this because using Database generated IDs delegates an important aspect of the program's domain to third party software. Should we consider handling userIDs ourselves? What considerations must we make if we choose to do this?
+Our team has really enjoyed working on this project, and have learnt invaluable tools and skills about the implementation and functionality of web apps and databsaes. :)
 
-
-- Making our API publicly available
-    
-    We hope to have our API publicly available for Phase 2. Where can we host our app? What changes need to be made to our app and database to support running remotely? What security concerns must we address in making our API public?
-
-
-## Work Allocation
-
-We have finalized all the remaining fundamental components of our application, and have turned our development to transferring/implementing a Web App using SpringBoot. 
-
-- Alex: Refactoring User Interactors for new Response Model, Moving to SpringBoot, Design Document, Slideshow presentation
-- Spencer: Reworking Request and Response Model, Data Access Object, Moving to SpringBoot
-- Will: Refactoring Conversation interactor for new Response Model, Moving to SpringBoot
-- Ted: AddFollower Interface, UserManager, Moving to SpringBoot
-- Yukthi: User Stories, Reworking Interactors for Spring Boot, Slideshow presentation
-- Zachary: Refactoring Conversation manager and some conversation interactors for the new response model. Created a new gateway, JSON file and interface for access to constants used in interactors, Slideshow presentation.
-
-We are all enjoying seeing the fruits of our labour begin to form a working application, and are excited to see where Phase 2 takes us! 
-Here are some ideas of the next steps in our development:
-- Finalizing our back end
-- Deciding how we want to handle our front end
-- UI/UX Design choices
-- In the long run: bringing our app live!
-
-What we plan to work on next:
-- Alex: Implementing Front End Design
-- Spencer: Finalizing our Backend
-- Will: Implementing Front End Design
-- Ted: Finalizing our Backend
-- Yukthi: Implementing Front End Design
-- Zachary: Finalizing our Backend
