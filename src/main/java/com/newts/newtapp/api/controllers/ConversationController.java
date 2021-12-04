@@ -4,11 +4,13 @@ import com.newts.newtapp.api.application.ConversationManager;
 import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.controllers.assemblers.ConversationDataModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
+import com.newts.newtapp.api.controllers.assemblers.MessageDataModelAssembler;
 import com.newts.newtapp.api.controllers.forms.CreateConversationForm;
 import com.newts.newtapp.api.errors.*;
 import org.springframework.hateoas.EntityModel;
@@ -28,13 +30,16 @@ public class ConversationController {
     private final UserManager userManager;
     private final ConversationProfileModelAssembler profileAssembler;
     private final ConversationDataModelAssembler dataAssembler;
+    private final MessageDataModelAssembler messageDataModelAssembler;
 
     public ConversationController(ConversationManager conversationManager, UserManager userManager,
-                                  ConversationProfileModelAssembler profileAssembler, ConversationDataModelAssembler dataAssembler) {
+                                  ConversationProfileModelAssembler profileAssembler,
+                                  ConversationDataModelAssembler dataAssembler, MessageDataModelAssembler messageDataModelAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
         this.dataAssembler = dataAssembler;
+        this.messageDataModelAssembler = messageDataModelAssembler;
     }
 
     /**
@@ -121,10 +126,12 @@ public class ConversationController {
      * @throws UserBlocked                If the user is blocked from the conversation
      * @throws ConversationFull           If the conversation is full
      * @throws ConversationNotFound       If no conversation exists with id
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/join")
-    public EntityModel<ConversationProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
-            UserBlocked, ConversationFull, ConversationNotFound {
+    public EntityModel<ConversationData> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
+            UserBlocked, ConversationFull, ConversationNotFound, MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -135,9 +142,9 @@ public class ConversationController {
 
         conversationManager.addUser(request);
 
-        // Build response TODO Profile vs Data
-        ConversationProfile profile = conversationManager.getProfile(request);
-        return profileAssembler.toModel(profile);
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
     }
 
     /**
@@ -160,7 +167,7 @@ public class ConversationController {
 
         conversationManager.removeUser(request);
 
-        // Build response TODO Profile vs Data
+        // Build response
         ConversationProfile profile = conversationManager.getProfile(request);
         return profileAssembler.toModel(profile);
     }
@@ -173,10 +180,13 @@ public class ConversationController {
      * @throws UserNotFound               If no user exists with id
      * @throws ConversationNotFound       If no conversation exists with id
      * @throws WrongAuthor                If the given user didn't create the given conversation
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/edit")
-    public EntityModel<ConversationProfile> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
-            throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize {
+    public EntityModel<ConversationData> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
+            throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize,
+            MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -194,21 +204,47 @@ public class ConversationController {
 
         conversationManager.editConversation(request);
 
-        // Build response TODO Profile vs Data
-        ConversationProfile profile = conversationManager.getProfile(request);
-        return profileAssembler.toModel(profile);
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
+    }
+
+    /**
+     * delete a conversation.
+     * @param id                             Conversation with id
+     * @throws UserNotFound                  If no user exists with id
+     * @throws ConversationNotFound          If no conversation exists with id
+     * @throws WrongAuthor                   If the given user didn't create the given conversation
+     * @throws IncorrectPassword             If the password is incorrect
+     */
+    @DeleteMapping("/api/conversations/{id}")
+    ResponseEntity<?> delete(@PathVariable int id)
+            throws UserNotFound, ConversationNotFound, WrongAuthor, IncorrectPassword {
+        //initiate a request model requesting the conversationId and the userId.
+        RequestModel request = new RequestModel();
+
+        //fill in the messageId
+        request.fill(RequestField.CONVERSATION_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.deleteConversation(request);
+
+        return ResponseEntity.noContent().build();
     }
 
     /**
      * change a conversation's status.
-     * @param id                          Conversation with id
+     * @param  id                         Conversation with id
      * @throws UserNotFound               If no user exists with id
      * @throws ConversationNotFound       If no conversation exists with id
      * @throws WrongAuthor                If the given user didn't create the given conversation
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/open")
-    public EntityModel<ConversationProfile> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
-            ConversationNotFound {
+    public EntityModel<ConversationData> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
+            ConversationNotFound, MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -219,19 +255,26 @@ public class ConversationController {
 
         conversationManager.changeConversationStatus(request);
 
-        // Build response TODO Profile vs Data
-        ConversationProfile profile = conversationManager.getProfile(request);
-        return profileAssembler.toModel(profile);
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
     }
 
     /**
      * Add a message to a conversation.
+     * @param id                          Conversation with id
      * @param messageBody                 the string body of the given message
      * @throws UserNotFound               If no user exists with id
+     * @throws ConversationNotFound       If no conversation exists with id
+     * @throws EmptyMessage               If the given message body isEmpty
+     * @throws UserNotFoundInConversation If the given user is not in the conversation
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/messages")
-    public EntityModel<ConversationProfile> addMessage(@PathVariable int id, @RequestBody String messageBody)
-            throws UserNotFound, ConversationNotFound {
+    public EntityModel<ConversationData> addMessage(@PathVariable int id, @RequestBody String messageBody)
+            throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound, UserNotFound, MessageNotFound,
+            IncorrectPassword {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -244,11 +287,94 @@ public class ConversationController {
 
         conversationManager.addMessage(request);
 
-        // Build response TODO Profile vs Data
-        ConversationProfile profile = conversationManager.getProfile(request);
-        return profileAssembler.toModel(profile);
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
     }
 
+    /**
+     * Edit the message of a conversation.
+     * @param cid                            Conversation with cid
+     * @param id                             Message with id
+     * @param messageBody                    the string body of the given message
+     * @throws UserNotFound                  If no user exists with id
+     * @throws ConversationNotFound          If no conversation exists with id
+     * @throws MessageNotFound               If no message exists with id
+     * @throws EmptyMessage                  If the given message body isEmpty
+     * @throws WrongAuthor                   If the given user didn't create the given conversation
+     * @throws UserNotFoundInConversation    If the user is not found in conversation
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
+     */
+    @PostMapping("/api/conversations/{cid}/messages/{id}/edit")
+    public EntityModel<ConversationData> editMessage(@PathVariable int cid, @PathVariable int id,
+                                                        @RequestBody String messageBody)
+            throws UserNotFound, ConversationNotFound, EmptyMessage, WrongAuthor, MessageNotFound,
+            UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
+        //initiate a request model requesting the body, conversationId, messageId and the userId.
+        RequestModel request = new RequestModel();
 
+        //fill in the body
+        request.fill(RequestField.MESSAGE_BODY, messageBody);
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, cid);
+        //fill in the messageId
+        request.fill(RequestField.MESSAGE_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.editMessage(request);
+
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
+    }
+
+    /**
+     * delete a message of a conversation.
+     * @param cid                            Conversation with cid
+     * @param id                             Message with id
+     * @throws UserNotFound                  If no user exists with id
+     * @throws ConversationNotFound          If no conversation exists with id
+     * @throws MessageNotFound               If no message exists with id
+     * @throws EmptyMessage                  If the given message body isEmpty
+     * @throws WrongAuthor                   If the given user didn't create the given conversation
+     * @throws UserNotFoundInConversation    If the user is not found in conversation
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
+     */
+    @DeleteMapping("/api/conversations/{cid}/messages/{id}")
+    ResponseEntity<?> deleteMessage(@PathVariable int cid, @PathVariable int id)
+            throws UserNotFound, ConversationNotFound, EmptyMessage, WrongAuthor, MessageNotFound,
+            UserNotFoundInConversation, MessageNotFoundInConversation {
+        //initiate a request model requesting the conversationId, messageId and the userId.
+        RequestModel request = new RequestModel();
+
+        //fill in the conversationId
+        request.fill(RequestField.CONVERSATION_ID, cid);
+        //fill in the messageId
+        request.fill(RequestField.MESSAGE_ID, id);
+        //fill in the userId
+        request.fill(RequestField.USER_ID, returnId());
+
+        conversationManager.deleteMessage(request);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Returns a MessageData for the Message with given id.
+     * @param cid                       Conversation with cid
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     */
+    @GetMapping("/api/conversations/{cid}/messages/{id}")
+    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id)
+            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, cid);
+        request.fill(RequestField.MESSAGE_ID, id);
+        MessageData data = conversationManager.getMessageData(request);
+        return messageDataModelAssembler.toModel(data);
+    }
 
 }
