@@ -227,11 +227,14 @@ public class ConversationController {
     /**
      * Add a message to a conversation.
      * @param messageBody                 the string body of the given message
+     * @throws ConversationNotFound       If no conversation exists with id
      * @throws UserNotFound               If no user exists with id
+     * @throws UserNotFoundInConversation If the user with given is not in the conversation with given id
+     * @throws EmptyMessage               If the message is empty
      */
     @PostMapping("/api/conversations/{id}/messages")
     public EntityModel<ConversationProfile> addMessage(@PathVariable int id, @RequestBody String messageBody)
-            throws UserNotFound, ConversationNotFound {
+            throws ConversationNotFound, EmptyMessage, UserNotFoundInConversation, UserNotFound {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
