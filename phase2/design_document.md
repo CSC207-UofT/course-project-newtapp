@@ -7,14 +7,11 @@ We want to give our users the opportunity to connect with other users without ex
 
 ## Updated Specification
 
-   Since Phase 2, our group worked towards completing a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. These tasks included:
-   
+   Since Phase 2, our group worked towards completing a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. 
+These tasks included:
+ 
 - Implementing Authentication 
 - Password Encryption
-
-Some things that we reworked:
-- 
-- 
 
 In Phase 2, we continued working on our implementation of our Web Application. This involved:
 - Moving to and configuring React
