@@ -36,7 +36,7 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
         InterestSorter sorter = new InterestSorter();
 
         ConversationQueue conversationQueue = new ConversationQueue(sorter, user.getLocation(),
-                (int) request.get(RequestField.LOCATION_RADIUS), user.getInterests());
+                user.getInterests());
 
         ArrayList<Conversation> followerConversations = new ArrayList<>();
 
