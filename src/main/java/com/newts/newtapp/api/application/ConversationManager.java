@@ -5,6 +5,7 @@ import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
 import com.newts.newtapp.api.application.conversation.EditMessage;
+import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -145,5 +146,17 @@ public class ConversationManager {
             ConversationNotFound, MessageNotFoundInConversation {
         DeleteMessage deleteMessage = new DeleteMessage(conversationRepository, messageRepository);
         deleteMessage.request(request);
+    }
+
+    /**
+     * Returns a MessageData given a Conversation id and a MessageId in a RequestModel.
+     * @param request                   RequestModel containing Conversation's id
+     * @return                          ConversationData of corresponding Conversation
+     * @throws ConversationNotFound     If Conversation id does not exist
+     */
+    public MessageData getMessageData(RequestModel request) throws MessageNotFound, ConversationNotFound,
+            MessageNotFoundInConversation {
+        GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);
+        return getMessageData.request(request);
     }
 }
