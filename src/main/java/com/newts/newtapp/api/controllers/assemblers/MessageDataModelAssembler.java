@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
+import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.controllers.ConversationController;
 import org.springframework.hateoas.EntityModel;
@@ -32,7 +33,7 @@ public class MessageDataModelAssembler
             links.add(linkTo(methodOn(ConversationController.class).getMessageData(data.id)).withSelfRel());
         } catch (Exception e) {
             // No exception will ever be thrown at this point in normal use of this class as an exception would have
-            // been thrown earlier during application logic.
+            // been thrown earlier during application logic.s
         }
         return EntityModel.of(data, links);
     }
