@@ -16,10 +16,9 @@ class LoginForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const newId = await newtApi.createUser(this.state.username, this.state.password, this.state.interest);
-        if (newId != null) {
-            // redirect to login page or log in the new user or something else not sure
-            console.log(newId)
+        const authUser = await newtApi.login(this.state.username, this.state.password, this.state.interest);
+        if (!authUser) {
+            // ask to try again?
         }
     }
 
@@ -27,12 +26,10 @@ class LoginForm extends React.Component {
         return(
             <form onSubmit={this.handleSubmit}>
                 <input name="username" type="text" required="required" placeholder="Username"
-                       value={this.state.username} onChange={this.handleChange} /> <br />
-                <input name="password" type="password" minLength="6" required="required" placeholder="Password"
-                       value={this.state.password} onChange={this.handleChange} /> <br />
-                <input name="interest" type="text" required="required" placeholder="Something you're interested in"
-                       value={this.state.interest} onChange={this.handleChange} /> <br/>
-                <input type="submit" value="Submit" />
+                       value={this.state.username} onChange={this.handleChange} className="newtTextInput"/> <br />
+                <input name="password" type="password" required="required" placeholder="Password"
+                       value={this.state.password} onChange={this.handleChange} className="newtTextInput"/> <br />
+                <input type="submit" value="Log In" className="newtButtonDark"/>
             </form>
         );
     }

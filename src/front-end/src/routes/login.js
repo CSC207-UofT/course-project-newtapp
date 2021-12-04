@@ -1,12 +1,12 @@
 import '../App.css';
 import React from 'react';
 import LoginLayout from "../components/loginLayout";
-import CreateUserForm from "../components/forms/createUserForm";
+import LoginForm from "../components/forms/loginForm";
 
 function Login () {
     return (
         <LoginLayout>
-            <CreateUserForm />
+            <LoginForm />
         </LoginLayout>
     );
 }

@@ -18,7 +18,7 @@ render(
             <Route path="/" element={<App />} />
             <Route path="browse" element={<Browse />} />
             <Route path="login" element={<Login />} />
-            <Route path="login/create" element={<CreateUser />} />
+            <Route path="create/user" element={<CreateUser />} />
             <Route path="/:username" element={<UserProfile />} />
         </Routes>
     </BrowserRouter>,
