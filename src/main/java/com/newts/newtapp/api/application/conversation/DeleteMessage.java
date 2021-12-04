@@ -25,24 +25,33 @@ public class DeleteMessage extends ConversationInteractor<Void, Exception> {
      * Remove a Message from a Conversation.
      * @param request a request stored as a RequestModel
      */
-    public Void request(RequestModel request) throws ConversationNotFound, MessageNotFound, WrongAuthor, MessageNotFoundInConversation {
-        int conversationID = (int)request.get(RequestField.CONVERSATION_ID);
-        int messageID = (int) request.get(RequestField.MESSAGE_ID);
-        int userID = (int) request.get(RequestField.USER_ID);
+    public Void request(RequestModel request) throws ConversationNotFound, MessageNotFound, WrongAuthor,
+            MessageNotFoundInConversation, UserNotFoundInConversation {
+        int conversationId = (int)request.get(RequestField.CONVERSATION_ID);
+        int messageId = (int) request.get(RequestField.MESSAGE_ID);
+        int userId = (int) request.get(RequestField.USER_ID);
 
         // Fetching the conversation from which we delete message
-        Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
+
+        // Check if the user and the message is in the conversation.
+        if(!(conversation.getUsers().contains(userId))) {
+            throw new UserNotFoundInConversation();
+        }
+        if(!(conversation.getMessages().contains(messageId))) {
+            throw new MessageNotFoundInConversation();
+        }
 
         //Fetching the message to remove from conversation
-        Message message = messageRepository.findById(messageID).orElseThrow(MessageNotFound::new);
+        Message message = messageRepository.findById(messageId).orElseThrow(MessageNotFound::new);
 
         //Check if the message is written by the given userID
-        if (message.getAuthor() != userID)  {
+        if (message.getAuthor() != userId)  {
             throw new WrongAuthor();
         }
 
         // Check that the message is in the conversation and delete it if so.
-        if (conversation.getMessages().contains(messageID)) {
+        if (conversation.getMessages().contains(messageId)) {
             conversation.deleteMessage(message);
             messageRepository.delete(message);
             conversationRepository.save(conversation);
