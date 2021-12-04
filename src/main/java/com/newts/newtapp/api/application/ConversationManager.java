@@ -91,21 +91,22 @@ public class ConversationManager {
     }
 
     /**
+     * Deletes a conversation using request
+     * @param request the filled in RequestModel
+     */
+    public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor, IncorrectPassword,
+            ConversationNotFound {
+        Delete delete = new Delete(conversationRepository, userRepository);
+        delete.request(request);
+    }
+
+    /**
      * Adds the user specified by request to the conversation
      * @param request the filled in RequestModel
      */
     public void addUser(RequestModel request) throws UserNotFound, ConversationNotFound, UserBelowMinimumRating, ConversationFull, UserBlocked {
         AddUser addUser = new AddUser(conversationRepository, userRepository);
         addUser.request(request);
-    }
-
-    /**
-     * Gets the user list of a conversation and outputs it using a ResponseModel
-     * @param request the filled in RequestModel
-     */
-    public void getUserList(RequestModel request) throws Exception {
-        GetUserList getUserList= new GetUserList(conversationRepository, userRepository);
-        getUserList.request(request);
     }
 
     /**
