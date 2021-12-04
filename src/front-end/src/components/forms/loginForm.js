@@ -1,7 +1,7 @@
 import React from "react"
 import newtApi from "../../api.js"
 
-class CreateUserForm extends React.Component {
+class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {username: '', password: '', interest: ''};
@@ -38,4 +38,4 @@ class CreateUserForm extends React.Component {
     }
 }
 
-export default CreateUserForm
+export default LoginForm
