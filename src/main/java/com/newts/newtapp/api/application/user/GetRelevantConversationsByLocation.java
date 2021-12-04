@@ -11,24 +11,24 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GetRelevantConversationsByFollowers extends UserInteractor<Conversation[], UserNotFound> {
+public class GetRelevantConversationsByLocation extends UserInteractor<Conversation[], UserNotFound>  {
     /**
      * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public GetRelevantConversationsByFollowers(UserRepository repository, ConversationRepository conversationRepository) {
+    public GetRelevantConversationsByLocation(UserRepository repository, ConversationRepository conversationRepository) {
         super(repository, conversationRepository);
     }
 
     /**
-     * Completes a GetRelevantConversations request.
-     * Looks for relevant conversations by sorting through conversations of a user's followers.
+     * Completes a GetRelevantConversationsByLocation request.
+     * Looks for conversations matching a user's location.
      * @param request   a request stored as a RequestModel
-     * @return ArrayList of Conversations containing conversations of a user's followers, as sorted by InterestSorter.
+     * @return ArrayList of Conversations matching a user's conversation.
      * @throws UserNotFound if the user in the request can not be found.
      */
-    @Override
     public Conversation[] request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
@@ -38,17 +38,18 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
         ConversationQueue conversationQueue = new ConversationQueue(sorter, user.getLocation(),
                 (int) request.get(RequestField.LOCATION_RADIUS), user.getInterests());
 
-        ArrayList<Conversation> followerConversations = new ArrayList<>();
+        ArrayList<Conversation> matchingConversations = new ArrayList<>();
+        List<Conversation> conversationList = this.conversationRepository.findAll();
 
-        ArrayList<Integer> followers = user.getFollowers();
-        for (int i : followers) {
-            Conversation userConversationID = conversationRepository.getById(i);
-            if (userConversationID.getIsOpen()) {
-                followerConversations.add(userConversationID);
+        String userLocation = user.getLocation();
+
+        for (Conversation conversation : conversationList) {
+            if (conversation.getLocation().equals(userLocation)) {
+                matchingConversations.add(conversation);
             }
         }
 
-        conversationQueue.addAll(followerConversations);
+        conversationQueue.addAll(matchingConversations);
 
         ArrayList<Conversation> filteredConversations = new ArrayList<>();
 
@@ -61,4 +62,3 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
         return filteredConversations.toArray(Conversation[]::new);
     }
 }
-
