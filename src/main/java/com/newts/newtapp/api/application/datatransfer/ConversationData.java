@@ -17,26 +17,21 @@ public class ConversationData {
     public final String title;
     public final ArrayList<String> topics;
     public final String location;
-    public int location_radius;
-    public int min_rating;
-    public final int max_size;
-    public final int curr_size;
-    public Boolean is_open;
+    public int minRating;
+    public final int maxSize;
+    public final int currSize;
+    public Boolean isOpen;
 
-    public ConversationData(ArrayList<MessageData> message_data, ArrayList<UserProfile> user_profiles, Conversation conversation) {
+    public ConversationData(ArrayList<MessageData> messageData, ArrayList<UserProfile> userProfiles, Conversation conversation) {
         this.id = conversation.getId();
         this.title = conversation.getTitle();
         this.topics = conversation.getTopics();
         this.location = conversation.getLocation();
-        this.location_radius = conversation.getLocationRadius();
-        this.min_rating = conversation.getMinRating();
-        this.max_size = conversation.getMaxSize();
-        this.curr_size = conversation.getNumUsers() / conversation.getMaxSize();
-        this.is_open = conversation.getIsOpen();
-
-        this.message_data = message_data;
-        this.user_profile = user_profiles;
-
-
+        this.minRating = conversation.getMinRating();
+        this.maxSize = conversation.getMaxSize();
+        this.currSize = conversation.getNumUsers() / conversation.getMaxSize();
+        this.isOpen = conversation.getIsOpen();
+        this.message_data = messageData;
+        this.user_profile = userProfiles;
     }
 }
