@@ -17,12 +17,10 @@ public class AddMessage extends ConversationInteractor<Void, Exception> {
      * Initialize a new AddMessage interactor with supplied message, conversation and user repositories
      * @param messageRepository MessageRepository containing message data
      * @param conversationRepository ConversationRepository containing conversation data
-     * @param userRepository UserRepository  containing user data
      */
     public AddMessage(ConversationRepository conversationRepository,
-                      MessageRepository messageRepository,
-                      UserRepository userRepository){
-        super(conversationRepository, messageRepository, userRepository);
+                      MessageRepository messageRepository){
+        super(conversationRepository, messageRepository);
     }
 
     /**
