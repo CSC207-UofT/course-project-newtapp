@@ -120,13 +120,13 @@ information relevant to the user is displayed on the web application's graphical
 
    Throughout the development of our web app our group has been making use of several features available on GitHub. One such feature is branching. So far we have been making separate branches for each new feature that we implement. Once the feature has been implemented, we used the pull request feature on GitHub to ensure that other members of the group have a chance to review the code before the branch is merged into our main branch. 
    
-  ![Example of Feature Branching](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase1/images/Feature%20branching.JPG)
+  ![Example of Feature Branching](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Feature%20branching.JPG)
    
    In addition, we initially only used the projects feature on GitHub to delegate work and ensure that each member knew what the other members were doing. As we progressed through the project we found that we could also make use of the issues feature as well, and that the issues could also be items in the projects tab that can be moved as necessary.
    
-   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase1/images/Projects%20Tab.JPG)
+   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Projects%20Tab.JPG)
    
-   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase1/images/issues%20tab.JPG)
+   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/issues%20tab.JPG)
   
    
    Another major change that we made in terms of our GitHub project page is transitioning to a new repository for our Spring Boot transition. We wanted to separate our previous project from the transitioned Spring Boot project so we created a new repository called course-project-newtapp, whereas our old repository was called course-project-optimistic-newts.
