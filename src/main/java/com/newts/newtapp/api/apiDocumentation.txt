@@ -17,7 +17,7 @@ User API:
 		body: {
 			"username": username
 			"password": password
-			"interest": interest
+			"interests": [interest]
 		}
 
 	Edit User - POST /api/users/edit
