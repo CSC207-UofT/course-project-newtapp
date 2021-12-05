@@ -24,7 +24,7 @@ public class GetMessageDataTest {
         m = new TestMessageRepository();
         testMessage = new Message();
         testMessage.setId(1);
-        testMessage.setBody("testBody");
+        testMessage.setBody("test");
         testMessage.setAuthor(1);
         testMessage.setWrittenAt("testWrittenAt");
         testMessage.setLastUpdatedAt("testLastUpdatedAt");
@@ -43,7 +43,7 @@ public class GetMessageDataTest {
         MessageData mD = g.request(r);
 
         Assert.assertEquals(1, mD.id);
-        Assert.assertEquals("testBody", mD.body);
+        Assert.assertEquals("test", mD.body);
         Assert.assertEquals(1, mD.author);
         Assert.assertEquals("testWrittenAt", mD.writtenAt);
         Assert.assertEquals("testLastUpdatedAt", mD.lastUpdatedAt);
