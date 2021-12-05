@@ -55,7 +55,7 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<ArrayLis
 
         // Removing any conversations authored by users on the user's blocked list
         for(Conversation c:conversationQueue.toArray()){
-            if(!user.getBlockedUsers().contains(c.getAuthorID())){
+            if(!user.getBlockedUsers().contains(c.getAuthorId())){
                 ConversationProfile cp = new ConversationProfile(c);
                 filteredConversations.add(cp);
             }

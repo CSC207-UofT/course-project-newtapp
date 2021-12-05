@@ -27,23 +27,25 @@ public class RemoveUser extends ConversationInteractor<Void, Exception> {
      * @param request a request stored as a RequestModel
      */
     public Void request(RequestModel request) throws UserNotFound, ConversationNotFound, UserNotFoundInConversation {
-        int userID = (int)request.get(RequestField.USER_ID);
-        int conversationID = (int)request.get(RequestField.CONVERSATION_ID);
+        int userid = (int)request.get(RequestField.USER_ID);
+        int conversationid = (int)request.get(RequestField.CONVERSATION_ID);
 
         // Fetching the conversation from which we remove user
-        Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationid).orElseThrow(ConversationNotFound::new);
 
         //Fetching the user to remove from conversation
-        User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
+        User user = userRepository.findById(userid).orElseThrow(UserNotFound::new);
 
         // Check that the user is in the conversation
-        if (conversation.getUsers().contains(userID)) {
+        if (conversation.getUsers().contains(userid)) {
             // Checks to see how many users are in conversation, if 1 delete conversation
             // else just remove user from conversation.
             if(conversation.getNumUsers() == 1){
+                user.removeConversation(conversation);
+                userRepository.save(user);
                 conversationRepository.delete(conversation);
             } else{
-                conversation.removeUser(user);
+                conversation.removeUser(user.getId());
                 user.removeConversation(conversation);
                 conversationRepository.save(conversation);
                 userRepository.save(user);

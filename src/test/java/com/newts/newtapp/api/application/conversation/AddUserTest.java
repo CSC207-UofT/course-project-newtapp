@@ -34,8 +34,8 @@ public class AddUserTest {
 
         u.save(testUser);
         u.save(testAuthor);
-        testConversation.addUser(testAuthor);
-        testConversation.setAuthorID(2);
+        testConversation.addUser(testAuthor.getId());
+        testConversation.setAuthorId(2);
 
         c.save(testConversation);
 

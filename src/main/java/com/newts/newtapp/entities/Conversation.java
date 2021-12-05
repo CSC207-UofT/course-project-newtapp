@@ -86,7 +86,7 @@ public class Conversation {
      * The id of the author of the conversation.
      */
     @Column(name = "author_id", columnDefinition = "int")
-    private int authorID;
+    private int authorId;
 
     /**
      * Create a new Conversation object.
@@ -115,13 +115,14 @@ public class Conversation {
         messages = new ArrayList<>();
         users = new ArrayList<>();
         users.add(creatorId);
+        authorId = creatorId;
     }
 
     /**
      * Initialize a new empty conversation. Mostly used for testing purposes.
      */
     public Conversation() {
-        this.id = -1;
+        this.id = 0;
         this.title = "";
         this.topics = new ArrayList<>();
         this.location = "";
@@ -131,6 +132,7 @@ public class Conversation {
         this.isOpen = false;
         this.messages = new ArrayList<>();
         this.users = new ArrayList<>();
+        authorId = 0;
     }
 
     /**
@@ -280,20 +282,20 @@ public class Conversation {
 
     /**
      * Add a message to the conversation.
-     * @param message the message to be added
+     * @param messageId the message to be added
      */
-    public void addMessage(Message message){ this.messages.add(message.getId()); }
+    public void addMessage(int messageId){ this.messages.add(messageId); }
 
     /**
      * Add a user to the conversation.
-     * @param user  a user to be added
+     * @param userId  a user to be added
      * @return      true iff the user was added to the conversation
      */
-    public boolean addUser(User user){
-        if ((users.size() == maxSize) | users.contains(user.getId())) {
+    public boolean addUser(int userId){
+        if ((users.size() == maxSize) | users.contains(userId)) {
             return false;
         } else {
-            return users.add(user.getId());
+            return users.add(userId);
         }
     }
 
@@ -315,12 +317,12 @@ public class Conversation {
 
     /**
      * Remove a user from a conversation.
-     * @param user  a user to be removed
+     * @param userId  a user to be removed
      * @return      true iff the user was removed
      */
-    public boolean removeUser(User user) {
+    public boolean removeUser(int userId) {
         int beforeSize = users.size();
-        users.remove(Integer.valueOf(user.getId()));
+        users.remove(Integer.valueOf(userId));
         return beforeSize != users.size();
     }
 
@@ -329,9 +331,9 @@ public class Conversation {
      * @param message   a message to be removed
      * @return          true iff the message was removed
      */
-    public boolean deleteMessage(Message message) {
+    public boolean deleteMessage(int messageId) {
         int beforeSize = messages.size();
-        messages.remove(Integer.valueOf(message.getId()));
+        messages.remove(Integer.valueOf(messageId));
         return beforeSize != messages.size();
     }
 
@@ -339,13 +341,13 @@ public class Conversation {
      * Returns the id of the conversation author
      * @return  Author's userid.
      */
-    public int getAuthorID(){return authorID;}
+    public int getAuthorId(){return authorId;}
 
     /**
      * Sets author of conversation
      * @param authorID  Author's userid
      */
-    public void setAuthorID(int authorID){this.authorID = authorID;}
+    public void setAuthorId(int authorID){this.authorId = authorID;}
 
     /**
      * Sets location radius

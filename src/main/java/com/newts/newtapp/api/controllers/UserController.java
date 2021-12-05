@@ -88,11 +88,8 @@ public class UserController {
      */
     @PostMapping("/api/users/edit")
     public EntityModel<UserProfile> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.NEW_USERNAME, form.getUsername());
         request.fill(RequestField.LOCATION, form.getLocation());
         request.fill(RequestField.INTERESTS, form.getInterests());
@@ -113,11 +110,8 @@ public class UserController {
     @PostMapping("/api/users/edit/password")
     public EntityModel<UserProfile> changePassword(@RequestBody ChangePasswordForm form) throws UserNotFound,
             IncorrectPassword, InvalidPassword {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.PASSWORD, form.getPassword());
         request.fill(RequestField.NEW_PASSWORD, form.getNewPassword());
         userManager.changePassword(request);
@@ -136,11 +130,8 @@ public class UserController {
     @DeleteMapping("/api/users")
     ResponseEntity<?> delete(@RequestBody String password) throws UserNotFound, IncorrectPassword,
             ConversationNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.PASSWORD, password);
         userManager.delete(request);
         return ResponseEntity.noContent().build();
@@ -160,7 +151,7 @@ public class UserController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, usernameFollowing);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.follow(request);
         // Build response
@@ -176,11 +167,8 @@ public class UserController {
      */
     @PostMapping("/api/users/{username}/unfollow")
     public EntityModel<UserProfile> unfollow(@PathVariable String username) throws UserNotFound, SameUser {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String usernameFollowing = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, usernameFollowing);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.unfollow(request);
         // Build response
@@ -194,11 +182,8 @@ public class UserController {
      */
     @GetMapping("/api/following/conversations")
     void followingConversation() {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
+        request.fill(RequestField.USERNAME, returnUsername());
         userManager.followingConversations(request);
     }
 
@@ -210,11 +195,8 @@ public class UserController {
      */
     @PostMapping("/api/users/{username}/block")
     EntityModel<UserProfile> block(@PathVariable String username) throws UserNotFound, UserAlreadyBlocked  {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String user = userDetails.getUsername();
         RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, user);
+        request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.block(request);
         // Build response
@@ -234,6 +216,16 @@ public class UserController {
         userManager.rate(request);
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
+    }
+  
+    /**
+     * A helper method that returns the username of the currently authenticated user
+     * @return                  Currently authenticated user's username
+     */
+    private String returnUsername(){
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUsername();
     }
 
 }

@@ -1,6 +1,8 @@
 package com.newts.newtapp.api.application.datatransfer;
 
 import com.newts.newtapp.entities.Conversation;
+import com.newts.newtapp.entities.User;
+import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
 
@@ -10,8 +12,8 @@ import java.util.ArrayList;
  * This is just a data storage object.
  */
 public class ConversationData {
-    public ArrayList<MessageData> messageData;
-    public ArrayList<UserProfile> userProfiles;
+    public ArrayList<EntityModel<MessageData>> messageData;
+    public ArrayList<EntityModel<UserProfile>> userProfiles;
 
     public final int id;
     public final String title;
@@ -22,7 +24,7 @@ public class ConversationData {
     public final int numUsers;
     public Boolean isOpen;
 
-    public ConversationData(ArrayList<MessageData> messageData, ArrayList<UserProfile> userProfiles, Conversation conversation) {
+    public ConversationData(ArrayList<EntityModel<MessageData>> messageData, ArrayList<EntityModel<UserProfile>> userProfiles, Conversation conversation) {
         this.id = conversation.getId();
         this.title = conversation.getTitle();
         this.topics = conversation.getTopics();

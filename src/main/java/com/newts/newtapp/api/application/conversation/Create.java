@@ -2,10 +2,13 @@ package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
+import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.Conversation;
+import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
@@ -13,20 +16,23 @@ import java.util.ArrayList;
  * ConversationInteractor that creates a new conversation.
  * RequestModel must provide details for a new conversation
  */
-public class Create extends ConversationInteractor<Void, Exception> {
+public class Create extends ConversationInteractor<Integer, Exception> {
 
     /**
      * Initialize a new Create interactor with given ConversationRepository.
-     * @param repository    ConversationRepository to access Conversation data by
+     * @param repository        ConversationRepository to access Conversation data by
+     * @param userRepository    UserRepository to access User data by
      */
-    public Create(ConversationRepository repository) { super(repository); }
+    public Create(ConversationRepository repository, UserRepository userRepository) {
+        super(repository, userRepository);
+    }
 
     /**
      * Accepts a Create request and creates a conversation based on the request
      * @param request   a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws InvalidConversationSize, InvalidMinRating {
+    public Integer request(RequestModel request) throws InvalidConversationSize, InvalidMinRating, UserNotFound {
         String title = (String) request.get(RequestField.TITLE);
         // Cast Topics to Arraylist of String
         ArrayList<?> topics = (ArrayList<?>) request.get(RequestField.TOPICS);
@@ -50,7 +56,13 @@ public class Create extends ConversationInteractor<Void, Exception> {
 
         Conversation conversation = new Conversation(0, title, topicsList, location,
                 locationRadius, minRating, maxSize, creatorId);
-        conversationRepository.save(conversation);
-        return null;
+
+        // We need to use the saved conversation to connect it to a user. Else, we don't know what the id is!
+        Conversation saved = conversationRepository.save(conversation);
+
+        User user = userRepository.findById(creatorId).orElseThrow(UserNotFound::new);
+        user.addConversation(saved);
+        userRepository.save(user);
+        return saved.getId();
     }
 }

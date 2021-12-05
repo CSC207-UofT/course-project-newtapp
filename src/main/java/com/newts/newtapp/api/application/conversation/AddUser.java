@@ -39,7 +39,7 @@ public class AddUser extends ConversationInteractor<Void, Exception> {
 
         // Fetching the user to be added
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
-        User conversationAuthor = userRepository.findById(conversation.getAuthorID()).orElseThrow(UserNotFound::new);
+        User conversationAuthor = userRepository.findById(conversation.getAuthorId()).orElseThrow(UserNotFound::new);
 
         // Check if the User is above the conversation minimum rating
         if (user.getRating() < conversation.getMinRating()) {
@@ -57,7 +57,7 @@ public class AddUser extends ConversationInteractor<Void, Exception> {
         }
 
         // Add User to the conversation and the conversation to the user's list of conversations
-        conversation.addUser(user);
+        conversation.addUser(user.getId());
         user.addConversation(conversation);
 
         // Save conversation and save user
