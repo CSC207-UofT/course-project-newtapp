@@ -182,9 +182,9 @@ Principle 7 - Size and Space for Approach and Use: Appropriate size and space is
    
    In addition, we initially only used the projects feature on GitHub to delegate work and ensure that each member knew what the other members were doing. As we progressed through the project we found that we could also make use of the issues feature as well, and that the issues could also be items in the projects tab that can be moved as necessary.
    
-   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Projects%20Tab.JPG)
+   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/DesignDocument/phase2/images/issues%20tab.JPG)
    
-   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/issues%20tab.JPG)
+   ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/DesignDocument/phase2/images/issues%20tab.JPG)
   
  
    In Phase 1, our group decided to transition to a new repository for our Spring Boot transition. We wanted to separate our previous project from the transitioned Spring Boot project so we created a new repository called course-project-newtapp, whereas our old repository was called course-project-optimistic-newts.
