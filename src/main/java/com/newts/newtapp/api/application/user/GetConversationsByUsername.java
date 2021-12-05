@@ -32,8 +32,8 @@ public class GetConversationsByUsername extends UserInteractor<ArrayList<Convers
     @Override
     public ArrayList<ConversationProfile> request(RequestModel request) throws ConversationNotFound, UserNotFound {
         // Fetch the user, so we can access the user's conversation list
-        int userId = (int) request.get(RequestField.USER_ID);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        String username = (String) request.get(RequestField.USERNAME);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         // Initialize the ArrayList to hold the conversation profiles
         ArrayList<ConversationProfile> conversationProfiles = new ArrayList<ConversationProfile>();
