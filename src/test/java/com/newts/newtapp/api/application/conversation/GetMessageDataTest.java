@@ -3,8 +3,10 @@ package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
+import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.IncorrectPassword;
 import com.newts.newtapp.api.errors.MessageNotFound;
+import com.newts.newtapp.api.errors.MessageNotFoundInConversation;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestMessageRepository;
 import com.newts.newtapp.entities.Message;
@@ -35,7 +37,7 @@ public class GetMessageDataTest {
     }
 
     @Test(timeout=50)
-    public void testGetMessagesData() throws IncorrectPassword, MessageNotFound {
+    public void testGetMessagesData() throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
         RequestModel r = new RequestModel();
 
         r.fill(RequestField.MESSAGE_ID, 1);

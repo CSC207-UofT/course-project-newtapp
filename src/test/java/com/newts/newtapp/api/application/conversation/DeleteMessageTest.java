@@ -2,10 +2,7 @@ package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
-import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.MessageNotFound;
-import com.newts.newtapp.api.errors.MessageNotFoundInConversation;
-import com.newts.newtapp.api.errors.WrongAuthor;
+import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestMessageRepository;
 import com.newts.newtapp.entities.Conversation;
@@ -51,7 +48,8 @@ public class DeleteMessageTest {
     }
 
     @Test(timeout=50)
-    public void testGetMessages() throws ConversationNotFound, MessageNotFound, WrongAuthor, MessageNotFoundInConversation {
+    public void testGetMessages() throws ConversationNotFound, MessageNotFound, WrongAuthor,
+            MessageNotFoundInConversation, UserNotFoundInConversation {
         RequestModel r = new RequestModel();
 
         r.fill(RequestField.CONVERSATION_ID, 1);

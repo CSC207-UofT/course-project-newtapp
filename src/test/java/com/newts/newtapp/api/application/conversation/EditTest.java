@@ -3,6 +3,9 @@ package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.ConversationNotFound;
+import com.newts.newtapp.api.errors.InvalidConversationSize;
+import com.newts.newtapp.api.errors.InvalidMinRating;
+import com.newts.newtapp.api.errors.WrongAuthor;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
@@ -36,7 +39,7 @@ public class EditTest {
     }
 
     @Test(timeout=50)
-    public void testGetMessages() throws ConversationNotFound {
+    public void testGetMessages() throws ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize {
         RequestModel r = new RequestModel();
 
         r.fill(RequestField.CONVERSATION_ID, 1);
