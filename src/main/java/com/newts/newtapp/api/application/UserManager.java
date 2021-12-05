@@ -140,7 +140,16 @@ public class UserManager {
         Rate rate = new Rate((userRepository));
     }
 
-
+    /**
+     * Returns an arraylist of conversation profiles of conversations the token bearer is currently in.
+     * @param request                   RequestModel containing Conversation's id
+     * @return UserNotFound             If User with id does not exist
+     * @throws ConversationNotFound     If Conversation with id does not exist
+     */
+    public ArrayList<ConversationProfile> getConversationsByUsername(RequestModel request) throws UserNotFound, ConversationNotFound {
+        GetConversationsByUsername getConvByUsername = new GetConversationsByUsername(conversationRepository, userRepository);
+        return getConvByUsername.request(request);
+    }
 
 
 }
