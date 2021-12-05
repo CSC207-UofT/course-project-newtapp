@@ -101,7 +101,7 @@ public class User implements UserDetails {
     @Type(type = "list-array")
     private ArrayList<String> authorities;
 
-    @Column(name = "rated_user", columnDefinition = "int[]")
+    @Column(name = "rated_users", columnDefinition = "int[]")
     @Type(type = "list-array")
     private ArrayList<Integer> ratedUsers;
 

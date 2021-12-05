@@ -39,7 +39,7 @@ public class FollowUnfollowTest {
     }
 
     @Test(timeout = 500)
-    public void testFollow() throws UserNotFound, SameUser, AlreadyFollowingUser{
+    public void testFollow() throws UserNotFound, SameUser, AlreadyFollowingUser, UserBlocked, BlockedByUser {
         RequestModel r3 = new RequestModel();
         User user1 = testUserRepository.findById(1).get();
         User user2 = testUserRepository.findById(2).get();
