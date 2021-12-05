@@ -1,7 +1,9 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.ConversationController;
+import org.hibernate.type.EntityType;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -34,6 +36,11 @@ public class ConversationDataModelAssembler
             // No exception will ever be thrown at this point in normal use of this class as an exception would have
             // been thrown earlier during application logic.
         }
+
+        ArrayList<EntityModel> userProfile = new ArrayList<EntityModel>();
+        ArrayList<EntityModel> messageData = new ArrayList<EntityModel>();
+        for ()
+
         return EntityModel.of(data, links);
     }
 }
