@@ -220,4 +220,19 @@ public class UserController {
         UserProfile profile = userManager.getProfileById(request);
         return profileAssembler.toModel(profile);
     }
+
+    @PostMapping("/api/users/{username}/rate")
+    ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) throws UserNotFound, UserAlreadyRated {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String usernameRating = userDetails.getUsername();
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, usernameRating);
+        request.fill(RequestField.USERNAME_TWO, username);
+        request.fill(RequestField.RATING, rating);
+        userManager.rate(request);
+        // return empty ResponseEntity
+        return ResponseEntity.noContent().build();
+    }
+
 }

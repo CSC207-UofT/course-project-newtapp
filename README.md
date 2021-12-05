@@ -51,7 +51,8 @@ CREATE TABLE users (
     followers int[],
     blocked_users int[],
     conversations int[],
-    authorities text[]
+    authorities text[],
+    rated_users int[]
 )
 
 CREATE TABLE messages (

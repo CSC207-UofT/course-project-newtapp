@@ -2,12 +2,10 @@ package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
-import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
-import com.newts.newtapp.entities.Conversation;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
@@ -132,6 +130,16 @@ public class UserManager {
                 conversationRepository);
         return getRelevantConversations.request(request);
     }
+
+    /**
+     * Rate given user
+     * @param request RequestModel containing the user to be rated and the rating
+     */
+    public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
+        Rate rate = new Rate((userRepository));
+    }
+
+
 
 
 }
