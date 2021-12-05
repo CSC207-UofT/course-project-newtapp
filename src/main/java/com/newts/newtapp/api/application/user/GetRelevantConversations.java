@@ -31,8 +31,8 @@ public class GetRelevantConversations extends UserInteractor<ArrayList<Conversat
      */
     @Override
     public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound {
-        int userId = (int) request.get(RequestField.USER_ID);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        String username = (String) request.get(RequestField.USERNAME);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         InterestSorter sorter = new InterestSorter();
 

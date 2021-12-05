@@ -3,8 +3,10 @@ package com.newts.newtapp.api.controllers;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
+import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
@@ -15,6 +17,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 
 /**
  * This Controller handles User related mappings for our API.
@@ -24,10 +28,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserManager userManager;
     private final UserProfileModelAssembler profileAssembler;
+    private final ConversationProfileModelAssembler conversationAssembler;
 
-    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler) {
+    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler,
+                          ConversationProfileModelAssembler conversationAssembler) {
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
+        this.conversationAssembler = conversationAssembler;
     }
 
     /**
@@ -178,13 +185,25 @@ public class UserController {
 
     // TODO implement followingConversation and getRelevantConversations
     /**
-     * Return a list of conversations in which users' are user is following are
+     * Return a list of conversations in which users who this user is following are, sorted by interest.
      */
     @GetMapping("/api/following/conversations")
     void followingConversation() {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, returnUsername());
         userManager.followingConversations(request);
+    }
+
+    @GetMapping("/api/relevant/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getRelevantConversations() throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        ArrayList<ConversationProfile> conversations = userManager.getRelevantConversations(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(conversationAssembler.toModel(c));
+        }
+        return conversationsModel;
     }
 
     /**
