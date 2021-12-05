@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import {useCookies} from "react-cookie";
 import {Navigate} from "react-router-dom";
-import Layout from "./components/layout";
+import Layout from "./components/layouts/layout";
 
 function App() {
     const [cookies, setCookie] = useCookies(["Auth"]);

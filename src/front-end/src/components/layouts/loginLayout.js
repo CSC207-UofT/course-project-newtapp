@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import logo from "../images/logo128.png";
+import logo from "../../images/logo128.png";
 
 const LoginLayout = ({ children }) => {
     return(
