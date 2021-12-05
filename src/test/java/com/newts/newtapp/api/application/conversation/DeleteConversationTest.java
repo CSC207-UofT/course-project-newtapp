@@ -6,15 +6,11 @@ import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestMessageRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.Conversation;
-import com.newts.newtapp.entities.Message;
 import com.newts.newtapp.entities.User;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 public class DeleteConversationTest {
     TestConversationRepository c;
     TestMessageRepository m;
@@ -36,8 +32,12 @@ public class DeleteConversationTest {
     }
 
     @Test(timeout = 50)
-    public void testDeleteConversation(){
+    public void testDeleteConversation() throws UserNotFound, WrongAuthor, IncorrectPassword, ConversationNotFound {
         RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, testConversation.getId());
+        request.fill(RequestField.USER_ID, testUser.getId());
+        delete.request(request);
+        assertFalse(c.findById(testConversation.getId()).isPresent());
 
     }
 }
