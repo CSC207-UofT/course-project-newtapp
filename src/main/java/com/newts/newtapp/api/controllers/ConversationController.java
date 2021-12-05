@@ -72,23 +72,6 @@ public class ConversationController {
     }
 
     /**
-     * A helper method that returns the ID of the currently authenticated user
-     * @return                  Currently authenticated user's id
-     * @throws UserNotFound     If no User exists with username
-     */
-    private int returnId() throws UserNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-
-        // use the username to get the userId
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
-        UserProfile userProfile = userManager.getProfileByUsername(request);
-        return userProfile.id;
-    }
-
-    /**
      * Create a new conversation.
      * @param form                        A filled in CreateConversationForm
      * @throws InvalidConversationSize    If the provided conversation size is out of range
@@ -375,4 +358,20 @@ public class ConversationController {
         return messageDataModelAssembler.toModel(data);
     }
 
+    /**
+     * A helper method that returns the ID of the currently authenticated user
+     * @return                  Currently authenticated user's id
+     * @throws UserNotFound     If no User exists with username
+     */
+    private int returnId() throws UserNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // use the username to get the userId
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        UserProfile userProfile = userManager.getProfileByUsername(request);
+        return userProfile.id;
+    }
 }
