@@ -3,7 +3,10 @@ package com.newts.newtapp.api.controllers;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
+import com.newts.newtapp.api.controllers.assemblers.ConversationDataModelAssembler;
+import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.errors.*;
@@ -15,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 
 /**
  * This Controller handles User related mappings for our API.
@@ -24,10 +29,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserManager userManager;
     private final UserProfileModelAssembler profileAssembler;
+    private final ConversationProfileModelAssembler conversationAssembler;
 
-    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler) {
+    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler, ConversationProfileModelAssembler conversationAssembler) {
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
+        this.conversationAssembler = conversationAssembler;
     }
 
     /**
@@ -228,4 +235,23 @@ public class UserController {
         return userDetails.getUsername();
     }
 
+    /**
+     * Get an Arraylist of EntityModels of ConversationProfile of the conversations of the given user
+     * @param username              name of the user
+     * @throws UserNotFound         if user with given id doesn't exist
+     * @throws ConversationNotFound if conversation with given id doesn't exist
+     * @return                      Currently authenticated user's username
+     */
+    @GetMapping("/api/users/{username}/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getConversationsByUsername(@PathVariable String username)
+            throws UserNotFound, ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        ArrayList<ConversationProfile> conversations = userManager.getConversationsByUsername(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(conversationAssembler.toModel(c));
+        }
+        return conversationsModel;
+    }
 }
