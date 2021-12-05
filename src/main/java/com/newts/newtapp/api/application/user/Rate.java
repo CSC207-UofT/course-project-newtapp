@@ -20,7 +20,7 @@ public class Rate extends UserInteractor<Void, Exception>{
      * @param request a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws UserNotFound, UserAlreadyRated {
+    public Void request(RequestModel request) throws UserNotFound, UserAlreadyRated, InvalidRating {
         String username = (String) request.get(RequestField.USERNAME);
         String ratedUsername = (String) request.get(RequestField.USERNAME_TWO);
         int rating = (int) request.get(RequestField.RATING);
@@ -30,6 +30,10 @@ public class Rate extends UserInteractor<Void, Exception>{
 
         if (user.getRatedUsers().contains(ratedUser.getId())){
             throw new UserAlreadyRated();
+        }
+
+        if (0 < rating || rating > 5){
+            throw new InvalidRating();
         }
 
         user.addRatedUser(ratedUser.getId());
