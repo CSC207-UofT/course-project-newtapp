@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.gateways.ConversationRepository;
@@ -124,7 +125,7 @@ public class UserManager {
         block.request(request);
     }
 
-    public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
+    public ConversationProfile[] getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
         return getRelevantConversations.request(request);

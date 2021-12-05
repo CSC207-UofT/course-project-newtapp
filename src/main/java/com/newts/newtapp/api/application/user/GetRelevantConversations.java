@@ -1,5 +1,6 @@
 package com.newts.newtapp.api.application.user;
 
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.boundary.RequestField;
@@ -12,7 +13,7 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversations extends UserInteractor<Conversation[],UserNotFound>  {
+public class GetRelevantConversations extends UserInteractor<ConversationProfile[],UserNotFound>  {
 
     /**
      * Initialize a new Create interactor with given UserRepository.
@@ -29,7 +30,7 @@ public class GetRelevantConversations extends UserInteractor<Conversation[],User
      * @throws UserNotFound if the user can not be found
      */
     @Override
-    public Conversation[] request(RequestModel request) throws UserNotFound {
+    public ConversationProfile[] request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
@@ -40,14 +41,15 @@ public class GetRelevantConversations extends UserInteractor<Conversation[],User
 
         conversationQueue.addAll(conversationRepository.findAll());
 
-        ArrayList<Conversation> filteredConversations = new ArrayList<>();
+        ArrayList<ConversationProfile> filteredConversationsProfile = new ArrayList<>();
 
-        // Removing any converasations authored by users on the user's blocked list
+        // Removing any conversations authored by users on the user's blocked list
         for(Conversation c:conversationQueue.toArray()){
             if(!user.getBlockedUsers().contains(c.getAuthorID())){
-                filteredConversations.add(c);
+                ConversationProfile cp = new ConversationProfile(c);
+                filteredConversationsProfile.add(cp);
             }
         }
-        return filteredConversations.toArray(Conversation[]::new);
+        return filteredConversationsProfile.toArray(ConversationProfile[]::new);
     }
 }
