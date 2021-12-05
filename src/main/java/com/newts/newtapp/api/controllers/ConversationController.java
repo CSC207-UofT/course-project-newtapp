@@ -337,14 +337,13 @@ public class ConversationController {
      * @throws UserNotFound                  If no user exists with id
      * @throws ConversationNotFound          If no conversation exists with id
      * @throws MessageNotFound               If no message exists with id
-     * @throws EmptyMessage                  If the given message body isEmpty
      * @throws WrongAuthor                   If the given user didn't create the given conversation
      * @throws UserNotFoundInConversation    If the user is not found in conversation
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @DeleteMapping("/api/conversations/{cid}/messages/{id}")
     ResponseEntity<?> deleteMessage(@PathVariable int cid, @PathVariable int id)
-            throws UserNotFound, ConversationNotFound, EmptyMessage, WrongAuthor, MessageNotFound,
+            throws UserNotFound, ConversationNotFound, WrongAuthor, MessageNotFound,
             UserNotFoundInConversation, MessageNotFoundInConversation {
         //initiate a request model requesting the conversationId, messageId and the userId.
         RequestModel request = new RequestModel();
@@ -361,21 +360,19 @@ public class ConversationController {
         return ResponseEntity.noContent().build();
     }
 
-//    /**
-//     * Returns a MessageData for the Message with given id.
-//     * @param cid                       Conversation with cid
-//     * @param id                        id of Conversation
-//     * @return                          EntityModel containing Conversation data
-//     * @throws ConversationNotFound     If no Conversation exists with id
-//     */
-//    @GetMapping("/api/conversations/{cid}/messages/{id}")
-//    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id)
-//            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.CONVERSATION_ID, cid);
-//        request.fill(RequestField.MESSAGE_ID, id);
-//        MessageData data = conversationManager.getMessageData(request);
-//        return messageDataModelAssembler.toModel(data);
-//    }
+    /**
+     * Returns a MessageData for the Message with given id.
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     */
+    @GetMapping("/api/messages/{id}")
+    public EntityModel<MessageData> getMessageData(@PathVariable int id)
+            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.MESSAGE_ID, id);
+        MessageData data = conversationManager.getMessageData(request);
+        return messageDataModelAssembler.toModel(data);
+    }
 
 }
