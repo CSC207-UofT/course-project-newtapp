@@ -38,7 +38,7 @@ public class GetRevelantConversationsByFollowingTest {
         ArrayList<String> interest = new ArrayList<>();
         interest.add("a");
         ArrayList<String> notInterest = new ArrayList<>();
-        notInterest.add("b");
+        notInterest.add("c");
         user.setId(7);
         user.setInterests(interest);
         user.setLocation("Toronto");

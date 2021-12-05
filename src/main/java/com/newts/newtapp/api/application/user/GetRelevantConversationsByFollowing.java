@@ -26,7 +26,7 @@ public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayLis
     /**
      * Completes a GetRelevantConversations request.
      * Looks for relevant conversations by sorting through conversations of a user's following.
-     * @param request   a request stored as a RequestModel
+     * @param request  a request stored as a RequestModel
      * @return ArrayList of Conversations containing conversations of a user's following, as sorted by InterestSorter.
      * @throws UserNotFound if the user in the request can not be found.
      */
