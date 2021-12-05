@@ -1,12 +1,13 @@
 import '../App.css';
-import CreateUserForm from "../components/createuser";
-import Layout from "../components/layout";
+import CreateUserForm from "../components/forms/createUserForm";
+import Layout from "../components/layouts/layout";
+import LoginLayout from "../components/layouts/loginLayout";
+import React from "react";
 
 export default function CreateUser() {
     return (
-        <Layout>
-            <h2>Create an account</h2>
+        <LoginLayout>
             <CreateUserForm />
-        </Layout>
+        </LoginLayout>
     );
 }

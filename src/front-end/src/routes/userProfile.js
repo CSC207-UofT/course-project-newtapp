@@ -1,7 +1,7 @@
 import '../App.css';
 import React, {useEffect, useRef, useState} from 'react'
 import {useParams, Navigate, useNavigate} from "react-router-dom";
-import Layout from "../components/layout";
+import Layout from "../components/layouts/layout";
 import newtApi from "../api";
 
 const UserProfile = () => {
