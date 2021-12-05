@@ -26,13 +26,13 @@ public class Edit extends ConversationInteractor<Void,Exception>{
      */
     @Override
     public Void request(RequestModel request) throws ConversationNotFound, WrongAuthor, InvalidMinRating, InvalidConversationSize {
-        int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
-        int userID = (int) request.get(RequestField.USER_ID);
+        int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
+        int userId = (int) request.get(RequestField.USER_ID);
 
-        Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
+        Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
-        //Check if the conversation is created by the given userID
-        if (conversation.getAuthorID() != userID)  {
+        //Check if the conversation is created by the given userId
+        if (conversation.getAuthorID() != userId)  {
             throw new WrongAuthor();
         }
 
