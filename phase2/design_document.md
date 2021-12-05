@@ -118,6 +118,49 @@ Throughout our project, Clean Architecture played a very useful role, as we move
 
    When implementing our front-end, we originally wanted to use Gatsby for implementing a fast and efficient front-end. However, after further research, we realized Gatsby to be static. As such, we decided to simply stick to React for our front end, as we want our app to be able to update as new chats, conversations, and friends come in.
    
+## Accessibility Report
+
+   Design principles are essential design considerations for guiding the design of environments, products and communications. Incorportating design principles make products or applications assessible to the greatest range of people possible, incorporating equitable usages for people of all backgrounds, abilities and education.
+   
+Principle 1 - Equitable use: the design is useful and marketable to people with diverse abilities.
+  
+  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or alternatively a easily enabalable high-contrast mode for the visually impaired.
+
+
+Principle 2 - Flexibility in Use: The design accommodates a wide range of individual preferences and abilities.  
+   
+   - Proviving users with the flexibility to configure an app to their preference is an important design consideration. In the future, we could consider making our application accessible from multiple different deivces and platforms, giving users the flexibility to use our app to their liking. As such, this would also involve making mobile friendly designs.
+   
+   
+Principle 3 - Simple and Intuitive: The design is easy to understand, regardless of the user's experience, knowledge, language skills, or current concentration level. 
+   
+   - We hope to design an app that is accessible, equitable and understandable to those of all education levels and language. Providing the option to translate our app to different languages, or alternatively to sort through conversations based on a user's language could aid in promiting intuitive uses for people across the globe. Further, designing a simple, straightforeward and familiar app and chat layout can help to make our app more accessible to all, regardless of one's level of focus.
+   
+   
+Principle 4 - Perceptible Information: The design communicates necessary information effectively to the user, regardless of ambient conditions or the user's sensory abilities. 
+   
+   - Including a variety of modes for the presentation of information is not only important for making information easily percievable, but also a nice way to make applications look visually pleasing and appealing. As such, we hope to make important information like creating accounts and logging in easily percievable on our app, while also using colours to make important UI components stand out to users.
+   
+   
+Principle 5 - Tolerance for Error: The design minimizes hazards and the adverse consequences of accidental or unintended actions. 
+   
+   - Features like autocorrection for typing or confirmation of actions is a useful way to minimize accidental or unintended actions. Keeping important information behind multiple pages, like password information or account deletion, is important to prevent accidental touches, or to prevent unintentional loss of progress.
+   
+   
+Principle 6 - Low Physical Effort: The design can be used efficiently and comfortably and with a minimum of fatigue.
+   
+   - Tho this principle largely does not apply towards the design of applications, it is important to stay away from requiring extravaganteous inputs or operating forces from users. For example, users should not be required to click buttons at high rates to interact with our app.
+
+
+Principle 7 - Size and Space for Approach and Use: Appropriate size and space is provided for approach, reach, manipulation, and use regardless of user's body size, posture, or mobility. 
+   
+   - Once again, this design principle does not specifically relate to the implementation of a tech app, tho it is important to ensure text and data is presented in a legible, understandable and clear way as to not require extraneous strain from users.
+   
+   
+   As a social media applicaiton, we hope to make our applicatin accessible and usable for all age groups, ranging from teens to adults. Expressing one's opinions and communicating is invaluavble and an essential part of human life, so we think our app will apply to all age groups who enjoy learning, interacting with others, and sharing opinions. 
+   However, if we were to provide some sort of subscription or permium service, we think this would be most popular amidst teenagers and young adults. We feel that teens and millenials would be the most willing and interested in possible additinal features like bigger chatrooms, voice-calling featurss, or simply allowing for more user customization.
+
+   
 ## Use of GitHub Features
 
    Throughout the development of our web app our group has been making use of several features available on GitHub. One such feature is branching. So far we have been making separate branches for each new feature that we implement. Once the feature has been implemented, we used the pull request feature on GitHub to ensure that other members of the group have a chance to review the code before the branch is merged into our main branch. 
@@ -130,13 +173,12 @@ Throughout our project, Clean Architecture played a very useful role, as we move
    
    ![Example of Projects tab](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/issues%20tab.JPG)
   
-   
-   Another major change that we made in terms of our GitHub project page is transitioning to a new repository for our Spring Boot transition. We wanted to separate our previous project from the transitioned Spring Boot project so we created a new repository called course-project-newtapp, whereas our old repository was called course-project-optimistic-newts.
+ 
+   In Phase 1, our group decided to transition to a new repository for our Spring Boot transition. We wanted to separate our previous project from the transitioned Spring Boot project so we created a new repository called course-project-newtapp, whereas our old repository was called course-project-optimistic-newts.
 
 ## Code Style and Documentation
 
 At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
-
 
 ## Packaging Strategies
 
@@ -174,20 +216,45 @@ In Phase 2, we worked towards finaliing all the remaining fundamental components
 
 Our team has continued to work effectively in completing our Specification and moving our program to a Web App. Our team has continued to work well as a group in communicating amidst ourselves and in dividing the work between us.
 
-- Alex: In Phase 2, I focused on helping to develop our front-end. I worked on implementing DataTransfer Objects for Conversation and Message Data, as secure ways of transfering information from higher layers of the program to the Front-End. I also implemented more sorting algorithyms for our ConversationSorter Strategy Design Pattern. Lastly, I worked on final changes for the DesignDocument, and prepared slides for our presentation.
-   An important Pull Request I made Throughout this project was with 
+### Alex
+   In Phase 2, I aided in our front-end development. I worked on implementing DataTransfer Objects for Conversation and Message Data, as secure ways of transfering information from higher layers of the program to the Front-End. I also implemented more sorting algorithyms for our ConversationSorter Strategy Design Pattern. Lastly, I worked on final changes for the DesignDocument, and prepared slides for our presentation.
+   
+   An important Pull Request I made throughout this project was with 
 
-- Spencer: 
+### Spencer
+   For phase 2, I worked on implementing password encryption, user authentication, and the front end. I enjoyed working on these things because they were each very interesting topics to learn about that are not specifically part of this course.
 
-- Will: 
+   A significant PR i made during this project is linked below. This pull request implemented the Authentication features that enable our API to be used securely without requiring username+password credentials on each secured request.
+   
+   https://github.com/CSC207-UofT/course-project-newtapp/pull/62
 
-- Ted: 
+### Will 
+   For phase 2, I worked on 
+   
+   A significant PR I made during this project is 
 
-- Yukthi: 
+### Ted
+   For phase 2, I worked on the backend - implemented some remaining message interactors necessary for the app, edited conversation manager to use those interactors, and implemented conversation controller as well as necessary conversation and message data assemblers.
 
-- Zachary: A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pr still play significant roles in the functionality of the program currently.
+   A significant pull request I made in the development of our app was for implementing the ConversationController. This handles mapping between the frontend and the backend.
+   
+   https://github.com/CSC207-UofT/course-project-newtapp/pull/81
+
+### Yukthi
+   For phase 2 I primarily worked on the backend, focusing on finishing the use case classes as well as adding tests to already implemented use case classes. I enjoyed being able to implement the backend functionality responsible for the actions that our users may choose to do on the app.
+
+  A significant PR i made during this project was for the Delete User Interactor. This interactor is a use case involved in deleting a user from the database, along with removing any references and reationships associated with that user. This included changing conversation authors, removing from followed lists, as well as removing from following lists.
+  
+  https://github.com/CSC207-UofT/course-project-newtapp/pull/32
+
+### Zachary
+   For phase 2, I worked on implementing the mock repositories to be able to test all the interactors. I also worked on implementing tests for the interactors. Also spent some time creating the logo for our app.
+
+   A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pr still play significant roles in the functionality of the program currently.
+   
    https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/6
 
+# Final Thoughts
 
 Our team has really enjoyed working on this project, and have learnt invaluable tools and skills about the implementation and functionality of web apps and databsaes. :)
 
