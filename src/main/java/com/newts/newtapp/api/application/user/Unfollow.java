@@ -34,14 +34,20 @@ public class Unfollow extends UserInteractor<Void, Exception>{
         }
 
         // Check if user is following other
-        if (user.getFollowing().contains(other.getId())){user.removeFollowing(other);}
-        else { throw new UserNotFound();}
-
+        if (!user.getFollowing().contains(other.getId())){
+            throw new UserNotFound();
+        }
 
         // Check if other has user as a follower
-        if(other.getFollowers().contains(user.getId())){other.removeFollower(user);}
-        else { throw new UserNotFound();}
+        if(!other.getFollowers().contains(user.getId())){
+            throw new UserNotFound();
+        }
 
+        user.removeFollowing(other);
+        other.removeFollower(user);
+
+        userRepository.save(user);
+        userRepository.save(other);
         return null;
     }
 }

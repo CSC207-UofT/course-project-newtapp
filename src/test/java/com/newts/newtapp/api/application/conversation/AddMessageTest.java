@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AddMessageTest {
     TestConversationRepository c;
+    TestUserRepository u;
     TestMessageRepository m;
     AddMessage a;
     Conversation testConversation;
@@ -28,21 +29,22 @@ public class AddMessageTest {
     public void setUp() {
         c = new TestConversationRepository();
         m = new TestMessageRepository();
+        u = new TestUserRepository();
 
         testConversation = new Conversation();
         testUser = new User();
         c.save(testConversation);
+        u.save(testUser);
 
-        a = new AddMessage(c,m);
+        a = new AddMessage(c,m,u);
     }
 
     @Test(timeout = 50)
-    public void testAddUser() throws ConversationNotFound, EmptyMessage, UserNotFoundInConversation {
+    public void testAddMessage() throws ConversationNotFound, EmptyMessage {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, testConversation.getId());
         r.fill(RequestField.USER_ID, testUser.getId());
         r.fill(RequestField.MESSAGE_BODY, "Hello");
-        r.fill(RequestField.MESSAGE_ID, -1);
 
         a.request(r);
 
@@ -50,10 +52,10 @@ public class AddMessageTest {
         Conversation checkConversation = c.findById(-1).get();
         ArrayList<Integer> messageList = checkConversation.getMessages();
         int actualMessageId = messageList.get(0);
-        Assert.assertEquals(-1, actualMessageId);
+        Assert.assertEquals(0, actualMessageId);
 
-        assertTrue(m.findById(-1).isPresent());
-        Message checkMessage = m.findById(-1).get();
+        assertTrue(m.findById(1).isPresent());
+        Message checkMessage = m.findById(1).get();
 
         Assert.assertEquals("Hello", checkMessage.getBody());
     }

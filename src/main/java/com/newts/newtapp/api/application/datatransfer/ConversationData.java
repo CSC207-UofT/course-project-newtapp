@@ -20,7 +20,7 @@ public class ConversationData {
     public final String location;
     public int minRating;
     public final int maxSize;
-    public final int currSize;
+    public final int numUsers;
     public Boolean isOpen;
 
     public ConversationData(ArrayList<EntityModel> messageData, ArrayList<EntityModel> userProfiles, Conversation conversation) {
@@ -30,7 +30,7 @@ public class ConversationData {
         this.location = conversation.getLocation();
         this.minRating = conversation.getMinRating();
         this.maxSize = conversation.getMaxSize();
-        this.currSize = conversation.getNumUsers();
+        this.numUsers = conversation.getNumUsers();
         this.isOpen = conversation.getIsOpen();
         this.messageData = messageData;
         this.userProfiles = userProfiles;
