@@ -1,6 +1,7 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
+import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.errors.*;
@@ -76,6 +77,18 @@ public class UserManager {
     public void edit(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
         Edit edit = new Edit(userRepository);
         edit.request(request);
+    }
+
+    /**
+     * Changes a user's password.
+     * @param request
+     * @throws UserNotFound         Given user is not in repository
+     * @throws InvalidPassword      Password not valid
+     * @throws IncorrectPassword    Old password is wrong
+     */
+    public void changePassword(RequestModel request) throws UserNotFound, InvalidPassword, IncorrectPassword {
+        ChangePassword changePassword = new ChangePassword(userRepository);
+        changePassword.request(request);
     }
 
     /**
