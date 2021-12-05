@@ -6,12 +6,15 @@ import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
 import com.newts.newtapp.api.application.conversation.EditMessage;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
+import com.newts.newtapp.api.application.user.GetConversationsByUsername;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.*;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 /**
  * An object representing a ConversationManager of the application.
