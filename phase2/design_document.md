@@ -7,18 +7,22 @@ We want to give our users the opportunity to connect with other users without ex
 
 ## Updated Specification
 
-   Since Phase 2, our group worked towards completing a number of critical components for our social media application. We began by completing the remaining tasks in our specifications and user stories. 
-These tasks included:
+   Since Phase 2, our group worked towards completing a number of critical components for our social media application. We began by finishing the remaining tasks in our specifications and user stories. 
+Some of these tasks included:
  
 - Implementing Authentication 
 - Password Encryption
+- Interactors for Message, conversation editing 
+- Additional sorting algorithyms for conversations, such as based on friends or your location
+
 
 In Phase 2, we continued working on our implementation of our Web Application. This involved:
 - Moving to and configuring React
 - Familiarizing ourselves with  JavaScript and CSS
+- Data Transfer Objects for secure transfer of conversation, user and messages
 - Deciding essential components of our front-end
 - Using React Routes to enable navigation among views of various components
-- 
+
 ## SOLID Design Principles
 
 In the development of our App, we considered many uses of SOLID design principles to better demonstrate effective, well-designed code.
@@ -77,7 +81,7 @@ information relevant to the user is displayed on the web application's graphical
 Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional funcionalities. Along the way, 
 - Moving to SpringBoot: Clean Architecture meant we could largely plug in our existing back-end on top of SpringBoot's functionality
 - Implementing PostGres: The use of a gateway meant we could easily move from a mock databse to using PosgGreSql
-- Implemnenting our front-end using React: The structure of our code allowed us to build our front-end on top of our existing code.
+- Implementing our front-end using React: The structure of our code allowed us to build our front-end on top of our existing code.
 
 
 ## Design Patterns
@@ -93,9 +97,12 @@ Throughout our project, Clean Architecture played a very useful role, as we move
 
     The Strategy Design pattern facilitates defining family of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
     
-- Singleton Design Pattern:
- JWT Token #TODO
+ 
+- Factory Design Pattern
 
+   Our group considered the use of the Factory Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for recieving and replying to requests for interacions between components of our program. Tho this model would be useful for our program, our group decided against implementing this design pattern, because it would require builder subclasses for each use case implementation. As such, we decided it was more important to focus our time on our remaining specification and towards our front-end.  
+   
+   
 ## Design Decisions
 
    In the further development of our app, we were called to consider many design questions for better optimizing the functionality of our app.
@@ -114,10 +121,14 @@ Throughout our project, Clean Architecture played a very useful role, as we move
    
    Originally, we had different request models for each interactor, making sending and receiving requests and responses unnecessarily complex. To adjust this, we created one request model for all interactors. However, after further implementing our program as a web app, we then decided to use the request and responses as implemented and handled by Spring Boot.
    
+- Message Controller
+
+   Our group decided not to include a controller for our Message entity, but rather to handle the use cases of messages through the conversation controller.
+   
 -  Implemenmting our Front-End
 
    When implementing our front-end, we originally wanted to use Gatsby for implementing a fast and efficient front-end. However, after further research, we realized Gatsby to be static. As such, we decided to simply stick to React for our front end, as we want our app to be able to update as new chats, conversations, and friends come in.
-   
+     
 ## Accessibility Report
 
    Design principles are essential design considerations for guiding the design of environments, products and communications. Incorportating design principles make products or applications assessible to the greatest range of people possible, incorporating equitable usages for people of all backgrounds, abilities and education.
@@ -180,7 +191,12 @@ Principle 7 - Size and Space for Approach and Use: Appropriate size and space is
 
 ## Code Style and Documentation
 
-At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+   At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+
+## Testing
+
+   In phase 2, our group worked towards adding more tests for our program. # TO INCLUDE: PIC OF TEST COVERAGE
+
 
 ## Packaging Strategies
 
@@ -189,7 +205,7 @@ At the moment, we have a bunch of IntelliJ warnings across our project, but plea
 
 ## Refactoring
 
-We did a fair share of refactoring for Phase 1.  Here are three examples of refactoring we did:
+We did a fair share of refactoring for Phase 2.  Here are three examples of refactoring we did:
 - Request Model (https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/37): 
   The first version of our request model was overly complicated. We simplified it a lot by making one request model format that all Use Cases can implement.
   In our current request model, our Use Cases only need to implement Input Boundary so that they can accept a request. The controller now fills the request and send it to the appropriate Use Case.
