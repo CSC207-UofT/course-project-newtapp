@@ -1,8 +1,10 @@
 import '../App.css';
-import React, {useEffect, useRef, useState} from 'react'
-import {useParams, Navigate, useNavigate} from "react-router-dom";
-import Layout from "../components/layout";
+import React, {useEffect, useState} from 'react'
+import {useParams, Navigate} from "react-router-dom";
+import Layout from "../components/layouts/layout";
 import newtApi from "../api";
+import CookieCheck from "../components/cookieCheck";
+import Profile from "../components/user/profile";
 
 const UserProfile = () => {
     const { username } = useParams()
@@ -17,7 +19,7 @@ const UserProfile = () => {
             setLoaded(true);
         }
         if (!loaded && !sent) {
-            getUser();
+            getUser().then();
         } else if (loaded && user.id == null) {
             setSent(false);
         }
@@ -25,8 +27,11 @@ const UserProfile = () => {
 
     if (!loaded) {
         return (
-            <Layout>
-            </Layout>
+            <>
+                <CookieCheck />
+                <Layout>
+                </Layout>
+            </>
         )
     } else if (loaded && !sent) {
         return (
@@ -34,9 +39,12 @@ const UserProfile = () => {
         )
     } else {
         return (
-            <Layout>
-                <p>{user.username}</p>
-            </Layout>
+            <>
+                <CookieCheck />
+                <Layout>
+                    <Profile userData={user} />
+                </Layout>
+            </>
         )
     }
 }

@@ -101,6 +101,10 @@ public class User implements UserDetails {
     @Type(type = "list-array")
     private ArrayList<String> authorities;
 
+    @Column(name = "rated_users", columnDefinition = "int[]")
+    @Type(type = "list-array")
+    private ArrayList<Integer> ratedUsers;
+
     /**
      * Create a new User with given User information.
      * @param username  The user's username.
@@ -448,5 +452,21 @@ public class User implements UserDetails {
      * @param blockedUsers ArrayList of blocked users.
      */
     public void setBlockedUsers(ArrayList<Integer> blockedUsers){this.blockedUsers = blockedUsers;}
+
+    /**
+     * Sets ratedUsers ArrayList to the ArrayList passed in.
+     * @param ratedUsers Arraylist of user ids which have been rated by the user
+     */
+    public void setRatedUsers(ArrayList<Integer> ratedUsers){this.ratedUsers = ratedUsers;}
+
+    /**
+     * Returns ratedUsers ArrayList
+     * @return ratedUsers Arraylist of user ids which have been rated by the user
+     */
+    public ArrayList<Integer> getRatedUsers(){return ratedUsers;}
+
+    public void addRatedUser(int userID){
+        ratedUsers.add(userID);
+    }
 
 }

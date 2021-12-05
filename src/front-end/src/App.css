@@ -5,6 +5,63 @@ body {
   background-color: #252525;
 }
 
+.newtButton {
+  background-color: #992F05;
+  border: none;
+  color: white;
+  margin: 5px;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.newtButton:hover {
+  box-shadow: 0 0 5px black;
+}
+
+.newtButton:focus {
+  color: #992F05;
+  background-color: white;
+}
+
+.newtButtonDark {
+  background-color: #252525;
+  border: none;
+  color: white;
+  margin: 5px;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.newtButtonDark:hover {
+  box-shadow: 0 0 5px black;
+}
+
+.newtButtonDark:focus {
+  background-color: black;
+}
+
+.newtTextInput {
+  margin: 4px;
+  padding: 8px;
+  border: none;
+}
+
+.newtTextInput:hover {
+  box-shadow: 0 0 5px black;
+}
+
+.formWarningText {
+  position: absolute;
+  width: 250px;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 nav {
   position: fixed;
   top: 0;
@@ -37,6 +94,7 @@ nav {
   background-color: #FFFFFF;
   color: #992F05;
   cursor: pointer;
+  box-shadow: 0 0 5px black;
 }
 
 .navLogo {
@@ -60,15 +118,13 @@ nav {
 }
 
 .navUserPhoto:hover {
-  background-color: #FFFFFF;
-  padding: 2px;
-  right: 12px;
+  box-shadow: 0 0 5px black;
 }
 
 .mainContainer {
   z-index: -1;
   width: 100%;
-  max-width: 1500px;
+  max-width: 1000px;
   background-color: #252525;
   position: absolute;
   left: 50%;
@@ -78,4 +134,127 @@ nav {
 
 .loginMain {
   margin: -50px 0 0;
+  height: 100vh;
+  background-image: url("./images/North_America_Nebula_HaRGB_V3_high_res.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.loginSideDiv {
+  background-color: #992F05;
+  height: 400px;
+  width: 400px;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  box-shadow: 2px 0 25px black;
+}
+
+.loginSideContent {
+  position: absolute;
+  width: 75%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.loginSideChildren {
+
+}
+
+.loginLogo {
+  width: 40px;
+  height: 40px;
+}
+
+.loginLink {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.loginLink:hover {
+  background-color: #FFFFFF;
+  color: #992F05;
+  cursor: pointer;
+  box-shadow: 0 0 5px black;
+}
+
+/* User Profile */
+
+.userProfileBanner {
+  position: fixed;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  height: 15%;
+  border-bottom: 2px solid #505050;
+}
+
+.userProfilePhotoContainer {
+  flex: none;
+  height: 75%;
+  margin: 0 25px;
+}
+
+.userProfilePhoto {
+  border-radius: 50%;
+  background-color: white;
+  height: 100%;
+  width: 100%;
+}
+
+.userProfileNameContainer {
+  flex: none;
+}
+
+.userProfileName {
+  font-size: 32px;
+}
+
+.userProfileFollowButton{
+  padding: 0 10px;
+  flex: none;
+}
+
+.userProfileContent {
+  height: 85%;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
+
+.userProfileInfoPanel {
+  width: 30%;
+  height: 500px;
+  position: absolute;
+  left: 0;
+  word-wrap: break-word;
+  line-height: 150%;
+}
+
+.userProfileInfo {
+  font-size: 18px;
+  margin-top: 10px;
+  padding: 15px;
+  width: 50%;
+  text-align: center;
+}
+
+.userProfileInfoRow {
+  height: 25px;
+}
+
+.userProfileConversationsPanel {
+  width: 69%;
+  height: 100%;
+  position: absolute;
+  right: 0;
 }

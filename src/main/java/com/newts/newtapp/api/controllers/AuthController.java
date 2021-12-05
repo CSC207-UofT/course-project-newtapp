@@ -11,6 +11,7 @@ import com.newts.newtapp.api.security.JwtTokenUtil;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,12 +21,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.format.SignStyle;
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class AuthController {
-    private AuthenticationManager authManager;
-    private JwtTokenUtil jwtTokenUtil;
-    private UserProfileModelAssembler profileAssembler;
-    private UserManager userManager;
+    private final AuthenticationManager authManager;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserProfileModelAssembler profileAssembler;
+    private final UserManager userManager;
 
     public AuthController(AuthenticationManager authManager, JwtTokenUtil jwtTokenUtil,
                           UserProfileModelAssembler profileAssembler, UserManager userManager) {
@@ -52,8 +57,9 @@ public class AuthController {
             RequestModel request = new RequestModel();
             request.fill(RequestField.USERNAME, userDetails.getUsername());
             UserProfile user = userManager.getProfileByUsername(request);
-            return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
-                    .body(profileAssembler.toModel(user));
+            Map<String, String> responseBody = new HashMap<>();
+            responseBody.put("jwt", jwtTokenUtil.generateAccessToken(user));
+            return ResponseEntity.ok().body(responseBody);
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

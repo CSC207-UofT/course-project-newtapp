@@ -31,7 +31,7 @@ public class Block extends UserInteractor<Void, Exception>{
 
         User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
         User blockedUser = userRepository.findByUsername(blockedUsername).orElseThrow(UserNotFound::new);
-        if(!user.getBlockedUsers().contains(blockedUser.getId())){
+        if(user.getBlockedUsers().contains(blockedUser.getId())){
             throw new UserAlreadyBlocked();
         }
 
