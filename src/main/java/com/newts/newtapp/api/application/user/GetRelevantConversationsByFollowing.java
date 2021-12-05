@@ -13,20 +13,20 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationsByFollowers extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
+public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
     /**
      * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
      */
-    public GetRelevantConversationsByFollowers(UserRepository repository, ConversationRepository conversationRepository) {
+    public GetRelevantConversationsByFollowing(UserRepository repository, ConversationRepository conversationRepository) {
         super(repository, conversationRepository);
     }
 
     /**
      * Completes a GetRelevantConversations request.
-     * Looks for relevant conversations by sorting through conversations of a user's followers.
+     * Looks for relevant conversations by sorting through conversations of a user's following.
      * @param request   a request stored as a RequestModel
-     * @return ArrayList of Conversations containing conversations of a user's followers, as sorted by InterestSorter.
+     * @return ArrayList of Conversations containing conversations of a user's following, as sorted by InterestSorter.
      * @throws UserNotFound if the user in the request can not be found.
      */
     @Override
@@ -39,17 +39,19 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<ArrayLis
         ConversationQueue conversationQueue = new ConversationQueue(sorter, user.getLocation(),
                 user.getInterests());
 
-        ArrayList<Conversation> followerConversations = new ArrayList<>();
+        ArrayList<Conversation> followingConversations = new ArrayList<>();
 
-        ArrayList<Integer> followers = user.getFollowers();
-        for (int i : followers) {
-            Conversation userConversationID = conversationRepository.getById(i);
-            if (userConversationID.getIsOpen()) {
-                followerConversations.add(userConversationID);
+        ArrayList<Integer> following = user.getFollowing();
+
+        for (Conversation c : conversationRepository.findAll()) {
+            for (int i : following) {
+                if (c.getUsers().contains(i) && !(followingConversations.contains(c))){
+                    followingConversations.add(c);
+                }
             }
         }
 
-        conversationQueue.addAll(followerConversations);
+        conversationQueue.addAll(followingConversations);
 
         ArrayList<ConversationProfile> filteredConversations = new ArrayList<>();
 
