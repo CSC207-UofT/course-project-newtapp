@@ -10,6 +10,8 @@ import com.newts.newtapp.api.application.user.*;
 import com.newts.newtapp.entities.Conversation;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+
 /**
  * A facade for user interactors.
  */
@@ -125,7 +127,7 @@ public class UserManager {
         block.request(request);
     }
 
-    public ConversationProfile[] getRelevantConversations(RequestModel request) throws UserNotFound {
+    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
         return getRelevantConversations.request(request);

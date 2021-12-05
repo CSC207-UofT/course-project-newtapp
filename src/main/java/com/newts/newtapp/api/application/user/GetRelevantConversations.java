@@ -13,7 +13,7 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversations extends UserInteractor<ConversationProfile[],UserNotFound>  {
+public class GetRelevantConversations extends UserInteractor<ArrayList<ConversationProfile>,UserNotFound>  {
 
     /**
      * Initialize a new Create interactor with given UserRepository.
@@ -30,7 +30,7 @@ public class GetRelevantConversations extends UserInteractor<ConversationProfile
      * @throws UserNotFound if the user can not be found
      */
     @Override
-    public ConversationProfile[] request(RequestModel request) throws UserNotFound {
+    public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
@@ -41,15 +41,15 @@ public class GetRelevantConversations extends UserInteractor<ConversationProfile
 
         conversationQueue.addAll(conversationRepository.findAll());
 
-        ArrayList<ConversationProfile> filteredConversationsProfile = new ArrayList<>();
+        ArrayList<ConversationProfile> filteredConversations = new ArrayList<>();
 
         // Removing any conversations authored by users on the user's blocked list
         for(Conversation c:conversationQueue.toArray()){
             if(!user.getBlockedUsers().contains(c.getAuthorID())){
                 ConversationProfile cp = new ConversationProfile(c);
-                filteredConversationsProfile.add(cp);
+                filteredConversations.add(cp);
             }
         }
-        return filteredConversationsProfile.toArray(ConversationProfile[]::new);
+        return filteredConversations;
     }
 }
