@@ -72,23 +72,6 @@ public class ConversationController {
     }
 
     /**
-     * A helper method that returns the ID of the currently authenticated user
-     * @return                  Currently authenticated user's id
-     * @throws UserNotFound     If no User exists with username
-     */
-    private int returnId() throws UserNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-
-        // use the username to get the userId
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
-        UserProfile userProfile = userManager.getProfileByUsername(request);
-        return userProfile.id;
-    }
-
-    /**
      * Create a new conversation.
      * @param form                        A filled in CreateConversationForm
      * @throws InvalidConversationSize    If the provided conversation size is out of range
@@ -206,8 +189,8 @@ public class ConversationController {
         conversationManager.editConversation(request);
 
         // Build response
-        ConversationProfile data = conversationManager.getProfile(request);
-        return profileAssembler.toModel(data);
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
@@ -244,7 +227,7 @@ public class ConversationController {
      * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/open")
-    public EntityModel<ConversationDataWithLink> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
+    public EntityModel<ConversationProfile> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
             ConversationNotFound, MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
@@ -257,8 +240,8 @@ public class ConversationController {
         conversationManager.changeConversationStatus(request);
 
         // Build response
-        ConversationData data = conversationManager.getData(request);
-        return dataAssembler.toModel(data);
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
@@ -342,9 +325,9 @@ public class ConversationController {
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @DeleteMapping("/api/conversations/{cid}/messages/{id}")
-    ResponseEntity<?> deleteMessage(@PathVariable int cid, @PathVariable int id)
+    public EntityModel<ConversationDataWithLink> deleteMessage(@PathVariable int cid, @PathVariable int id)
             throws UserNotFound, ConversationNotFound, WrongAuthor, MessageNotFound,
-            UserNotFoundInConversation, MessageNotFoundInConversation {
+            UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
         //initiate a request model requesting the conversationId, messageId and the userId.
         RequestModel request = new RequestModel();
 
@@ -357,7 +340,9 @@ public class ConversationController {
 
         conversationManager.deleteMessage(request);
 
-        return ResponseEntity.noContent().build();
+        // Build response
+        ConversationData data = conversationManager.getData(request);
+        return dataAssembler.toModel(data);
     }
 
     /**
@@ -373,6 +358,24 @@ public class ConversationController {
         request.fill(RequestField.MESSAGE_ID, id);
         MessageData data = conversationManager.getMessageData(request);
         return messageDataModelAssembler.toModel(data);
+    }
+
+
+    /**
+     * A helper method that returns the ID of the currently authenticated user
+     * @return                  Currently authenticated user's id
+     * @throws UserNotFound     If no User exists with username
+     */
+    private int returnId() throws UserNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // use the username to get the userId
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        UserProfile userProfile = userManager.getProfileByUsername(request);
+        return userProfile.id;
     }
 
 }
