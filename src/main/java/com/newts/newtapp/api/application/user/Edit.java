@@ -7,6 +7,7 @@ import com.newts.newtapp.entities.User;
 import com.newts.newtapp.api.gateways.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * UserInteractor that edits user information.
@@ -40,7 +41,7 @@ public class Edit extends UserInteractor<Void, Exception> {
         if (username.contains(" ")) {
             throw new InvalidUsername();
         }
-        if (userRepository.findByUsername(username).isPresent()) {
+        if (!Objects.equals(user.getUsername(), username) && userRepository.findByUsername(username).isPresent()) {
             throw new UserAlreadyExists();
         }
 

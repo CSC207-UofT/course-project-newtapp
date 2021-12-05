@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.application.ConversationQueue;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.sorters.InterestSorter;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
@@ -12,7 +13,7 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationsByFollowers extends UserInteractor<Conversation[], UserNotFound> {
+public class GetRelevantConversationsByFollowers extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
     /**
      * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
@@ -29,7 +30,7 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
      * @throws UserNotFound if the user in the request can not be found.
      */
     @Override
-    public Conversation[] request(RequestModel request) throws UserNotFound {
+    public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
@@ -50,15 +51,16 @@ public class GetRelevantConversationsByFollowers extends UserInteractor<Conversa
 
         conversationQueue.addAll(followerConversations);
 
-        ArrayList<Conversation> filteredConversations = new ArrayList<>();
+        ArrayList<ConversationProfile> filteredConversations = new ArrayList<>();
 
-        // Removing any converasations authored by users on the user's blocked list
+        // Removing any conversations authored by users on the user's blocked list
         for(Conversation c:conversationQueue.toArray()){
             if(!user.getBlockedUsers().contains(c.getAuthorID())){
-                filteredConversations.add(c);
+                ConversationProfile cp = new ConversationProfile(c);
+                filteredConversations.add(cp);
             }
         }
-        return filteredConversations.toArray(Conversation[]::new);
+        return filteredConversations;
     }
 }
 
