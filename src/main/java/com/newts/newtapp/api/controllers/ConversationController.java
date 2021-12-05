@@ -114,7 +114,7 @@ public class ConversationController {
      * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/join")
-    public EntityModel<ConversationDataWithLink> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
+    public EntityModel<ConversationProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
             UserBlocked, ConversationFull, ConversationNotFound, MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
@@ -127,8 +127,8 @@ public class ConversationController {
         conversationManager.addUser(request);
 
         // Build response
-        ConversationData data = conversationManager.getData(request);
-        return dataAssembler.toModel(data);
+        ConversationProfile profile = conversationManager.getProfile(request);
+        return profileAssembler.toModel(profile);
     }
 
     /**
