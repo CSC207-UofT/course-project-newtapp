@@ -99,7 +99,7 @@ public class ConversationTest {
     @Test(timeout = 50)
     public void TestAddMessage() {
         User u = new User(0, "Joe", "pass", new ArrayList<>());
-        Message m = new Message(1, "Hello!", 0);
+        Message m = new Message(1, "Hello!", 0, 0);
         c.addMessage(m);
         assertSame(m.getId(), c.getMessages().get(c.getMessages().size() - 1));
     }
