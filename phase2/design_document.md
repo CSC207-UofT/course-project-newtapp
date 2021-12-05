@@ -231,9 +231,11 @@ Our team has continued to work effectively in completing our Specification and m
    https://github.com/CSC207-UofT/course-project-newtapp/pull/62
 
 ### Will 
-   For phase 2, I worked on 
+   Since phase 1, I tried helping with the front-end of our app but soon realized that I am a lot more efficient in the back-end. Consequently, I finished implementing our User Controller, wrote tests for use cases and fixed bugs in our app.
    
-   A significant PR I made during this project is 
+   A significant PR I made during this project is implementing our databse. This Pull request implements our Postgres database through Spring boot to store messages. It demonstrates a significant contribution to the team because it shows that I contributed to setting up our Spring Boot app and our database, both essential for our app.
+   
+   https://github.com/CSC207-UofT/course-project-newtapp/commit/91d3406b37efabaff08150aa512eb5d27af08875
 
 ### Ted
    For phase 2, I worked on the backend - implemented some remaining message interactors necessary for the app, edited conversation manager to use those interactors, and implemented conversation controller as well as necessary conversation and message data assemblers.
