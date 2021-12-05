@@ -4,7 +4,9 @@ import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
+import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
+import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.Conversation;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,16 +18,18 @@ import static org.junit.Assert.assertTrue;
 
 public class CreateTest {
     TestConversationRepository c;
+    TestUserRepository u;
     Create create;
 
     @Before
     public void setUp() {
         c = new TestConversationRepository();
-        create = new Create(c);
+        u = new TestUserRepository();
+        create = new Create(c, u);
     }
 
     @Test(timeout = 50)
-    public void testCreate() throws InvalidMinRating, InvalidConversationSize {
+    public void testCreate() throws InvalidMinRating, InvalidConversationSize, UserNotFound {
         RequestModel r = new RequestModel();
         r.fill(RequestField.TITLE, "");
         r.fill(RequestField.TOPICS, "");

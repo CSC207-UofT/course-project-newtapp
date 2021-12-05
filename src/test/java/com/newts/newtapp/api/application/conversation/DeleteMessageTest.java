@@ -37,8 +37,8 @@ public class DeleteMessageTest {
         testMessageTwo.setAuthor(3);
         testConversation = new Conversation();
         testConversation.setId(1);
-        testConversation.addMessage(testMessage);
-        testConversation.addMessage(testMessageTwo);
+        testConversation.addMessage(testMessage.getId());
+        testConversation.addMessage(testMessageTwo.getId());
 
         c.save(testConversation);
         m.save(testMessage);

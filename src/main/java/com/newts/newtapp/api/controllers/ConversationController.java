@@ -30,16 +30,14 @@ public class ConversationController {
     private final UserManager userManager;
     private final ConversationProfileModelAssembler profileAssembler;
     private final ConversationDataModelAssembler dataAssembler;
-    private final MessageDataModelAssembler messageDataModelAssembler;
 
     public ConversationController(ConversationManager conversationManager, UserManager userManager,
                                   ConversationProfileModelAssembler profileAssembler,
-                                  ConversationDataModelAssembler dataAssembler, MessageDataModelAssembler messageDataModelAssembler) {
+                                  ConversationDataModelAssembler dataAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
         this.dataAssembler = dataAssembler;
-        this.messageDataModelAssembler = messageDataModelAssembler;
     }
 
     /**
@@ -99,7 +97,8 @@ public class ConversationController {
         //fill in the userId
         request.fill(RequestField.USER_ID, returnId());
 
-        conversationManager.createConversation(request);
+        int id = conversationManager.createConversation(request);
+        request.fill(RequestField.CONVERSATION_ID, id);
 
         // Build response
         EntityModel<ConversationProfile> profileModel = profileAssembler.toModel(conversationManager.getProfile(request));
@@ -349,22 +348,6 @@ public class ConversationController {
         ConversationData data = conversationManager.getData(request);
         return dataAssembler.toModel(data);
     }
-
-    /**
-     * Returns a MessageData for the Message with given id.
-     * @param id                        id of Conversation
-     * @return                          EntityModel containing Conversation data
-     * @throws ConversationNotFound     If no Conversation exists with id
-     */
-    @GetMapping("/api/messages/{id}")
-    public EntityModel<MessageData> getMessageData(@PathVariable int id)
-            throws MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.MESSAGE_ID, id);
-        MessageData data = conversationManager.getMessageData(request);
-        return messageDataModelAssembler.toModel(data);
-    }
-
 
     /**
      * A helper method that returns the ID of the currently authenticated user

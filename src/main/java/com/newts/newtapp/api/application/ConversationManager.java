@@ -66,9 +66,9 @@ public class ConversationManager {
      * Creates a conversation using request
      * @param request the filled in RequestModel
      */
-    public void createConversation(RequestModel request) throws InvalidMinRating, InvalidConversationSize {
-        Create create = new Create(conversationRepository);
-        create.request(request);
+    public int createConversation(RequestModel request) throws InvalidMinRating, InvalidConversationSize, UserNotFound {
+        Create create = new Create(conversationRepository, userRepository);
+        return create.request(request);
     }
 
     /**
@@ -122,9 +122,9 @@ public class ConversationManager {
      * Adds message to the conversation specified by the user
      * @param request the filled in RequestModel
      */
-    public void addMessage(RequestModel request) throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound {
+    public Void addMessage(RequestModel request) throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound {
         AddMessage addMessage = new AddMessage(conversationRepository, messageRepository);
-        addMessage.request(request);
+        return addMessage.request(request);
     }
 
     /**

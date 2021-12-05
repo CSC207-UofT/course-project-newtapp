@@ -35,9 +35,9 @@ public class RemoveUserTest {
         u.save(testUser);
         u.save(testAuthor);
 
-        testConversation.addUser(testAuthor);
-        testConversation.addUser(testUser);
-        testConversation.setAuthorID(2);
+        testConversation.addUser(testAuthor.getId());
+        testConversation.addUser(testUser.getId());
+        testConversation.setAuthorId(2);
 
         c.save(testConversation);
 

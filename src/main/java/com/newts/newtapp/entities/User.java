@@ -402,7 +402,7 @@ public class User implements UserDetails {
     public void removeConversation(Conversation conversation){
         int index = conversations.indexOf(conversation.getId());
         if(index != -1)
-            conversations.remove(conversation.getId());
+            conversations.remove(index);
     }
 
     /**

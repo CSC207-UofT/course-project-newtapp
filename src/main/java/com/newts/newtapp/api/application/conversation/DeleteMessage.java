@@ -52,7 +52,7 @@ public class DeleteMessage extends ConversationInteractor<Void, Exception> {
 
         // Check that the message is in the conversation and delete it if so.
         if (conversation.getMessages().contains(messageId)) {
-            conversation.deleteMessage(message);
+            conversation.deleteMessage(message.getId());
             messageRepository.delete(message);
             conversationRepository.save(conversation);
             return null;

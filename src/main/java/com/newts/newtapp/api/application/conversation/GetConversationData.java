@@ -59,6 +59,7 @@ public class GetConversationData extends ConversationInteractor<ConversationData
 
         // Creating MessageData objects from list of messageIds and adding them to an ArrayList of
         // EntityModel of messageData and their links
+        requestModel.fill(RequestField.CONVERSATION_ID, conversationId);
         for(int m : conversation.getMessages()){
             requestModel.fill(RequestField.MESSAGE_ID, m);
             messageData.add(messageAssembler.toModel(getMessageData.request(requestModel)));

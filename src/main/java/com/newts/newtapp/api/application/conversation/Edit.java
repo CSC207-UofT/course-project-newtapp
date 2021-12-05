@@ -32,7 +32,7 @@ public class Edit extends ConversationInteractor<Void,Exception>{
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         //Check if the conversation is created by the given userId
-        if (conversation.getAuthorID() != userId)  {
+        if (conversation.getAuthorId() != userId)  {
             throw new WrongAuthor();
         }
 

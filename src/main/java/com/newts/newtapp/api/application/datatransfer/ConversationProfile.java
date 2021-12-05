@@ -14,16 +14,17 @@ public class ConversationProfile {
     public final String title;
     public final ArrayList<String> topics;
     public final String location;
-    public final int max_size;
-    public final int curr_size;
+    public final int maxSize;
+    public final int currSize;
+    public final boolean isOpen;
 
     public ConversationProfile(Conversation conversation) {
         this.id = conversation.getId();
         this.title = conversation.getTitle();
         this.topics = conversation.getTopics();
         this.location = conversation.getLocation();
-        this.max_size = conversation.getMaxSize();
-        this.curr_size = conversation.getNumUsers() / conversation.getMaxSize();
-
+        this.maxSize = conversation.getMaxSize();
+        this.currSize = conversation.getNumUsers();
+        this.isOpen = conversation.getIsOpen();
     }
 }

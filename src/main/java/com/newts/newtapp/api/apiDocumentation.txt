@@ -71,11 +71,11 @@ Conversation API:
 		header: authentication
 		body: {
 			"title": title,
-			"topic": topic,
+			"topics": topics,
 			"location": location,
 			"locationRadius": locationRadius,
 			"minRating": minRating,
-			"maxSize": maxSize,
+			"maxSize": maxSize
 		}
 
 	Edit Conversation - POST /api/conversations/{id}/edit

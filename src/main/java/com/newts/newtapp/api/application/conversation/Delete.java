@@ -31,7 +31,7 @@ public class Delete extends ConversationInteractor<Void,Exception> {
         Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
 
         //Check if the conversation is created by the given userID
-        if (conversation.getAuthorID() != userID)  {
+        if (conversation.getAuthorId() != userID)  {
             throw new WrongAuthor();
         }
 

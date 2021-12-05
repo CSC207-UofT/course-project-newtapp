@@ -54,10 +54,10 @@ public class Delete extends UserInteractor<Void,Exception> {
             if (conversation.getNumUsers() == 1){
                 conversationRepository.delete(conversation);
             } else{
-                if (conversation.getAuthorID() == user.getId()){
-                    conversation.setAuthorID(conversation.getUsers().get(1));
+                if (conversation.getAuthorId() == user.getId()){
+                    conversation.setAuthorId(conversation.getUsers().get(1));
                 }
-                conversation.removeUser(user);
+                conversation.removeUser(user.getId());
                 conversationRepository.save(conversation);
             }
         }

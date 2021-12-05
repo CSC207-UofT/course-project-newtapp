@@ -27,14 +27,6 @@ public class MessageDataModelAssembler
      */
     @Override
     public @NonNull EntityModel<MessageData> toModel(@NonNull MessageData data) {
-        ArrayList<Link> links = new ArrayList<>();
-        try {
-            // Add appropriate links from this MessageData
-            links.add(linkTo(methodOn(ConversationController.class).getMessageData(data.id)).withSelfRel());
-        } catch (Exception e) {
-            // No exception will ever be thrown at this point in normal use of this class as an exception would have
-            // been thrown earlier during application logic.s
-        }
-        return EntityModel.of(data, links);
+        return EntityModel.of(data);
     }
 }

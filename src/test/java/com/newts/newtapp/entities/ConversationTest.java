@@ -100,7 +100,7 @@ public class ConversationTest {
     public void TestAddMessage() {
         User u = new User(0, "Joe", "pass", new ArrayList<>());
         Message m = new Message(1, "Hello!", 0);
-        c.addMessage(m);
+        c.addMessage(m.getId());
         assertSame(m.getId(), c.getMessages().get(c.getMessages().size() - 1));
     }
 
@@ -109,7 +109,7 @@ public class ConversationTest {
         c.setMaxSize(1);
         ArrayList<String> interests = new ArrayList<>(List.of(new String[]{"Golf", "Painting"}));
         User u = new User(0, "testuser", "password", interests);
-        c.addUser(u);
+        c.addUser(u.getId());
         assertSame(u.getId(), c.getUsers().get(c.getUsers().size() - 1));
     }
 
@@ -117,7 +117,7 @@ public class ConversationTest {
     public void TestAddUserAtMax() {
         ArrayList<String> interests = new ArrayList<>(List.of(new String[]{"Golf", "Painting"}));
         User u = new User(0, "testuser", "password", interests);
-        assertFalse(c.addUser(u));
+        assertFalse(c.addUser(u.getId()));
     }
 
     @Test(timeout = 50)
@@ -125,20 +125,20 @@ public class ConversationTest {
         c.setMaxSize(2);
         ArrayList<String> interests = new ArrayList<>(List.of(new String[]{"Golf", "Painting"}));
         User u = new User(1, "testuser", "password", interests);
-        assertTrue(c.addUser(u));
+        assertTrue(c.addUser(u.getId()));
     }
 
     @Test(timeout = 50)
     public void TestRemoveUser() {
         User u = new User();
-        c.addUser(u);
-        assertTrue(c.removeUser(u));
+        c.addUser(u.getId());
+        assertTrue(c.removeUser(u.getId()));
     }
 
     @Test(timeout = 50)
     public void TestRemoveUserNotInConversation() {
         User u = new User();
         u.setId(1);
-        assertFalse(c.removeUser(u));
+        assertFalse(c.removeUser(u.getId()));
     }
 }
