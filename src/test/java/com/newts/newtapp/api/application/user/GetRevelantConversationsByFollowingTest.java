@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
@@ -97,7 +98,7 @@ public class GetRevelantConversationsByFollowingTest {
     }
 
     @Test(timeout=50)
-    public void testGetRelevantConversationsByFollowers() throws UserNotFound {
+    public void testGetRelevantConversationsByFollowers() throws UserNotFound, ConversationNotFound {
         RequestModel r = new RequestModel();
 
         r.fill(RequestField.USER_ID, 7);

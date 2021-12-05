@@ -5,6 +5,7 @@ import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.sorters.InterestSorter;
+import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -31,7 +32,7 @@ public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayLis
      * @throws UserNotFound if the user in the request can not be found.
      */
     @Override
-    public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound {
+    public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound, ConversationNotFound {
         int userId = (int) request.get(RequestField.USER_ID);
         User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
 
@@ -45,9 +46,9 @@ public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayLis
         ArrayList<Integer> following = user.getFollowing();
 
         for (int i : following) {
-            User u = userRepository.findById(i).get();
+            User u = userRepository.findById(i).orElseThrow(UserNotFound::new);
             for (int c : u.getConversations()){
-                Conversation conversation = conversationRepository.findById(c).get();
+                Conversation conversation = conversationRepository.findById(c).orElseThrow(ConversationNotFound::new);
                 if (!followingConversations.contains(conversation)){
                     followingConversations.add(conversation);
                 }
