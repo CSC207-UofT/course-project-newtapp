@@ -1,7 +1,5 @@
 package com.newts.newtapp.api.application;
 
-import com.newts.newtapp.api.application.ConversationQueue;
-import com.newts.newtapp.api.application.KeyedConversation;
 import com.newts.newtapp.api.application.sorters.InterestSorter;
 import com.newts.newtapp.entities.Conversation;
 import org.junit.Assert;
@@ -25,7 +23,7 @@ public class ConversationQueueTest {
         ArrayList<String> interests = new ArrayList<>();
         interests.add("Hockey");
         interests.add("Math");
-        cq = new ConversationQueue(sorter,"Toronto", 10, interests);
+        cq = new ConversationQueue(sorter,"Toronto", interests);
     }
 
     /**
@@ -34,14 +32,6 @@ public class ConversationQueueTest {
     @Test
     public void getLocationTest() {
         Assert.assertEquals("Toronto", cq.getLocation());
-    }
-
-    /**
-     * Test location radius getter.
-     */
-    @Test
-    public void getLocationRadiusTest() {
-        Assert.assertEquals(10, cq.getLocationRadius());
     }
 
     /**

@@ -7,14 +7,14 @@ public class MessageData {
     public int id;
     public String body;
     public int author;
-    public String written_at;
-    public String last_updated_at;
+    public String writtenAt;
+    public String lastUpdatedAt;
 
     public MessageData(Message message) {
         this.id = message.getId();
         this.body = message.getBody();
         this.author = message.getAuthor();
-        this.written_at = message.getWrittenAt();
-        this.last_updated_at = message.getLastUpdatedAt();
+        this.writtenAt = message.getWrittenAt();
+        this.lastUpdatedAt = message.getLastUpdatedAt();
     }
 }

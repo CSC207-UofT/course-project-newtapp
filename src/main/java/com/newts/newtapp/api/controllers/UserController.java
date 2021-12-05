@@ -5,6 +5,7 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
+import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
 import org.springframework.hateoas.EntityModel;
@@ -95,34 +96,33 @@ public class UserController {
         request.fill(RequestField.NEW_USERNAME, form.getUsername());
         request.fill(RequestField.LOCATION, form.getLocation());
         request.fill(RequestField.INTERESTS, form.getInterests());
-        userManager.create(request);
+        userManager.edit(request);
         request.fill(RequestField.USERNAME, form.getUsername());
         // Build response
-        UserProfile profile = userManager.getProfileById(request);
+        UserProfile profile = userManager.getProfileByUsername(request);
         return profileAssembler.toModel(profile);
     }
 
     /**
      * Change the password of the currently authenticated user, provided the given current password is correct for said user.
      * We require the user to resubmit their password here for security reasons.
-     * @param password              user's password
+     * @param form                  form containing old and new passwords
      * @throws UserNotFound         if no such user exists with given id
      * @throws IncorrectPassword    if given password is incorrect
      */
     @PostMapping("/api/users/edit/password")
-    // TODO Check that parameters work as expect
-    public EntityModel<UserProfile> changePassword(@RequestBody String password, @RequestBody String newPassword) throws UserNotFound, IncorrectPassword,
-            ConversationNotFound {
+    public EntityModel<UserProfile> changePassword(@RequestBody ChangePasswordForm form) throws UserNotFound,
+            IncorrectPassword, InvalidPassword {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, username);
-        request.fill(RequestField.PASSWORD, password);
-        request.fill(RequestField.NEW_PASSWORD, newPassword);
-        userManager.delete(request);
+        request.fill(RequestField.PASSWORD, form.getPassword());
+        request.fill(RequestField.NEW_PASSWORD, form.getNewPassword());
+        userManager.changePassword(request);
         // Build response
-        UserProfile profile = userManager.getProfileById(request);
+        UserProfile profile = userManager.getProfileByUsername(request);
         return profileAssembler.toModel(profile);
     }
 
@@ -163,7 +163,7 @@ public class UserController {
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.follow(request);
         // Build response
-        UserProfile profile = userManager.getProfileById(request);
+        UserProfile profile = userManager.getProfileByUsername(request);
         return profileAssembler.toModel(profile);
     }
 
@@ -183,11 +183,11 @@ public class UserController {
         request.fill(RequestField.USERNAME_TWO, username);
         userManager.unfollow(request);
         // Build response
-        UserProfile profile = userManager.getProfileById(request);
+        UserProfile profile = userManager.getProfileByUsername(request);
         return profileAssembler.toModel(profile);
     }
 
-    // TODO implement followingConversation
+    // TODO implement followingConversation and getRelevantConversations
     /**
      * Return a list of conversations in which users' are user is following are
      */
@@ -220,14 +220,4 @@ public class UserController {
         UserProfile profile = userManager.getProfileById(request);
         return profileAssembler.toModel(profile);
     }
-
-//// These methods need to be remade in a secure and RESTful manner
-//    @GetMapping("/api/users/getRelevantConversations")
-//    Conversation[] getRelevantConversations(@RequestParam int userId, @RequestParam int locationRadius)
-//            throws UserNotFound {
-//        RequestModel request = new RequestModel();
-//        request.fill(RequestField.USER_ID, userId);
-//        request.fill(RequestField.LOCATION_RADIUS, locationRadius);
-//        return userManager.getRelevantConversations(request);
-//    }
 }
