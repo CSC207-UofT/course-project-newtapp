@@ -1,7 +1,5 @@
 package com.newts.newtapp.api.application.boundary;
 
-import com.newts.newtapp.api.errors.*;
-
 /**
  * An Input Boundary interface. Defines a standard input method by which to pass RequestModel objects.
  */
