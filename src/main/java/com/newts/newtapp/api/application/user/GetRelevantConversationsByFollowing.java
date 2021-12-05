@@ -13,7 +13,6 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
     /**
