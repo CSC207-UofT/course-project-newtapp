@@ -6,10 +6,7 @@ import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.user.GetProfileById;
-import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.IncorrectPassword;
-import com.newts.newtapp.api.errors.MessageNotFound;
-import com.newts.newtapp.api.errors.UserNotFound;
+import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -35,7 +32,7 @@ public class GetConversationData extends ConversationInteractor<ConversationData
      * @param request a request stored as a RequestModel
      */
     @Override
-    public ConversationData request(RequestModel request) throws IncorrectPassword, UserNotFound, ConversationNotFound, MessageNotFound {
+    public ConversationData request(RequestModel request) throws IncorrectPassword, UserNotFound, ConversationNotFound, MessageNotFound, MessageNotFoundInConversation {
         RequestModel requestModel = new RequestModel();
         GetProfileById getProfileById = new GetProfileById(userRepository);
         GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);
