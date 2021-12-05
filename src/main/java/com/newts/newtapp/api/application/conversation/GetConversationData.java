@@ -3,6 +3,8 @@ package com.newts.newtapp.api.application.conversation;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
+import com.newts.newtapp.api.application.datatransfer.MessageData;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.user.GetProfileById;
 import com.newts.newtapp.api.controllers.assemblers.MessageDataModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
@@ -23,7 +25,7 @@ public class GetConversationData extends ConversationInteractor<ConversationData
     /**
      * Creates a GetConversationData Interactor with given User and Conversation Repositories
      * @param userRepository UserRepository containing User data
-     * @param conversationRepository ConversationRepository containing COnversation data
+     * @param conversationRepository ConversationRepository containing Conversation data
      */
     public GetConversationData(ConversationRepository conversationRepository, MessageRepository messageRepository,
                                UserRepository userRepository){
@@ -44,8 +46,8 @@ public class GetConversationData extends ConversationInteractor<ConversationData
         GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);
 
         int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
-        ArrayList<EntityModel> userProfiles = new ArrayList<EntityModel>();
-        ArrayList<EntityModel> messageData = new ArrayList<EntityModel>();
+        ArrayList<EntityModel<UserProfile>> userProfiles = new ArrayList<>();
+        ArrayList<EntityModel<MessageData>> messageData = new ArrayList<>();
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 
         // Creating UserProfile objects from list of userIds in Conversation and adding them to an ArrayList of
