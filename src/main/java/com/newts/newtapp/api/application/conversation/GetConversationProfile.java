@@ -13,10 +13,10 @@ public class GetConversationProfile extends ConversationInteractor<ConversationP
     /**
      * Create a GetConversationProfile interactor with supplied repositories
      * @param conversationRepository ConversatioRepository containing Conversation data
-     * @param userRepository UserRepository containing User data
      */
-    public GetConversationProfile(ConversationRepository conversationRepository,
-                                  UserRepository userRepository){super(conversationRepository, userRepository);}
+    public GetConversationProfile(ConversationRepository conversationRepository){
+        super(conversationRepository);
+    }
 
 
     /**
