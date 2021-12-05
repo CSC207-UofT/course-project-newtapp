@@ -38,7 +38,7 @@ public class GetConversationDataTest {
         testConversation.setMaxSize(1);
         testUser = new User(1, "testUser", "password", new ArrayList<>());
         testConversation.addUser(testUser.getId());
-        testMessage = new Message(-1, "", 1);
+        testMessage = new Message(-1, "", 1, 0);
         testConversation.addMessage(testMessage.getId());
 
         u.save(testUser);
