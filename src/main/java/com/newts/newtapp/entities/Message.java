@@ -44,18 +44,26 @@ public class Message {
     private String lastUpdatedAt;
 
     /**
+     * This message's time at which it was last updated.
+     */
+    @Column(name = "conversation_id", columnDefinition = "integer")
+    private int conversationId;
+
+    /**
      * Create a new message with given id, body, and authorId.
      * @param id            Unique id for this message
      * @param body          Body of this message
      * @param authorId      Author of this message's user id
+     * @param conversationId Conversation id of the conversation that this message was sent to
      */
-    public Message(int id, String body, int authorId) {
+    public Message(int id, String body, int authorId, int conversationId) {
         this.id = id;
         this.body = body;
         this.author = authorId;
         DateTimeFormatter date = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         this.writtenAt = LocalDateTime.now().format(date);
         this.lastUpdatedAt = LocalDateTime.now().format(date);
+        this.conversationId = conversationId;
     }
 
     public Message() {
@@ -147,4 +155,12 @@ public class Message {
      * @param id    unique message id
      */
     public void setId(int id) { this.id = id; }
+
+    /**
+     * Returns id of the conversation that the message is in
+     * @return Int id of the conversation
+     */
+    public int getConversationId() {
+        return conversationId;
+    }
 }
