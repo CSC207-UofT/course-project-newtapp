@@ -55,8 +55,9 @@ public class GetRelevantConversationsByLocation extends UserInteractor<ArrayList
         ArrayList<ConversationProfile> filteredConversations = new ArrayList<>();
 
         // Removing any conversations authored by users on the user's blocked list
+        // and removing any conversations that the user is already in
         for(Conversation c:conversationQueue.toArray()){
-            if(!user.getBlockedUsers().contains(c.getAuthorId())){
+            if(!user.getBlockedUsers().contains(c.getAuthorId()) && !user.getConversations().contains(c.getId())){
                 ConversationProfile cp = new ConversationProfile(c);
                 filteredConversations.add(cp);
             }
