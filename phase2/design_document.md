@@ -192,7 +192,8 @@ Bringing an app to the public
 
 Alex
    - In Phase 2, I aided in our front-end development. I worked on implementing DataTransfer Objects for Conversation and Message Data, as secure ways of transferring information from higher layers of the program to the Front-End. I also implemented more sorting algorithms for our ConversationSorter Strategy Design Pattern. Lastly, I worked on the final changes for the design document and prepared slides for our presentation.
-An important Pull Request I made throughout this project was with
+An important Pull Request I made throughout this project was for our design document. The design document is an essential component of our project, and hilights the progress, ideas and work of our team.
+https://github.com/CSC207-UofT/course-project-newtapp/pull/112
 
 Spencer
    - For phase 2, I worked on implementing password encryption, user authentication, and the front end. I enjoyed working on these things because they were each very interesting topics to learn about that are not specifically part of this course.
