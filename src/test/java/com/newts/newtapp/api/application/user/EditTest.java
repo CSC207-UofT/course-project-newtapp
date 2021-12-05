@@ -2,26 +2,26 @@ package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
-import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestUserRepository;
+import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
-public class GetProfileByIDTest {
+public class EditTest {
     TestUserRepository testUserRepository;
     Create create;
-    GetProfileById getProfileById;
+    Edit edit;
 
     @Before
     public void setUp() throws UserNotFound, SameUser, AlreadyFollowingUser, InvalidUsername, UserAlreadyExists,
             InvalidPassword {
         testUserRepository = new TestUserRepository();
         create = new com.newts.newtapp.api.application.user.Create(testUserRepository);
-        getProfileById = new com.newts.newtapp.api.application.user.GetProfileById(testUserRepository);
+        edit = new Edit(testUserRepository);
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
@@ -31,11 +31,19 @@ public class GetProfileByIDTest {
         create.request(r);
     }
 
-    @Test(timeout = 500)
-    public void testGetProfileByID() throws UserNotFound{
+    @Test(timeout = 50)
+    public void testEdit() throws UserNotFound, UserAlreadyExists, InvalidUsername{
         RequestModel r2 = new RequestModel();
-        r2.fill(RequestField.USER_ID, 1);
-        UserProfile userProfile = getProfileById.request(r2);
-        assertEquals(1, userProfile.id);
+        ArrayList<String> newInterests = new ArrayList<>();
+        newInterests.add("newInterests");
+        r2.fill(RequestField.USERNAME, "test");
+        r2.fill(RequestField.NEW_USERNAME, "newUsername");
+        r2.fill(RequestField.INTERESTS, newInterests);
+        edit.request(r2);
+
+        User u = testUserRepository.findById(1).orElseThrow(UserNotFound::new);
+
+        assertEquals("newUsername", u.getUsername());
+        assertEquals("newInterests", u.getInterests().get(0));
     }
 }

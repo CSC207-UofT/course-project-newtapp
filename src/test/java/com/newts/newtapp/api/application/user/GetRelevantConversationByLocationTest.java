@@ -14,14 +14,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationsTest {
+public class GetRelevantConversationByLocationTest {
     TestConversationRepository c;
     TestUserRepository u;
     User user;
     Conversation conversationOne;
     Conversation conversationTwo;
     Conversation conversationThree;
-    GetRelevantConversations g;
+    GetRelevantConversationsByLocation g;
 
     @Before
     public void setUp() {
@@ -29,15 +29,19 @@ public class GetRelevantConversationsTest {
         u = new TestUserRepository();
 
         user = new User();
+        ArrayList<Integer> following = new ArrayList<>();
+        following.add(1);
+        following.add(2);
         ArrayList<Integer> blockedUser = new ArrayList<>();
         ArrayList<String> interest = new ArrayList<>();
         interest.add("a");
         ArrayList<String> notInterest = new ArrayList<>();
         notInterest.add("b");
+        user.setId(7);
         user.setInterests(interest);
-        user.setLocation("Toronto");
+        user.setLocation("a");
         user.setBlockedUsers(blockedUser);
-        user.setId(1);
+        user.setFollowing(following);
 
         conversationOne = new Conversation();
         conversationTwo = new Conversation();
@@ -46,14 +50,14 @@ public class GetRelevantConversationsTest {
         conversationTwo.setId(2);
         conversationThree.setId(3);
         conversationOne.setTitle("a");
-        conversationTwo.setTitle("a");
-        conversationThree.setTitle("b");
+        conversationTwo.setTitle("b");
+        conversationThree.setTitle("aa");
         conversationOne.setTopics(interest);
-        conversationTwo.setTopics(interest);
+        conversationTwo.setTopics(notInterest);
         conversationThree.setTopics(notInterest);
         conversationOne.setLocation("a");
-        conversationTwo.setLocation("a");
-        conversationThree.setLocation("b");
+        conversationTwo.setLocation("b");
+        conversationThree.setLocation("a");
         conversationOne.setMaxSize(5);
         conversationTwo.setMaxSize(5);
         conversationThree.setMaxSize(5);
@@ -64,19 +68,19 @@ public class GetRelevantConversationsTest {
 
         u.save(user);
 
-        g = new GetRelevantConversations(u, c);
+        g = new GetRelevantConversationsByLocation(u, c);
     }
 
     @Test(timeout=50)
-    public void testGetRelevantConversations() throws UserNotFound {
+    public void testGetRelevantConversationsByLocation() throws UserNotFound {
         RequestModel r = new RequestModel();
 
-        r.fill(RequestField.USER_ID, 1);
+        r.fill(RequestField.USER_ID, 7);
 
         ArrayList<ConversationProfile> cp = g.request(r);
 
+        Assert.assertEquals(2, cp.size());
         Assert.assertEquals("a", cp.get(0).topics.get(0));
-        Assert.assertEquals("a", cp.get(1).topics.get(0));
-        Assert.assertEquals("b", cp.get(2).topics.get(0));
+        Assert.assertEquals("b", cp.get(1).topics.get(0));
     }
 }

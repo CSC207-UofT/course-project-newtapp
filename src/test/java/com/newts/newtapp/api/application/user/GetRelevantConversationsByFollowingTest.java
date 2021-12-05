@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
@@ -14,14 +15,16 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationsTest {
+public class GetRelevantConversationsByFollowingTest {
     TestConversationRepository c;
     TestUserRepository u;
     User user;
+    User userOne;
+    User userTwo;
     Conversation conversationOne;
     Conversation conversationTwo;
     Conversation conversationThree;
-    GetRelevantConversations g;
+    GetRelevantConversationsByFollowing g;
 
     @Before
     public void setUp() {
@@ -29,15 +32,19 @@ public class GetRelevantConversationsTest {
         u = new TestUserRepository();
 
         user = new User();
+        ArrayList<Integer> following = new ArrayList<>();
+        following.add(1);
+        following.add(2);
         ArrayList<Integer> blockedUser = new ArrayList<>();
         ArrayList<String> interest = new ArrayList<>();
         interest.add("a");
         ArrayList<String> notInterest = new ArrayList<>();
         notInterest.add("b");
+        user.setId(7);
         user.setInterests(interest);
         user.setLocation("Toronto");
         user.setBlockedUsers(blockedUser);
-        user.setId(1);
+        user.setFollowing(following);
 
         conversationOne = new Conversation();
         conversationTwo = new Conversation();
@@ -46,10 +53,10 @@ public class GetRelevantConversationsTest {
         conversationTwo.setId(2);
         conversationThree.setId(3);
         conversationOne.setTitle("a");
-        conversationTwo.setTitle("a");
+        conversationTwo.setTitle("c");
         conversationThree.setTitle("b");
         conversationOne.setTopics(interest);
-        conversationTwo.setTopics(interest);
+        conversationTwo.setTopics(notInterest);
         conversationThree.setTopics(notInterest);
         conversationOne.setLocation("a");
         conversationTwo.setLocation("a");
@@ -57,26 +64,51 @@ public class GetRelevantConversationsTest {
         conversationOne.setMaxSize(5);
         conversationTwo.setMaxSize(5);
         conversationThree.setMaxSize(5);
+        ArrayList<Integer> conversationOneFollowing = new ArrayList<>();
+        conversationOneFollowing.add(1);
+        conversationOne.setUsers(conversationOneFollowing);
+        ArrayList<Integer> conversationTwoFollowing = new ArrayList<>();
+        conversationOneFollowing.add(2);
+        conversationOne.setUsers(conversationTwoFollowing);
+        ArrayList<Integer> conversationThreeFollowing = new ArrayList<>();
+        conversationOneFollowing.add(4);
+        conversationOne.setUsers(conversationThreeFollowing);
+
+        userOne = new User();
+        userOne.setId(1);
+        ArrayList<Integer> userOneConversation = new ArrayList<>();
+        userOneConversation.add(1);
+        userOne.setConversations(userOneConversation);
+
+        userTwo = new User();
+        userTwo.setId(2);
+        ArrayList<Integer> userTwoConversation = new ArrayList<>();
+        userTwoConversation.add(2);
+        userTwo.setConversations(userTwoConversation);
 
         c.save(conversationThree);
         c.save(conversationTwo);
         c.save(conversationOne);
 
         u.save(user);
+        u.save(userOne);
+        u.save(userTwo);
 
-        g = new GetRelevantConversations(u, c);
+        g = new GetRelevantConversationsByFollowing(u, c);
     }
 
     @Test(timeout=50)
-    public void testGetRelevantConversations() throws UserNotFound {
+    public void testGetRelevantConversationsByFollowers() throws UserNotFound, ConversationNotFound {
         RequestModel r = new RequestModel();
 
-        r.fill(RequestField.USER_ID, 1);
+        r.fill(RequestField.USER_ID, 7);
 
         ArrayList<ConversationProfile> cp = g.request(r);
 
+        Assert.assertEquals(2, cp.size());
         Assert.assertEquals("a", cp.get(0).topics.get(0));
-        Assert.assertEquals("a", cp.get(1).topics.get(0));
-        Assert.assertEquals("b", cp.get(2).topics.get(0));
+        Assert.assertEquals("b", cp.get(1).topics.get(0));
     }
 }
+
+

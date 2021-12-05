@@ -96,7 +96,7 @@ public class ConversationManager {
      */
     public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor, IncorrectPassword,
             ConversationNotFound {
-        Delete delete = new Delete(conversationRepository, userRepository);
+        Delete delete = new Delete(conversationRepository, messageRepository, userRepository);
         delete.request(request);
     }
 
