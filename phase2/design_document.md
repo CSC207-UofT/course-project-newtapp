@@ -158,6 +158,8 @@ Principle 7 - Size and Space for Approach and Use: Appropriate size and space is
    
    
    As a social media applicaiton, we hope to make our applicatin accessible and usable for all age groups, ranging from teens to adults. Expressing one's opinions and communicating is invaluavble and an essential part of human life, so we think our app will apply to all age groups who enjoy learning, interacting with others, and sharing opinions. 
+   
+   
    However, if we were to provide some sort of subscription or permium service, we think this would be most popular amidst teenagers and young adults. We feel that teens and millenials would be the most willing and interested in possible additinal features like bigger chatrooms, voice-calling featurss, or simply allowing for more user customization.
 
    
