@@ -72,6 +72,23 @@ public class ConversationController {
     }
 
     /**
+     * A helper method that returns the ID of the currently authenticated user
+     * @return                  Currently authenticated user's id
+     * @throws UserNotFound     If no User exists with username
+     */
+    private int returnId() throws UserNotFound {
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+
+        // use the username to get the userId
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        UserProfile userProfile = userManager.getProfileByUsername(request);
+        return userProfile.id;
+    }
+
+    /**
      * Create a new conversation.
      * @param form                        A filled in CreateConversationForm
      * @throws InvalidConversationSize    If the provided conversation size is out of range
@@ -168,7 +185,7 @@ public class ConversationController {
      * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/edit")
-    public EntityModel<ConversationDataWithLink> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
+    public EntityModel<ConversationProfile> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
             throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize,
             MessageNotFound, IncorrectPassword {
         //initiate a request model requesting the body, conversationId and the userId.
@@ -189,8 +206,8 @@ public class ConversationController {
         conversationManager.editConversation(request);
 
         // Build response
-        ConversationData data = conversationManager.getData(request);
-        return dataAssembler.toModel(data);
+        ConversationProfile data = conversationManager.getProfile(request);
+        return profileAssembler.toModel(data);
     }
 
     /**
@@ -358,20 +375,4 @@ public class ConversationController {
         return messageDataModelAssembler.toModel(data);
     }
 
-    /**
-     * A helper method that returns the ID of the currently authenticated user
-     * @return                  Currently authenticated user's id
-     * @throws UserNotFound     If no User exists with username
-     */
-    private int returnId() throws UserNotFound {
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = userDetails.getUsername();
-
-        // use the username to get the userId
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
-        UserProfile userProfile = userManager.getProfileByUsername(request);
-        return userProfile.id;
-    }
 }
