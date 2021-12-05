@@ -2,7 +2,6 @@ package com.newts.newtapp.api.application.user;
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
-import com.newts.newtapp.api.application.conversation.ConversationInteractor;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
@@ -13,14 +12,14 @@ import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
 
-public class GetConversationsByUsername extends ConversationInteractor<ArrayList<ConversationProfile>, Exception> {
+public class GetConversationsByUsername extends UserInteractor<ArrayList<ConversationProfile>, Exception> {
     /**
      * Create a GetConversationProfile interactor with supplied repositories
      * @param conversationRepository ConversatioRepository containing Conversation data
      * @param userRepository         UserRepository containing User data
      */
     public GetConversationsByUsername(ConversationRepository conversationRepository, UserRepository userRepository){
-        super(conversationRepository, userRepository);
+        super(userRepository, conversationRepository);
     }
 
 
