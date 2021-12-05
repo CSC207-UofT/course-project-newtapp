@@ -1,6 +1,4 @@
-import React, {useEffect} from 'react'
-import Header from "./header";
-import newtApi from "../api";
+import React from 'react'
 import {Link} from "react-router-dom";
 import logo from "../images/logo128.png";
 

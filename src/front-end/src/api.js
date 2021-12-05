@@ -3,9 +3,7 @@ const newtApi = {
 
     async getUser(username) {
         const response = await fetch(`http://localhost:8080/api/users/${username}`)
-        const data = await response.json()
-        console.log(data)
-        return data
+        return await response.json()
     },
 
      async createUser(username, password, interest) {
@@ -17,13 +15,10 @@ const newtApi = {
                  },
                  body: JSON.stringify({username: username, password: password, interest: interest})
              })
-         const data = await response.json()
-         console.log(data)
-         if (data.id != null) {
-             return data.id;
-         } else {
+         if (response.status !== 201) {
              return false;
          }
+         return await response.json()
      },
 
      async login(username, password) {
