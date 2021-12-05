@@ -61,9 +61,14 @@ public class ConversationController {
      * @param id                        id of Conversation
      * @return                          EntityModel containing Conversation data
      * @throws ConversationNotFound     If no Conversation exists with id
+     * @throws UserNotFound               If no user exists with id
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws IncorrectPassword          If the password is incorrect
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @GetMapping("/api/conversations/{id}/view")
-    public EntityModel<ConversationData> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound, MessageNotFound, IncorrectPassword {
+    public EntityModel<ConversationData> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound,
+            MessageNotFound, IncorrectPassword, MessageNotFoundInConversation {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
         ConversationData data = conversationManager.getData(request);
@@ -253,11 +258,12 @@ public class ConversationController {
      * @throws UserNotFoundInConversation If the given user is not in the conversation
      * @throws MessageNotFound            If no conversation exists with id
      * @throws IncorrectPassword          If the password is incorrect
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @PostMapping("/api/conversations/{id}/messages")
     public EntityModel<ConversationData> addMessage(@PathVariable int id, @RequestBody String messageBody)
             throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound, UserNotFound, MessageNotFound,
-            IncorrectPassword {
+            IncorrectPassword, MessageNotFoundInConversation {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
