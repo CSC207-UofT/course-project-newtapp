@@ -74,9 +74,9 @@ Strategy Design Pattern
 
    - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
 
-Factory Design Pattern
+Builder Design Pattern
 
-   - Our group considered the use of the Factory Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Tho this model would be useful for our program, our group decided against implementing this design pattern, because it would require builder subclasses for each use case implementation. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
+   - Our group considered the use of the Builder Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Tho this model would be useful for our program, our group decided against implementing this design pattern, because it would require ConcreteBuilder for each use case implementation. In other words, we would not use the same ConcreteBuilder often. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
 
 ## Design Decisions
 
