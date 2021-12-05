@@ -10,8 +10,8 @@ import java.util.ArrayList;
  * This is just a data storage object.
  */
 public class ConversationData {
-    public ArrayList<MessageData> message_data;
-    public ArrayList<UserProfile> user_profile;
+    public ArrayList<MessageData> messageData;
+    public ArrayList<UserProfile> userProfiles;
 
     public final int id;
     public final String title;
@@ -29,9 +29,9 @@ public class ConversationData {
         this.location = conversation.getLocation();
         this.minRating = conversation.getMinRating();
         this.maxSize = conversation.getMaxSize();
-        this.currSize = conversation.getNumUsers() / conversation.getMaxSize();
+        this.currSize = conversation.getNumUsers();
         this.isOpen = conversation.getIsOpen();
-        this.message_data = messageData;
-        this.user_profile = userProfiles;
+        this.messageData = messageData;
+        this.userProfiles = userProfiles;
     }
 }
