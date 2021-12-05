@@ -154,7 +154,8 @@ public class UserController {
      * @throws AlreadyFollowingUser  if user follows other user already
      */
     @PostMapping("/api/users/{username}/follow")
-    public EntityModel<UserProfile> follow(@PathVariable String username) throws UserNotFound, SameUser, AlreadyFollowingUser {
+    public EntityModel<UserProfile> follow(@PathVariable String username) throws UserNotFound, SameUser,
+            AlreadyFollowingUser, UserBlocked, BlockedByUser {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameFollowing = userDetails.getUsername();

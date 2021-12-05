@@ -20,7 +20,8 @@ public class BlockTest {
     Follow follow;
 
     @Before
-    public void setUp() throws InvalidUsername, UserAlreadyExists, InvalidPassword, UserNotFound, SameUser, AlreadyFollowingUser {
+    public void setUp() throws InvalidUsername, UserAlreadyExists, InvalidPassword, UserNotFound,
+            SameUser, AlreadyFollowingUser, UserBlocked, BlockedByUser {
         testUserRepository = new TestUserRepository();
         testConversationRepository = new TestConversationRepository();
         block = new Block(testUserRepository, testConversationRepository);
