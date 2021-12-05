@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class GetRevelantConversationsByFollowingTest {
+public class GetRelevantConversationsByFollowingTest {
     TestConversationRepository c;
     TestUserRepository u;
     User user;
