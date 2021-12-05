@@ -45,9 +45,9 @@ public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayLis
         ArrayList<Integer> following = user.getFollowing();
 
         for (int i : following) {
-            User u = userRepository.findById(i).orElseThrow(UserNotFound::new);
+            User u = userRepository.findById(i).get();
             for (int c : u.getConversations()){
-                Conversation conversation = conversationRepository.getById(c);
+                Conversation conversation = conversationRepository.findById(c).get();
                 if (!followingConversations.contains(conversation)){
                     followingConversations.add(conversation);
                 }

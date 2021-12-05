@@ -38,7 +38,7 @@ public class GetRevelantConversationsByFollowingTest {
         ArrayList<String> interest = new ArrayList<>();
         interest.add("a");
         ArrayList<String> notInterest = new ArrayList<>();
-        notInterest.add("c");
+        notInterest.add("b");
         user.setId(7);
         user.setInterests(interest);
         user.setLocation("Toronto");
@@ -52,10 +52,10 @@ public class GetRevelantConversationsByFollowingTest {
         conversationTwo.setId(2);
         conversationThree.setId(3);
         conversationOne.setTitle("a");
-        conversationTwo.setTitle("a");
+        conversationTwo.setTitle("c");
         conversationThree.setTitle("b");
         conversationOne.setTopics(interest);
-        conversationTwo.setTopics(interest);
+        conversationTwo.setTopics(notInterest);
         conversationThree.setTopics(notInterest);
         conversationOne.setLocation("a");
         conversationTwo.setLocation("a");
@@ -76,13 +76,13 @@ public class GetRevelantConversationsByFollowingTest {
         userOne = new User();
         userOne.setId(1);
         ArrayList<Integer> userOneConversation = new ArrayList<>();
-        conversationOneFollowing.add(1);
+        userOneConversation.add(1);
         userOne.setConversations(userOneConversation);
 
         userTwo = new User();
         userTwo.setId(2);
         ArrayList<Integer> userTwoConversation = new ArrayList<>();
-        conversationTwoFollowing.add(2);
+        userTwoConversation.add(2);
         userTwo.setConversations(userTwoConversation);
 
         c.save(conversationThree);
@@ -105,6 +105,8 @@ public class GetRevelantConversationsByFollowingTest {
         ArrayList<ConversationProfile> cp = g.request(r);
 
         Assert.assertEquals(2, cp.size());
+        Assert.assertEquals("a", cp.get(0).topics.get(0));
+        Assert.assertEquals("b", cp.get(1).topics.get(0));
     }
 }
 
