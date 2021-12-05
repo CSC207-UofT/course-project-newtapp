@@ -5,9 +5,8 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
-import com.newts.newtapp.api.controllers.assemblers.ConversationDataModelAssembler;
-import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
+import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
@@ -31,7 +30,8 @@ public class UserController {
     private final UserProfileModelAssembler profileAssembler;
     private final ConversationProfileModelAssembler conversationAssembler;
 
-    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler, ConversationProfileModelAssembler conversationAssembler) {
+    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler,
+                          ConversationProfileModelAssembler conversationAssembler) {
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
         this.conversationAssembler = conversationAssembler;
@@ -185,13 +185,25 @@ public class UserController {
 
     // TODO implement followingConversation and getRelevantConversations
     /**
-     * Return a list of conversations in which users' are user is following are
+     * Return a list of conversations in which users who this user is following are, sorted by interest.
      */
     @GetMapping("/api/following/conversations")
     void followingConversation() {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, returnUsername());
         userManager.followingConversations(request);
+    }
+
+    @GetMapping("/api/relevant/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getRelevantConversations() throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        ArrayList<ConversationProfile> conversations = userManager.getRelevantConversations(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(conversationAssembler.toModel(c));
+        }
+        return conversationsModel;
     }
 
     /**
@@ -224,16 +236,6 @@ public class UserController {
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
     }
-  
-    /**
-     * A helper method that returns the username of the currently authenticated user
-     * @return                  Currently authenticated user's username
-     */
-    private String returnUsername(){
-        // fetch the currently authenticated user's username
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userDetails.getUsername();
-    }
 
     /**
      * Get an Arraylist of EntityModels of ConversationProfile of the conversations of the given user
@@ -254,4 +256,15 @@ public class UserController {
         }
         return conversationsModel;
     }
+
+    /**
+     * A helper method that returns the username of the currently authenticated user
+     * @return                  Currently authenticated user's username
+     */
+    private String returnUsername(){
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUsername();
+    }
+
 }
