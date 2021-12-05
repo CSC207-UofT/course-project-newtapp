@@ -1,5 +1,4 @@
 package com.newts.newtapp.api.application.user;
-
 import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
@@ -8,6 +7,7 @@ import com.newts.newtapp.entities.User;
 import com.newts.newtapp.api.gateways.UserRepository;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * UserInteractor that edits user information.
@@ -29,19 +29,19 @@ public class Edit extends UserInteractor<Void, Exception> {
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
-        int userId = (int) request.get(RequestField.USER_ID);
+        String oldUsername = (String) request.get(RequestField.USERNAME);
 
         // look up the user, if it doesn't exist throw UserNotFound
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        User user = userRepository.findByUsername(oldUsername).orElseThrow(UserNotFound::new);
 
-        String username = (String) request.get(RequestField.USERNAME);
+        String username = (String) request.get(RequestField.NEW_USERNAME);
         String location = (String) request.get(RequestField.LOCATION);
         ArrayList<String> interests = ((ArrayList<String>) request.get(RequestField.INTERESTS));
 
         if (username.contains(" ")) {
             throw new InvalidUsername();
         }
-        if (userRepository.findByUsername(username).isPresent()) {
+        if (!Objects.equals(user.getUsername(), username) && userRepository.findByUsername(username).isPresent()) {
             throw new UserAlreadyExists();
         }
 

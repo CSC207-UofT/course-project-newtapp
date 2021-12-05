@@ -1,11 +1,14 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.application.user.*;
-import com.newts.newtapp.entities.Conversation;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 /**
  * A facade for user interactors.
@@ -69,6 +72,27 @@ public class UserManager {
     }
 
     /**
+     * Deletes a user according to the given RequestModel and sets this UserManager's user to null.
+     * @param request   RequestModel containing delete User information.
+     */
+    public void edit(RequestModel request) throws UserNotFound, UserAlreadyExists, InvalidUsername {
+        Edit edit = new Edit(userRepository);
+        edit.request(request);
+    }
+
+    /**
+     * Changes a user's password.
+     * @param request
+     * @throws UserNotFound         Given user is not in repository
+     * @throws InvalidPassword      Password not valid
+     * @throws IncorrectPassword    Old password is wrong
+     */
+    public void changePassword(RequestModel request) throws UserNotFound, InvalidPassword, IncorrectPassword {
+        ChangePassword changePassword = new ChangePassword(userRepository);
+        changePassword.request(request);
+    }
+
+    /**
      * Adjust two given users such that the first follows the second.
      * @param request   RequestModel containing addFollow User information.
      */
@@ -87,11 +111,35 @@ public class UserManager {
         unfollow.request(request);
     }
 
-    public Conversation[] getRelevantConversations(RequestModel request) throws UserNotFound {
+    /**
+     * Following conversation method, implemented on other branch
+     */
+     public void followingConversations(RequestModel request) {}
+
+    /**
+     * Block a given user
+     * @param request   RequestModel containing the user and the user to block.
+     */
+    public void block(RequestModel request) throws UserNotFound, UserAlreadyBlocked {
+        Block block = new Block(userRepository, conversationRepository);
+        block.request(request);
+    }
+
+    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
         return getRelevantConversations.request(request);
     }
+
+    /**
+     * Rate given user
+     * @param request RequestModel containing the user to be rated and the rating
+     */
+    public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
+        Rate rate = new Rate((userRepository));
+    }
+
+
 
 
 }

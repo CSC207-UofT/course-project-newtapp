@@ -33,7 +33,6 @@ CREATE TABLE conversations (
     location_radius int,
     min_rating int,
     max_size int,
-    closing_time text,
     is_open boolean,
     messages int[],
     users int[],
@@ -52,7 +51,8 @@ CREATE TABLE users (
     followers int[],
     blocked_users int[],
     conversations int[],
-    authorities text[]
+    authorities text[],
+    rated_users int[]
 )
 
 CREATE TABLE messages (
@@ -60,7 +60,8 @@ CREATE TABLE messages (
     body text,
     author integer,
     written_at text,
-    last_updated_at text
+    last_updated_at text,
+    conversation_id
 )
 ```
 

@@ -19,7 +19,7 @@ public class ConversationTest {
         ArrayList<String> topics = new ArrayList<>();
         topics.add("");
         c = new Conversation(0, "Sample Conversation", topics, "",
-                0, 0, 1, "", 0);
+                0, 0, 1, 0);
     }
 
     @Test(timeout = 50)
@@ -49,11 +49,6 @@ public class ConversationTest {
     @Test(timeout = 50)
     public void TestGetMaxUsers() {
         assertEquals(1, c.getMaxSize());
-    }
-
-    @Test(timeout = 50)
-    public void TestGetClosingTime() {
-        assertEquals("", c.getClosingTime());
     }
 
     @Test(timeout = 50)
@@ -96,12 +91,6 @@ public class ConversationTest {
     }
 
     @Test(timeout = 50)
-    public void TestSetClosingTime() {
-        c.setClosingTime("10:00");
-        assertEquals("10:00", c.getClosingTime());
-    }
-
-    @Test(timeout = 50)
     public void TestToggleStatus() {
         c.toggleIsOpen();
         assertFalse(c.getIsOpen());
@@ -110,7 +99,7 @@ public class ConversationTest {
     @Test(timeout = 50)
     public void TestAddMessage() {
         User u = new User(0, "Joe", "pass", new ArrayList<>());
-        Message m = new Message(1, "Hello!", 0);
+        Message m = new Message(1, "Hello!", 0, 0);
         c.addMessage(m);
         assertSame(m.getId(), c.getMessages().get(c.getMessages().size() - 1));
     }

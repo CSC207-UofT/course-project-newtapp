@@ -17,7 +17,7 @@ User API:
 		body: {
 			"username": username
 			"password": password
-			"interest": interest
+			"interests": [interest]
 		}
 
 	Edit User - POST /api/users/edit
@@ -48,7 +48,7 @@ User API:
 	Relevant Conversations - GET /api/relevant/conversations
 		header: authentication
 
-	Friends' Conversations - GET /api/friends/conversations
+	Following's Conversations - GET /api/following/conversations
 		header: authentication
 
 	Block User - POST /api/users/{username}/block

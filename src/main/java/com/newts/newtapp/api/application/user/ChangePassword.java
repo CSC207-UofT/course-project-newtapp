@@ -26,10 +26,10 @@ public class ChangePassword extends UserInteractor<Void, Exception>{
      */
     @Override
     public Void request(RequestModel request) throws UserNotFound, InvalidPassword, IncorrectPassword {
-        int userID = (int) request.get(RequestField.USER_ID);
+        String username = (String) request.get(RequestField.USERNAME);
         String currentPassword = (String) request.get(RequestField.PASSWORD);
-        String newPassword = (String) request.get(RequestField.PASSWORD_TWO);
-        User user = userRepository.findById(userID).orElseThrow(UserNotFound::new);
+        String newPassword = (String) request.get(RequestField.NEW_PASSWORD);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         // Checks user password
         if (!BCrypt.checkpw(currentPassword, user.getPassword())){
@@ -42,6 +42,7 @@ public class ChangePassword extends UserInteractor<Void, Exception>{
             // Hashing and setting user password
             String hashed_pw = BCrypt.hashpw(newPassword, BCrypt.gensalt());
             user.setPassword(hashed_pw);
+            userRepository.save(user);
         }
 
         return null;

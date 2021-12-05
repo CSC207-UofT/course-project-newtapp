@@ -5,8 +5,11 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -25,14 +28,16 @@ public class DeleteTest {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.PASSWORD, "test123");
-        r.fill(RequestField.INTEREST, "tests");
+        ArrayList<String> interests = new ArrayList<>();
+        interests.add("tests");
+        r.fill(RequestField.INTERESTS, interests);
         create.request(r);
     }
 
     @Test(timeout = 500)
     public void testDelete() throws UserNotFound, IncorrectPassword, ConversationNotFound{
         RequestModel r2 = new RequestModel();
-        r2.fill(RequestField.USER_ID, 1);
+        r2.fill(RequestField.USERNAME, "test");
         r2.fill(RequestField.PASSWORD, "test123");
         delete.request(r2);
         assertFalse(testUserRepository.findById(1).isPresent());

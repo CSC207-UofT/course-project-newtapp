@@ -14,20 +14,18 @@ public class ConversationQueue implements Queue<Conversation> {
     private ArrayList<KeyedConversation> conversations;
     private int size;
     private final String location;
-    private final int locationRadius; // not implemented to influence queue yet.
     private final ArrayList<String> interests;
 
     /**
      * Initialize a new, empty ConversationQueue.
      */
-    public ConversationQueue(ConversationSorter sorter, String location, int locationRadius,
+    public ConversationQueue(ConversationSorter sorter, String location,
                              ArrayList<String> interests) {
         this.sorter = sorter;
         conversations = new ArrayList<>();
         conversations.add(null); // item at index 0 will never be used, due to Array representation of binary heap.
         size = 0;
         this.location = location;
-        this.locationRadius = locationRadius;
         this.interests = interests;
     }
 
@@ -43,13 +41,6 @@ public class ConversationQueue implements Queue<Conversation> {
      */
     public String getLocation() {
         return location;
-    }
-
-    /**
-     * @return location radius around which to search for conversations.
-     */
-    public int getLocationRadius() {
-        return locationRadius;
     }
 
     /**

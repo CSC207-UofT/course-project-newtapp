@@ -15,7 +15,7 @@ public class MessageTest {
 
     @Before
     public void setUp() throws Exception {
-        m = new Message(1, "Luke, I am your father", 0);
+        m = new Message(1, "Luke, I am your father", 0, 0);
     }
 
     @Test(timeout = 50)

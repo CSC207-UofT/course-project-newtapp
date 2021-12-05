@@ -1,8 +1,7 @@
 package com.newts.newtapp.api.controllers.assemblers;
 
-import com.newts.newtapp.api.application.UserProfile;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.UserController;
-import com.newts.newtapp.api.errors.UserNotFound;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -29,7 +28,7 @@ public class UserProfileModelAssembler implements RepresentationModelAssembler<U
         ArrayList<Link> links = new ArrayList<>();
         try {
             // Add appropriate links from this UserProfile
-            links.add(linkTo(methodOn(UserController.class).get(profile.username)).withSelfRel());
+            links.add(linkTo(methodOn(UserController.class).getByUsername(profile.username)).withSelfRel());
         } catch (Exception e) {
             // No exception will ever be thrown at this point in normal use of this class as an exception would have
             // been thrown earlier during application logic.
