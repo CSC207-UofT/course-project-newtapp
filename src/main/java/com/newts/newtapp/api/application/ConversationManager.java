@@ -56,8 +56,7 @@ public class ConversationManager {
      * @return                          ConversationData of corresponding Conversation
      * @throws ConversationNotFound     If Conversation id does not exist
      */
-    public ConversationData getData(RequestModel request) throws ConversationNotFound, UserNotFound,
-            MessageNotFound, IncorrectPassword {
+    public ConversationData getData(RequestModel request) throws UserNotFound, MessageNotFound, IncorrectPassword, ConversationNotFound, MessageNotFoundInConversation {
         GetConversationData getDataById = new GetConversationData(conversationRepository, messageRepository,
                 userRepository);
         return getDataById.request(request);
