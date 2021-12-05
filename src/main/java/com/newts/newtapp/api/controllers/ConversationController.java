@@ -9,7 +9,6 @@ import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.controllers.assemblers.ConversationDataModelAssembler;
-import com.newts.newtapp.api.controllers.assemblers.ConversationDataWithLink;
 import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.assemblers.MessageDataModelAssembler;
 import com.newts.newtapp.api.controllers.forms.CreateConversationForm;
@@ -64,7 +63,7 @@ public class ConversationController {
      * @throws ConversationNotFound     If no Conversation exists with id
      */
     @GetMapping("/api/conversations/{id}/view")
-    public EntityModel<ConversationDataWithLink> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound, MessageNotFound, IncorrectPassword {
+    public EntityModel<ConversationData> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound, MessageNotFound, IncorrectPassword {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
         ConversationData data = conversationManager.getData(request);
@@ -256,7 +255,7 @@ public class ConversationController {
      * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/messages")
-    public EntityModel<ConversationDataWithLink> addMessage(@PathVariable int id, @RequestBody String messageBody)
+    public EntityModel<ConversationData> addMessage(@PathVariable int id, @RequestBody String messageBody)
             throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound, UserNotFound, MessageNotFound,
             IncorrectPassword {
         //initiate a request model requesting the body, conversationId and the userId.
@@ -290,7 +289,7 @@ public class ConversationController {
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @PostMapping("/api/conversations/{cid}/messages/{id}/edit")
-    public EntityModel<ConversationDataWithLink> editMessage(@PathVariable int cid, @PathVariable int id,
+    public EntityModel<ConversationData> editMessage(@PathVariable int cid, @PathVariable int id,
                                                         @RequestBody String messageBody)
             throws UserNotFound, ConversationNotFound, EmptyMessage, WrongAuthor, MessageNotFound,
             UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
@@ -325,7 +324,7 @@ public class ConversationController {
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @DeleteMapping("/api/conversations/{cid}/messages/{id}")
-    public EntityModel<ConversationDataWithLink> deleteMessage(@PathVariable int cid, @PathVariable int id)
+    public EntityModel<ConversationData> deleteMessage(@PathVariable int cid, @PathVariable int id)
             throws UserNotFound, ConversationNotFound, WrongAuthor, MessageNotFound,
             UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
         //initiate a request model requesting the conversationId, messageId and the userId.
