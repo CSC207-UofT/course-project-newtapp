@@ -18,6 +18,8 @@ public class GetRevelantConversationsByFollowingTest {
     TestConversationRepository c;
     TestUserRepository u;
     User user;
+    User userOne;
+    User userTwo;
     Conversation conversationOne;
     Conversation conversationTwo;
     Conversation conversationThree;
@@ -32,7 +34,6 @@ public class GetRevelantConversationsByFollowingTest {
         ArrayList<Integer> following = new ArrayList<>();
         following.add(1);
         following.add(2);
-        following.add(3);
         ArrayList<Integer> blockedUser = new ArrayList<>();
         ArrayList<String> interest = new ArrayList<>();
         interest.add("a");
@@ -72,12 +73,25 @@ public class GetRevelantConversationsByFollowingTest {
         conversationOneFollowing.add(4);
         conversationOne.setUsers(conversationThreeFollowing);
 
+        userOne = new User();
+        userOne.setId(1);
+        ArrayList<Integer> userOneConversation = new ArrayList<>();
+        conversationOneFollowing.add(1);
+        userOne.setConversations(userOneConversation);
+
+        userTwo = new User();
+        userTwo.setId(2);
+        ArrayList<Integer> userTwoConversation = new ArrayList<>();
+        conversationTwoFollowing.add(2);
+        userTwo.setConversations(userTwoConversation);
 
         c.save(conversationThree);
         c.save(conversationTwo);
         c.save(conversationOne);
 
         u.save(user);
+        u.save(userOne);
+        u.save(userTwo);
 
         g = new GetRelevantConversationsByFollowing(u, c);
     }

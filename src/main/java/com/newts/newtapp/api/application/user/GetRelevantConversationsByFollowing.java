@@ -12,6 +12,7 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
     /**
@@ -43,10 +44,12 @@ public class GetRelevantConversationsByFollowing extends UserInteractor<ArrayLis
 
         ArrayList<Integer> following = user.getFollowing();
 
-        for (Conversation c : conversationRepository.findAll()) {
-            for (int i : following) {
-                if (c.getUsers().contains(i) && !(followingConversations.contains(c))){
-                    followingConversations.add(c);
+        for (int i : following) {
+            User u = userRepository.findById(i).orElseThrow(UserNotFound::new);
+            for (int c : u.getConversations()){
+                Conversation conversation = conversationRepository.getById(c);
+                if (!followingConversations.contains(conversation)){
+                    followingConversations.add(conversation);
                 }
             }
         }
