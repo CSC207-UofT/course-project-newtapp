@@ -32,8 +32,8 @@ public class TestConversationRepository implements ConversationRepository{
     }
 
     @Override
-    public List<Conversation> findAll() {
-        return null;
+    public ArrayList<Conversation> findAll() {
+        return new ArrayList<>(conversations.values());
     }
 
     @Override
