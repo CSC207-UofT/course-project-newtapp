@@ -175,27 +175,29 @@ https://github.com/CSC207-UofT/course-project-newtapp/pull/112
 
 Spencer
    - For phase 2, I worked on implementing password encryption, user authentication, and the front end. I enjoyed working on these things because they were each very interesting topics to learn about that are not specifically part of this course.
-A significant PR I made during this project is linked below. This pull request implemented the Authentication features that enable our API to be used securely without requiring username+password credentials on each secured request.
+
+   - A significant PR I made during this project is linked below. This pull request implemented the Authentication features that enable our API to be used securely without requiring username+password credentials on each secured request.
 https://github.com/CSC207-UofT/course-project-newtapp/pull/62
 
 Will
-- Since phase 1, I tried helping with the front-end of our app but soon realized that I am a lot more efficient in the back-end. Consequently, I finished implementing our User Controller, wrote tests for use cases and fixed bugs in our app.
-A significant PR I made during this project is implementing our database. This Pull request implements our Postgres database through Spring boot to store messages. It demonstrates a significant contribution to the team because it shows that I contributed to setting up our Spring Boot app and our database, both essential for our app.
+   - Since phase 1, I tried helping with the front-end of our app but soon realized that I am a lot more efficient in the back-end. Consequently, I finished implementing our User Controller, wrote tests for use cases and fixed bugs in our app.
+
+   - A significant PR I made during this project is implementing our database. This Pull request implements our Postgres database through Spring boot to store messages. It demonstrates a significant contribution to the team because it shows that I contributed to setting up our Spring Boot app and our database, both essential for our app.
 https://github.com/CSC207-UofT/course-project-newtapp/commit/91d3406b37efabaff08150aa512eb5d27af08875
 
 Ted
-- For phase 2, I worked on the backend - implemented some remaining message interactors necessary for the app, edited conversation manager to use those interactors, and implemented conversation controller as well as necessary conversation and message data assemblers.
-A significant pull request I made in the development of our app was for implementing the ConversationController. This handles the mapping between the front end and the backend.
+   - For phase 2, I worked on the backend - implemented some remaining message interactors necessary for the app, edited conversation manager to use those interactors, and implemented conversation controller as well as necessary conversation and message data assemblers.
+   - A significant pull request I made in the development of our app was for implementing the ConversationController. This handles the mapping between the front end and the backend.
 https://github.com/CSC207-UofT/course-project-newtapp/pull/81
 
 Yukthi
-- For phase 2 I primarily worked on the backend, focusing on finishing the use case classes as well as adding tests to already implemented use case classes. I enjoyed being able to implement the backend functionality responsible for the actions that our users may choose to do on the app.
-A significant PR I made during this project was for the Delete User Interactor. This interactor is a use case involved in deleting a user from the database, along with removing any references and relationships associated with that user. This included changing conversation authors, removing from followed lists, as well as removing from following lists.
+   - For phase 2 I primarily worked on the backend, focusing on finishing the use case classes as well as adding tests to already implemented use case classes. I    enjoyed being able to implement the backend functionality responsible for the actions that our users may choose to do on the app.
+   - A significant PR I made during this project was for the Delete User Interactor. This interactor is a use case involved in deleting a user from the database, along with removing any references and relationships associated with that user. This included changing conversation authors, removing from followed lists, as well as removing from following lists.
 https://github.com/CSC207-UofT/course-project-newtapp/pull/32
 
 Zachary
-- For phase 2, I worked on implementing the mock repositories to be able to test all the interactors. I also worked on implementing tests for the interactors. Also spent some time creating the logo for our app and helping in the creation of the presentation.
-A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pull request still plays a significant role in the functionality of the program currently.
+   - For phase 2, I worked on implementing the mock repositories to be able to test all the interactors. I also worked on implementing tests for the interactors. Also spent some time creating the logo for our app and helping in the creation of the presentation.
+   - A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pull request still plays a significant role in the functionality of the program currently.
 https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/6
 
 ## Final Thoughts
