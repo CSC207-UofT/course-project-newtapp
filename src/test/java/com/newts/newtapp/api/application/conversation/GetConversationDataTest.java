@@ -50,7 +50,7 @@ public class GetConversationDataTest {
         g = new GetConversationData(c, m, u);
     }
 
-    @Test(timeout = 500)
+    @Test(timeout = 5000)
     public void testGetConversationData() throws UserNotFound, MessageNotFound, IncorrectPassword, ConversationNotFound,
             MessageNotFoundInConversation {
         RequestModel r = new RequestModel();
