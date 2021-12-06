@@ -13,6 +13,7 @@ import Browse from "./routes/browse"
 import Friends from "./routes/friends";
 import Conversations from "./routes/conversations";
 import UserProfile from "./routes/userProfile";
+import CreateConversation from "./routes/createConversation";
 
 const rootElement = document.getElementById("root");
 render(
@@ -26,6 +27,7 @@ render(
                 <Route path="/browse" element={<Browse />} />
                 <Route path="/friends" element={<Friends />} />
                 <Route path="/conversations" element={<Conversations />} />
+                <Route path="/conversations/create" element={<CreateConversation />}/>
                 <Route path="/:username" element={<UserProfile />} />
             </Routes>
         </BrowserRouter>
