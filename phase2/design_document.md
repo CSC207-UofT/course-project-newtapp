@@ -56,7 +56,7 @@ Once the use cases accept the request, it fetches the entities from the database
 
 Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional functionalities. Along the way,
 - Moving to SpringBoot: Clean Architecture meant we could largely plug in our existing back-end on top of SpringBoot's functionality
-- Implementing PostGres: The use of a gateway meant we could easily move from a mock database to using PosgGreSql
+- Implementing PostGres: The use of a gateway meant we could easily move from a mock database to using PosGreSql
 - Implementing our frontend using React: The structure of our code allowed us to build our front-end on top of our existing code.
 
 ## Design Patterns
@@ -71,7 +71,7 @@ Strategy Design Pattern
    - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
 
 Builder Design Pattern
-   - Our group considered the use of the Builder Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Tho this model would be useful for our program, our group decided against implementing this design pattern, because it would require ConcreteBuilder for each use case implementation. In other words, we would not use the same ConcreteBuilder often. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
+   - Our group considered the use of the Builder Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Although this model would be useful for our program, our group decided against implementing this design pattern, because it would require ConcreteBuilder for each use case implementation. In other words, we would not use the same ConcreteBuilder often. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
 
 ## Design Decisions
 In the further development of our app, we were called to consider many design questions for better optimizing the functionality of our app.
@@ -170,7 +170,8 @@ Bringing an app to the public
    
 Alex
    - In Phase 2, I aided in our front-end development. I worked on implementing DataTransfer Objects for Conversation and Message Data, as secure ways of transferring information from higher layers of the program to the Front-End. I also implemented more sorting algorithms for our ConversationSorter Strategy Design Pattern. Lastly, I worked on the final changes for the design document and prepared slides for our presentation.
-An important Pull Request I made throughout this project was with
+An important Pull Request I made throughout this project was with the design document, which plays an extremely important role in discussing the work of our team during this project.
+https://github.com/CSC207-UofT/course-project-newtapp/pull/112
 
 Spencer
    - For phase 2, I worked on implementing password encryption, user authentication, and the front end. I enjoyed working on these things because they were each very interesting topics to learn about that are not specifically part of this course.
