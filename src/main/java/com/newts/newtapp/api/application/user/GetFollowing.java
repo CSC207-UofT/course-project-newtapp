@@ -25,8 +25,8 @@ public class GetFollowing extends UserInteractor<ArrayList<Integer>, Exception> 
      */
     @Override
     public ArrayList<Integer> request(RequestModel request) throws UserNotFound {
-        int userId = (int) request.get(RequestField.USER_ID);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        String username = (String) request.get(RequestField.USERNAME);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
         return user.getFollowing();
     }
 }
