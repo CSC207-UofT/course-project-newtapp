@@ -36,6 +36,6 @@ public class GetProfileByIDTest {
         RequestModel r2 = new RequestModel();
         r2.fill(RequestField.USER_ID, 1);
         UserProfile userProfile = getProfileById.request(r2);
-        assertEquals(1, userProfile.id);
+        assertTrue(userProfile.id == 1);
     }
 }

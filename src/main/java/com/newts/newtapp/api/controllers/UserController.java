@@ -3,8 +3,10 @@ package com.newts.newtapp.api.controllers;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.UserManager;
+import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
+import com.newts.newtapp.api.controllers.assemblers.ConversationProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.ChangePasswordForm;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.controllers.forms.CreateUserForm;
@@ -14,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 
 /**
@@ -176,17 +180,6 @@ public class UserController {
         return profileAssembler.toModel(profile);
     }
 
-    // TODO implement followingConversation and getRelevantConversations
-    /**
-     * Return a list of conversations in which users' are user is following are
-     */
-    @GetMapping("/api/following/conversations")
-    void followingConversation() {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, returnUsername());
-        userManager.followingConversations(request);
-    }
-
     /**
      * Have a user follow another.
      * @param username               username of the user to block
@@ -217,7 +210,7 @@ public class UserController {
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
     }
-  
+
     /**
      * A helper method that returns the username of the currently authenticated user
      * @return                  Currently authenticated user's username

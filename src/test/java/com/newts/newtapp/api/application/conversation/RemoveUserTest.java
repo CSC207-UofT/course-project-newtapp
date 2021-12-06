@@ -19,7 +19,6 @@ public class RemoveUserTest {
     TestUserRepository u;
     RemoveUser r;
     User testUser;
-    User testAuthor;
     Conversation testConversation;
 
     @Before

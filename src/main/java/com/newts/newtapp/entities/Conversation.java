@@ -328,7 +328,7 @@ public class Conversation {
 
     /**
      * Delete a message from a conversation.
-     * @param message   a message to be removed
+     * @param messageId   a message to be removed
      * @return          true iff the message was removed
      */
     public boolean deleteMessage(int messageId) {

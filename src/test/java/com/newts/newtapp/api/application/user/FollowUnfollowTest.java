@@ -41,10 +41,10 @@ public class FollowUnfollowTest {
     @Test(timeout = 500)
     public void testFollow() throws UserNotFound, SameUser, AlreadyFollowingUser, UserBlocked, BlockedByUser {
         RequestModel r3 = new RequestModel();
-        User user1 = testUserRepository.findById(1).get();
-        User user2 = testUserRepository.findById(2).get();
-        r3.fill(RequestField.USER_ID, 1);
-        r3.fill(RequestField.USER_ID_TWO, 2);
+        User user1 = testUserRepository.findByUsername("test").orElseThrow(UserNotFound::new);
+        User user2 = testUserRepository.findByUsername("test2").orElseThrow(UserNotFound::new);
+        r3.fill(RequestField.USERNAME, "test");
+        r3.fill(RequestField.USERNAME_TWO, "test2");
         follow.request(r3);
         assertTrue(user1.getFollowing().contains(2));
         assertTrue(user2.getFollowers().contains(1));

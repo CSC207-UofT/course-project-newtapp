@@ -35,7 +35,45 @@ const newtApi = {
         }
         const body = await response.json();
         return body.jwt;
-     }
+     },
+
+     async getRelevantConversations(cookies) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch('http://localhost:8080/api/relevant/conversations',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                }
+            })
+         if (response.status !== 200) {
+             return false;
+         }
+         const body = await response.json();
+         console.log(body);
+         return body;
+     },
+
+    async createConversation(cookies, formData) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        console.log(bearerToken)
+        const response = await fetch('http://localhost:8080/api/conversations',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                },
+                body: JSON.stringify(formData)
+            })
+        if (response.status !== 201) {
+            return false;
+        }
+        const body = await response.json();
+        console.log(body);
+        return body;
+    }
 }
 
 export default newtApi
