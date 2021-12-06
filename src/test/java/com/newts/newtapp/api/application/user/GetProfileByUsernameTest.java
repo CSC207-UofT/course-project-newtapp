@@ -24,7 +24,7 @@ public class GetProfileByUsernameTest {
         getProfileByUsername = new GetProfileByUsername(testUserRepository);
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
-        r.fill(RequestField.PASSWORD, "test123");
+        r.fill(RequestField.PASSWORD, "testPassword");
         ArrayList<String> interests = new ArrayList<>();
         interests.add("tests");
         r.fill(RequestField.INTERESTS, interests);
