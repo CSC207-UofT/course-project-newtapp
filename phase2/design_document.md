@@ -97,7 +97,7 @@ Implementing our Front-End
 
 Principle 1 - Equitable use: the design is useful and marketable to people with diverse abilities.
   
-  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily unavailable high-contrast mode for the visually impaired.
+  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily available high-contrast mode for the visually impaired.
 
 Principle 2 - Flexibility in Use: The design accommodates a wide range of individual preferences and abilities.
  
