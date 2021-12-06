@@ -161,12 +161,18 @@ public class ConversationManager {
         return getMessageData.request(request);
     }
 
+    /**
+     * Returns an ArrayList of ConversationProfiles that are sorted approximately by relevance.
+     */
     public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
         return getRelevantConversations.request(request);
     }
 
+    /**
+     * Returns an ArrayList of ConversationsProfiles drawn from followed users sorted approximately by relevance.
+     */
     public ArrayList<ConversationProfile> getRelevantConversationsByFollow(RequestModel request) throws UserNotFound,
             ConversationNotFound {
         GetRelevantConversationsByFollow getRelevantConversationsByFollow = new GetRelevantConversationsByFollow(userRepository,
