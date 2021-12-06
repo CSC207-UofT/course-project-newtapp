@@ -30,14 +30,17 @@ public class ConversationController {
     private final UserManager userManager;
     private final ConversationProfileModelAssembler profileAssembler;
     private final ConversationDataModelAssembler dataAssembler;
+    private final MessageDataModelAssembler messageAssembler;
 
     public ConversationController(ConversationManager conversationManager, UserManager userManager,
                                   ConversationProfileModelAssembler profileAssembler,
-                                  ConversationDataModelAssembler dataAssembler) {
+                                  ConversationDataModelAssembler dataAssembler,
+                                  MessageDataModelAssembler messageAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
         this.dataAssembler = dataAssembler;
+        this.messageAssembler = messageAssembler;
     }
 
     /**
@@ -245,6 +248,24 @@ public class ConversationController {
         // Build response
         ConversationProfile profile = conversationManager.getProfile(request);
         return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Returns a MessageData for the Message with given id in the covnersation with given cid
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
+     */
+    @GetMapping("/api/conversations/{cid}/messages/{id}")
+    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id) throws MessageNotFound,
+            ConversationNotFound, MessageNotFoundInConversation {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, cid);
+        request.fill(RequestField.MESSAGE_ID, id);
+        MessageData data = conversationManager.getMessageData(request);
+        return messageAssembler.toModel(data);
     }
 
     /**

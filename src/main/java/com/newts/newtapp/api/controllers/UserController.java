@@ -236,7 +236,27 @@ public class UserController {
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
     }
-  
+
+    /**
+     * Get an Arraylist of EntityModels of ConversationProfile of the conversations of the given user
+     * @param username              name of the user
+     * @throws UserNotFound         if user with given id doesn't exist
+     * @throws ConversationNotFound if conversation with given id doesn't exist
+     * @return                      Currently authenticated user's username
+     */
+    @GetMapping("/api/users/{username}/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getConversationsByUsername(@PathVariable String username)
+            throws UserNotFound, ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        ArrayList<ConversationProfile> conversations = userManager.getConversationsByUsername(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(conversationAssembler.toModel(c));
+        }
+        return conversationsModel;
+    }
+
     /**
      * A helper method that returns the username of the currently authenticated user
      * @return                  Currently authenticated user's username

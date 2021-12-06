@@ -37,7 +37,6 @@ public class GetRelevantConversationsTest {
         user.setInterests(interest);
         user.setLocation("Toronto");
         user.setBlockedUsers(blockedUser);
-        user.setId(1);
 
         conversationOne = new Conversation();
         conversationTwo = new Conversation();

@@ -6,12 +6,15 @@ import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
 import com.newts.newtapp.api.application.conversation.EditMessage;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
+import com.newts.newtapp.api.application.user.GetConversationsByUsername;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.*;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
 
 /**
  * An object representing a ConversationManager of the application.
@@ -96,7 +99,7 @@ public class ConversationManager {
      */
     public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor, IncorrectPassword,
             ConversationNotFound {
-        Delete delete = new Delete(conversationRepository, messageRepository, userRepository);
+        Delete delete = new Delete(conversationRepository, userRepository);
         delete.request(request);
     }
 

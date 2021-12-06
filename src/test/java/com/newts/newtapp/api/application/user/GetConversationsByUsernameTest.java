@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
+import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
@@ -14,34 +15,31 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationByLocationTest {
+public class GetConversationsByUsernameTest {
     TestConversationRepository c;
     TestUserRepository u;
-    User user;
+    User userOne;
+    User userTwo;
     Conversation conversationOne;
     Conversation conversationTwo;
     Conversation conversationThree;
-    GetRelevantConversationsByLocation g;
+    GetConversationsByUsername g;
 
     @Before
     public void setUp() {
         c = new TestConversationRepository();
         u = new TestUserRepository();
 
-        user = new User();
-        ArrayList<Integer> following = new ArrayList<>();
-        following.add(1);
-        following.add(2);
-        ArrayList<Integer> blockedUser = new ArrayList<>();
-        ArrayList<String> interest = new ArrayList<>();
-        interest.add("a");
-        ArrayList<String> notInterest = new ArrayList<>();
-        notInterest.add("b");
-        user.setId(7);
-        user.setInterests(interest);
-        user.setLocation("a");
-        user.setBlockedUsers(blockedUser);
-        user.setFollowing(following);
+        userOne = new User();
+        userOne.setId(1);
+        userOne.setUsername("UserOne");
+        u.save(userOne);
+
+        userTwo = new User();
+        userTwo.setId(2);
+        userTwo.setUsername("UserTwo");
+        u.save(userTwo);
+
 
         conversationOne = new Conversation();
         conversationTwo = new Conversation();
@@ -51,36 +49,40 @@ public class GetRelevantConversationByLocationTest {
         conversationThree.setId(3);
         conversationOne.setTitle("a");
         conversationTwo.setTitle("b");
-        conversationThree.setTitle("aa");
-        conversationOne.setTopics(interest);
-        conversationTwo.setTopics(notInterest);
-        conversationThree.setTopics(notInterest);
-        conversationOne.setLocation("a");
-        conversationTwo.setLocation("b");
-        conversationThree.setLocation("a");
+        conversationThree.setTitle("c");
         conversationOne.setMaxSize(5);
         conversationTwo.setMaxSize(5);
         conversationThree.setMaxSize(5);
 
+        conversationOne.addUser(1);
+        userOne.addConversation(conversationOne);
+
+        conversationTwo.addUser(2);
+        userTwo.addConversation(conversationTwo);
+
+        conversationThree.addUser(1);
+        userOne.addConversation(conversationThree);
+        conversationThree.addUser(2);
+        userTwo.addConversation(conversationThree);
         c.save(conversationThree);
         c.save(conversationTwo);
         c.save(conversationOne);
 
-        u.save(user);
 
-        g = new GetRelevantConversationsByLocation(u, c);
+
+        g = new GetConversationsByUsername(c, u);
     }
 
     @Test(timeout=50)
-    public void testGetRelevantConversationsByLocation() throws UserNotFound {
+    public void testGetConversationsByUsername() throws UserNotFound, ConversationNotFound {
         RequestModel r = new RequestModel();
 
-        r.fill(RequestField.USER_ID, 7);
+        r.fill(RequestField.USERNAME, "UserTwo");
 
         ArrayList<ConversationProfile> cp = g.request(r);
 
         Assert.assertEquals(2, cp.size());
-        Assert.assertEquals("a", cp.get(0).topics.get(0));
-        Assert.assertEquals("b", cp.get(1).topics.get(0));
+        Assert.assertEquals("b", cp.get(0).title);
+        Assert.assertEquals("c", cp.get(1).title);
     }
 }
