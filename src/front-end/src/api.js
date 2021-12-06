@@ -1,4 +1,7 @@
 // Singleton to simplify API interface for use in front end JS
+import jwtDecode from "jwt-decode";
+import authUtil from "./auth";
+
 const newtApi = {
 
     async getUser(username) {
@@ -37,6 +40,23 @@ const newtApi = {
         return body.jwt;
      },
 
+    async follow(cookies, username) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch(`http://localhost:8080/api/users/${username}/follow`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                }
+            })
+        if (response.status !== 200) {
+            return false;
+        }
+        const body = await response.json();
+        return body.jwt;
+    },
+
      async getRelevantConversations(cookies) {
         const bearerToken = "Bearer " + cookies.Auth;
         const response = await fetch('http://localhost:8080/api/relevant/conversations',
@@ -54,6 +74,43 @@ const newtApi = {
          console.log(body);
          return body;
      },
+
+    async getRelevantConversationsByFollow(cookies) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch('http://localhost:8080/api/following/conversations',
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                }
+            })
+        if (response.status !== 200) {
+            return false;
+        }
+        const body = await response.json();
+        console.log(body);
+        return body;
+    },
+
+    async getMyConversationsList(cookies) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        const username = authUtil.getUsername(cookies.Auth)
+        const response = await fetch(`http://localhost:8080/api/users/${username}/conversations`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                }
+            })
+        if (response.status !== 200) {
+            return false;
+        }
+        const body = await response.json();
+        console.log(body);
+        return body;
+    },
 
     async createConversation(cookies, formData) {
         const bearerToken = "Bearer " + cookies.Auth;
