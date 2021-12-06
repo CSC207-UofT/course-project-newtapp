@@ -144,7 +144,7 @@ As a social media application, we hope to make our application accessible and us
    
    In phase 2, our group worked towards adding more tests for our program. 
 
-   ![Feature Branching](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Test%Coverage.png)
+   ![](images/Test Coverage.png)
 
 ## Packaging Strategies
    Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting between the functionality and purpose of methods. Since our code was created to fulfil thoughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, concise and organized file sorting. 
