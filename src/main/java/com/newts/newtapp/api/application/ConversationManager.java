@@ -6,7 +6,6 @@ import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.conversation.GetConversationProfile;
 import com.newts.newtapp.api.application.conversation.EditMessage;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
-import com.newts.newtapp.api.application.user.GetConversationsByUsername;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -160,5 +159,29 @@ public class ConversationManager {
             MessageNotFoundInConversation {
         GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);
         return getMessageData.request(request);
+    }
+
+    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
+        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
+                conversationRepository);
+        return getRelevantConversations.request(request);
+    }
+
+    public ArrayList<ConversationProfile> getRelevantConversationsByFollow(RequestModel request) throws UserNotFound,
+            ConversationNotFound {
+        GetRelevantConversationsByFollow getRelevantConversationsByFollow = new GetRelevantConversationsByFollow(userRepository,
+                conversationRepository);
+        return getRelevantConversationsByFollow.request(request);
+    }
+
+    /**
+     * Returns an arraylist of conversation profiles of conversations the token bearer is currently in.
+     * @param request                   RequestModel containing Conversation's id
+     * @return UserNotFound             If User with id does not exist
+     * @throws ConversationNotFound     If Conversation with id does not exist
+     */
+    public ArrayList<ConversationProfile> getConversationsByUsername(RequestModel request) throws UserNotFound, ConversationNotFound {
+        GetConversationsByUsername getConvByUsername = new GetConversationsByUsername(conversationRepository, userRepository);
+        return getConvByUsername.request(request);
     }
 }
