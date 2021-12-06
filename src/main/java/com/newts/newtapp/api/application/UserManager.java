@@ -116,11 +116,6 @@ public class UserManager {
     }
 
     /**
-     * Following conversation method, implemented on other branch
-     */
-     public void followingConversations(RequestModel request) {}
-
-    /**
      * Block a given user
      * @param request   RequestModel containing the user and the user to block.
      */

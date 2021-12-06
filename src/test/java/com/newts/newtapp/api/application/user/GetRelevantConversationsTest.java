@@ -38,6 +38,7 @@ public class GetRelevantConversationsTest {
         user.setInterests(interest);
         user.setLocation("Toronto");
         user.setBlockedUsers(blockedUser);
+        user.setUsername("testuser");
 
         conversationOne = new Conversation();
         conversationTwo = new Conversation();
@@ -71,7 +72,7 @@ public class GetRelevantConversationsTest {
     public void testGetRelevantConversations() throws UserNotFound {
         RequestModel r = new RequestModel();
 
-        r.fill(RequestField.USER_ID, 1);
+        r.fill(RequestField.USERNAME, "testuser");
 
         ArrayList<ConversationProfile> cp = g.request(r);
 
