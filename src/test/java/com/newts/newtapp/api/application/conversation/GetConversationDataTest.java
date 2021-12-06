@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.springframework.hateoas.EntityModel;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GetConversationDataTest {
     TestConversationRepository c;
@@ -38,7 +39,8 @@ public class GetConversationDataTest {
         testConversation.setMaxSize(1);
         testUser = new User(1, "testUser", "password", new ArrayList<>());
         testConversation.addUser(testUser.getId());
-        testMessage = new Message(-1, "", 1, 0);
+        testUser.addConversation(testConversation);
+        testMessage = new Message(1, "", 1, 1);
         testConversation.addMessage(testMessage.getId());
 
         u.save(testUser);
@@ -48,18 +50,18 @@ public class GetConversationDataTest {
         g = new GetConversationData(c, m, u);
     }
 
-    @Test(timeout = 50)
+    @Test(timeout = 500)
     public void testGetConversationData() throws UserNotFound, MessageNotFound, IncorrectPassword, ConversationNotFound,
             MessageNotFoundInConversation {
         RequestModel r = new RequestModel();
-        r.fill(RequestField.CONVERSATION_ID, -1);
+        r.fill(RequestField.CONVERSATION_ID, 1);
 
         ConversationData actualData = g.request(r);
 
         Assert.assertEquals(testConversation.getId(), actualData.id);
-        EntityModel<UserProfile> profileModel = (EntityModel) actualData.userProfiles.get(0);
-        Assert.assertEquals(1, profileModel.getContent().id);
-        EntityModel<MessageData> messageModel = (EntityModel) actualData.messageData.get(0);
-        Assert.assertEquals(-1, messageModel.getContent().id);
+        EntityModel<UserProfile> profileModel = actualData.userProfiles.get(0);
+        Assert.assertEquals(1, Objects.requireNonNull(profileModel.getContent()).id);
+        EntityModel<MessageData> messageModel = actualData.messageData.get(0);
+        Assert.assertEquals(1, Objects.requireNonNull(messageModel.getContent()).id);
     }
 }

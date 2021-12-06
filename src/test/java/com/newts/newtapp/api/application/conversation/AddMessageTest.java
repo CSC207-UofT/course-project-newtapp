@@ -30,6 +30,10 @@ public class AddMessageTest {
 
         testConversation = new Conversation();
         testUser = new User();
+
+        testConversation.setMaxSize(1);
+        testConversation.addUser(testUser.getId());
+
         c.save(testConversation);
 
         a = new AddMessage(c,m);
@@ -44,11 +48,11 @@ public class AddMessageTest {
 
         a.request(r);
 
-        assertTrue(c.findById(-1).isPresent());
-        Conversation checkConversation = c.findById(-1).get();
+        assertTrue(c.findById(1).isPresent());
+        Conversation checkConversation = c.findById(1).get();
         ArrayList<Integer> messageList = checkConversation.getMessages();
         int actualMessageId = messageList.get(0);
-        Assert.assertEquals(0, actualMessageId);
+        Assert.assertEquals(1, actualMessageId);
 
         assertTrue(m.findById(1).isPresent());
         Message checkMessage = m.findById(1).get();

@@ -1,5 +1,8 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.conversation.GetConversationsByUsername;
+import com.newts.newtapp.api.application.conversation.GetRelevantConversations;
+import com.newts.newtapp.api.application.conversation.GetRelevantConversationsByFollow;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.gateways.ConversationRepository;
@@ -126,12 +129,6 @@ public class UserManager {
         block.request(request);
     }
 
-    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
-        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
-                conversationRepository);
-        return getRelevantConversations.request(request);
-    }
-
     /**
      * Rate given user
      * @param request RequestModel containing the user to be rated and the rating
@@ -139,8 +136,4 @@ public class UserManager {
     public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
         Rate rate = new Rate((userRepository));
     }
-
-
-
-
 }

@@ -49,8 +49,8 @@ public class AddUserTest {
         r.fill(RequestField.CONVERSATION_ID, testConversation.getId());
         r.fill(RequestField.USER_ID, testUser.getId());
         a.request(r);
-        assertTrue(c.findById(-1).isPresent());
-        Conversation checkConversation = c.findById(-1).get();
+        assertTrue(c.findById(1).isPresent());
+        Conversation checkConversation = c.findById(1).get();
         ArrayList<Integer> userList = checkConversation.getUsers();
         int actualUserId = userList.get(1);
         Assert.assertEquals(1, actualUserId);

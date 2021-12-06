@@ -19,6 +19,10 @@ public class ChangeStatusTest {
     public void setUp() {
         c = new TestConversationRepository();
         Conversation testConversation = new Conversation();
+
+        // Setting the AuthorId
+        testConversation.setAuthorId(1);
+
         c.save(testConversation);
         change = new ChangeStatus(c);
     }
@@ -26,9 +30,10 @@ public class ChangeStatusTest {
     @Test(timeout = 50)
     public void testChangeStatus() throws ConversationNotFound, WrongAuthor {
         RequestModel r = new RequestModel();
-        r.fill(RequestField.CONVERSATION_ID, -1);
+        r.fill(RequestField.CONVERSATION_ID, 1);
+        r.fill(RequestField.USER_ID, 1);
         change.request(r);
-        assertTrue(c.findById(-1).isPresent());
-        assertTrue(c.findById(-1).get().getIsOpen());
+        assertTrue(c.findById(1).isPresent());
+        assertTrue(c.findById(1).get().getIsOpen());
     }
 }
