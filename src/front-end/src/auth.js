@@ -10,7 +10,7 @@ const authUtil = {
         } else if (cookies.Auth === undefined) {
             return false;
         }
-        const token = cookies.Auth;
+        let token = cookies.Auth;
         let decodedToken = "";
         try {
             decodedToken = jwt_decode(token);
@@ -18,18 +18,16 @@ const authUtil = {
             return false;
         }
         if (authUtil.isExpired(decodedToken)) {
-            cookies.remove("Auth");
             return false;
         }
         // token is valid
-        console.log(true)
         return true;
     },
 
     // Return true iff token is expired
     isExpired(decodedToken) {
          const now = Math.round(Date.now() / 1000);
-         return !(decodedToken.iat < now < decodedToken.exp);
+         return !((decodedToken.iat <= now) && (now <= decodedToken.exp));
     },
 
     // Return the username that belongs to a JWT

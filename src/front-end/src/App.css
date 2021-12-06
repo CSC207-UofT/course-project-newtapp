@@ -2,7 +2,11 @@ body {
   margin: 50px 0 0;
   font-family: sans-serif;
   color: #FFFFFF;
-  background-color: #252525;
+  background-color: #282828;
+}
+
+.emoji {
+  display: inline;
 }
 
 .newtButton {
@@ -26,7 +30,7 @@ body {
 }
 
 .newtButtonDark {
-  background-color: #252525;
+  background-color: #282828;
   border: none;
   color: white;
   margin: 5px;
@@ -42,6 +46,27 @@ body {
 
 .newtButtonDark:focus {
   background-color: black;
+}
+
+.newtJoinButton {
+  background-color: #992F05;
+  font-size: 20px;
+  border: none;
+  color: white;
+  margin: 5px;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.newtJoinButton:hover {
+  box-shadow: 0 0 5px black;
+}
+
+.newtJoinButton:focus {
+  color: #992F05;
+  background-color: white;
 }
 
 .newtTextInput {
@@ -69,13 +94,21 @@ nav {
   background-color: #992F05;
   height: 50px;
   width: 100%;
-  box-shadow: 0 -2px 25px black;
+
 }
 
-.navLinks {
+.leftNavLinks {
   position: absolute;
   top: 50%;
   left: 10px;
+  transform: translateY(-50%);
+}
+
+.rightNavLinks {
+  position: absolute;
+  display: inline-flex;
+  top: 50%;
+  right: -7px;
   transform: translateY(-50%);
 }
 
@@ -88,6 +121,7 @@ nav {
   text-decoration: none;
   padding: 4px;
   border-radius: 10px;
+
 }
 
 .navLink:hover {
@@ -109,12 +143,13 @@ nav {
 .navUserPhoto {
   width: 35px;
   height: 35px;
-  position: absolute;
+  position: relative;
   background-color: #FFFFFF;
   top: 50%;
   transform: translateY(-50%);
   right: 14px;
   border-radius: 50%;
+  margin-left: 20px;
 }
 
 .navUserPhoto:hover {
@@ -125,7 +160,6 @@ nav {
   z-index: -1;
   width: 100%;
   max-width: 1000px;
-  background-color: #252525;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -195,6 +229,7 @@ nav {
   align-items: center;
   width: 100%;
   height: 15%;
+  background-color: #303030;
   border-bottom: 2px solid #505050;
 }
 
@@ -242,14 +277,17 @@ nav {
 
 .userProfileInfo {
   font-size: 18px;
-  margin-top: 10px;
-  padding: 15px;
   width: 50%;
-  text-align: center;
+  list-style-type: none;
+  margin-left: -10px;
 }
 
-.userProfileInfoRow {
-  height: 25px;
+.userProfileInterests {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: flex-start;
+  width: 90%;
 }
 
 .userProfileConversationsPanel {
@@ -257,4 +295,93 @@ nav {
   height: 100%;
   position: absolute;
   right: 0;
+}
+
+/* Conversation List */
+
+.conversationList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.conversationTile {
+  position: relative;
+  background-color: #303030;
+  border: 1px solid #505050;
+  width: 90%;
+  height: 140px;
+  margin: 7px 0;
+  padding: 5px;
+  /*box-shadow: -2px 2px 5px black;*/
+}
+
+.conversationTileTitleBox {
+  position: absolute;
+  margin-left: 30px;
+  align-items: center;
+  top: -5px;
+  left: 0;
+  max-width: 75%;
+  max-height: 90%;
+}
+
+.conversationTileTitle {
+  font-size: 32px;
+}
+
+.conversationTileTopics{
+  position: absolute;
+  bottom: 0;
+  margin-left: 30px;
+  margin-bottom: 10px;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 60%;
+}
+
+.conversationTileTopic {
+  margin: 0 5px;
+  background-color: #992F05;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.conversationTileSidebar {
+  position: absolute;
+  right: 20px;
+  width: 20%;
+  height: 90%;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.conversationTileJoinButton {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.conversationTileSidebarExtra {
+  margin: 8px 5px;
+}
+
+/* Create conversation form */
+
+.createConversationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  position: fixed;
+  margin-top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 300px;
+  width: 375px;
 }
