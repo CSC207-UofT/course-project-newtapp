@@ -139,9 +139,13 @@ As a social media application, we hope to make our application accessible and us
    
 ## Code Style and Documentation
    At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+
 ## Testing
    
-   In phase 2, our group worked towards adding more tests for our program. # TO INCLUDE: PIC OF TEST COVERAGE
+   In phase 2, our group worked towards adding more tests for our program. 
+
+   ![Feature Branching](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Test%Coverage.png)
+
 ## Packaging Strategies
    Our group has decided to package by the layers of Clean Architecture, to allow for easy sorting between the functionality and purpose of methods. Since our code was created to fulfil thoughtful and organized layers as demonstrated in Clean Architecture, packaging by layers allows for clear, concise and organized file sorting. 
    
