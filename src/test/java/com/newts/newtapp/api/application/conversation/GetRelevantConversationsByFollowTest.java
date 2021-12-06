@@ -54,7 +54,7 @@ public class GetRelevantConversationsByFollowTest {
         conversationTwo.setId(2);
         conversationThree.setId(3);
         conversationOne.setTitle("a");
-        conversationTwo.setTitle("c");
+        conversationTwo.setTitle("d");
         conversationThree.setTitle("b");
         conversationOne.setTopics(interest);
         conversationTwo.setTopics(notInterest);
