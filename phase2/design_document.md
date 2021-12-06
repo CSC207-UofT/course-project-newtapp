@@ -193,7 +193,7 @@ A significant PR I made during this project was for the Delete User Interactor. 
 https://github.com/CSC207-UofT/course-project-newtapp/pull/32
 
 Zachary
-- For phase 2, I worked on implementing the mock repositories to be able to test all the interactors. I also worked on implementing tests for the interactors. Also spent some time creating the logo for our app.
+- For phase 2, I worked on implementing the mock repositories to be able to test all the interactors. I also worked on implementing tests for the interactors. Also spent some time creating the logo for our app and helping in the creation of the presentation.
 A significant pull request I made in the development of our app was for the conversation class and some of the test cases. This pull request still plays a significant role in the functionality of the program currently.
 https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/6
 
