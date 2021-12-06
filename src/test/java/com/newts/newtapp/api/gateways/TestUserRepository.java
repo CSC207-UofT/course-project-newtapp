@@ -2,17 +2,13 @@ package com.newts.newtapp.api.gateways;
 
 import com.newts.newtapp.entities.User;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * A mock UserRepository implemented for testing purposes.
@@ -200,7 +196,7 @@ public class TestUserRepository implements UserRepository {
     @Override
     public Optional<User> findByUsername(String username) {
         for(User user:users.values()){
-            if(user.getUsername().equals(username)){
+            if(Objects.equals(user.getUsername(), username)){
                 return Optional.of(users.get(user.getId()));
             }
         }
