@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import newtApi from "../../api.js";
 import { instanceOf } from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
+import ConversationTile from "../conversation/conversationTile/conversationTile";
 
 class CreateConversationForm extends React.Component {
     static propTypes = {
@@ -16,7 +17,8 @@ class CreateConversationForm extends React.Component {
                 topics: "",
                 location: "",
                 minRating: 0,
-                maxSize: 0};
+                maxSize: 10};
+        this.previewData = {title: "", topics: [], location: "", maxSize: 1, currSize: 1}
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,11 +26,20 @@ class CreateConversationForm extends React.Component {
     handleChange(event) {
         // this syntax assigns one dictionary key, value pair without altering others
         this.setState({[event.target.name]: event.target.value});
+        this.previewData = {
+            title: this.state.title,
+            topics: this.state.topics.split(',')
+                .map((value) => {return value.trim();}),
+            location: this.state.location, minRating: parseInt(this.state.minRating),
+            maxSize: parseInt(this.state.maxSize),
+            currSize: 1
+        }
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        const formData = {locationRadius: 0, title: this.state.title, topics: this.state.topics.split(','),
+        const formData = {locationRadius: 0, title: this.state.title, topics: this.state.topics.split(',')
+                .map((value) => {return value.trim();}),
             location: this.state.location, minRating: parseInt(this.state.minRating),
             maxSize: parseInt(this.state.maxSize)};
         console.log(formData);
@@ -46,10 +57,11 @@ class CreateConversationForm extends React.Component {
 
     render() {
         if (this.state.redirect) {
-            return (<Navigate to="/login" replace={false} />)
+            return (<Navigate to="/" replace={false} />)
         } else if (this.state.tryAgain) {
             return (
-                <div>
+                <div className="createConversationPage">
+                    <ConversationTile conversation={this.previewData} />
                     <form onSubmit={this.handleSubmit} className="createConversationForm">
                         <input name="title" type="text" required="required" placeholder="Title"
                                value={this.state.title} onChange={this.handleChange}
@@ -58,13 +70,19 @@ class CreateConversationForm extends React.Component {
                                value={this.state.topics} onChange={this.handleChange}
                                className="newtTextInput"/> <br/>
                         <input name="location" type="text" required="required" placeholder="Location"
-                               value={this.state.location} onChange={this.handleChange}
+                               value={this.state.location} onChange={this.handleChange} min="1"
                                className="newtTextInput"/><br/>
-                        <input name="maxSize" type="number" step="1" required="required" placeholder="Maximum Size"
-                               value={this.state.maxSize} onChange={this.handleChange}
-                               className="newtTextInput"/>
+                        <div>
+                            <p style={{"display": "inline"}}>Maximum capacity</p>
+                            <input name="maxSize" type="number" step="1" required="required" placeholder="Maximum Size"
+                                   value={this.state.maxSize} onChange={this.handleChange} min="1"
+                                   className="newtTextInput"/>
+                        </div>
                         <div style={{"padding":"16px"}}>
                             <p style={{"display": "inline"}}>Minimum user rating:</p>
+                            <input type="radio" id="0" name="minRating" required="required"
+                                   value={0} onChange={this.handleChange}
+                                   className="newtRadioInput"/><label htmlFor="0">0</label>
                             <input type="radio" id="1" name="minRating" required="required"
                                    value={1} onChange={this.handleChange}
                                    className="newtRadioInput"/><label htmlFor="1">1</label>
@@ -87,7 +105,8 @@ class CreateConversationForm extends React.Component {
             );
         } else {
             return (
-                <div>
+                <div className="createConversationPage">
+                    <ConversationTile conversation={this.previewData} />
                     <form onSubmit={this.handleSubmit} className="createConversationForm">
                         <input name="title" type="text" required="required" placeholder="Title"
                                value={this.state.title} onChange={this.handleChange}
@@ -101,11 +120,14 @@ class CreateConversationForm extends React.Component {
                         <div>
                             <p style={{"display": "inline"}}>Maximum capacity</p>
                             <input name="maxSize" type="number" step="1" required="required" placeholder="Maximum Size"
-                                   value={this.state.maxSize} onChange={this.handleChange}
+                                   value={this.state.maxSize} onChange={this.handleChange} min="1"
                                    className="newtTextInput"/>
                         </div>
                         <div style={{"padding":"16px"}}>
                             <p style={{"display": "inline"}}>Minimum user rating:</p>
+                            <input type="radio" id="0" name="minRating" required="required"
+                                   value={0} onChange={this.handleChange}
+                                   className="newtRadioInput"/><label htmlFor="0">0</label>
                             <input type="radio" id="1" name="minRating" required="required"
                                    value={1} onChange={this.handleChange}
                                    className="newtRadioInput"/><label htmlFor="1">1</label>

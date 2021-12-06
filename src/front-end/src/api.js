@@ -9,14 +9,18 @@ const newtApi = {
         return await response.json()
     },
 
-     async createUser(username, password, interest) {
+     async createUser(formData) {
          const response = await fetch('http://localhost:8080/api/users',
              {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
                  },
-                 body: JSON.stringify({username: username, password: password, interest: interest})
+                 body: JSON.stringify({
+                     username: formData.username,
+                     password: formData.password,
+                     interests: formData.interests
+                 })
              })
          if (response.status !== 201) {
              return false;
