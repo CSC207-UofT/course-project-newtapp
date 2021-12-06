@@ -28,13 +28,10 @@ import java.util.ArrayList;
 public class UserController {
     private final UserManager userManager;
     private final UserProfileModelAssembler profileAssembler;
-    private final ConversationProfileModelAssembler conversationAssembler;
 
-    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler,
-                          ConversationProfileModelAssembler conversationAssembler) {
+    public UserController(UserManager userManager, UserProfileModelAssembler profileAssembler) {
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
-        this.conversationAssembler = conversationAssembler;
     }
 
     /**
@@ -183,29 +180,6 @@ public class UserController {
         return profileAssembler.toModel(profile);
     }
 
-    // TODO implement followingConversation and getRelevantConversations
-    /**
-     * Return a list of conversations in which users who this user is following are, sorted by interest.
-     */
-    @GetMapping("/api/following/conversations")
-    void followingConversation() {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, returnUsername());
-        userManager.followingConversations(request);
-    }
-
-    @GetMapping("/api/relevant/conversations")
-    ArrayList<EntityModel<ConversationProfile>> getRelevantConversations() throws UserNotFound {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, returnUsername());
-        ArrayList<ConversationProfile> conversations = userManager.getRelevantConversations(request);
-        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
-        for (ConversationProfile c : conversations) {
-            conversationsModel.add(conversationAssembler.toModel(c));
-        }
-        return conversationsModel;
-    }
-
     /**
      * Have a user follow another.
      * @param username               username of the user to block
@@ -235,26 +209,6 @@ public class UserController {
         userManager.rate(request);
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
-    }
-
-    /**
-     * Get an Arraylist of EntityModels of ConversationProfile of the conversations of the given user
-     * @param username              name of the user
-     * @throws UserNotFound         if user with given id doesn't exist
-     * @throws ConversationNotFound if conversation with given id doesn't exist
-     * @return                      Currently authenticated user's username
-     */
-    @GetMapping("/api/users/{username}/conversations")
-    ArrayList<EntityModel<ConversationProfile>> getConversationsByUsername(@PathVariable String username)
-            throws UserNotFound, ConversationNotFound {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, username);
-        ArrayList<ConversationProfile> conversations = userManager.getConversationsByUsername(request);
-        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
-        for (ConversationProfile c : conversations) {
-            conversationsModel.add(conversationAssembler.toModel(c));
-        }
-        return conversationsModel;
     }
 
     /**

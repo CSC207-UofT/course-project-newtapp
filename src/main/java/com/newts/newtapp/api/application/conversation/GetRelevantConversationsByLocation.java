@@ -1,10 +1,11 @@
-package com.newts.newtapp.api.application.user;
+package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.ConversationQueue;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.sorters.InterestSorter;
+import com.newts.newtapp.api.application.user.UserInteractor;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
@@ -14,7 +15,7 @@ import com.newts.newtapp.entities.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetRelevantConversationsByLocation extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound>  {
+public class GetRelevantConversationsByLocation extends UserInteractor<ArrayList<ConversationProfile>, UserNotFound> {
     /**
      * Initialize a new Create interactor with given UserRepository.
      * @param repository    UserRepository to access user data by
@@ -31,8 +32,8 @@ public class GetRelevantConversationsByLocation extends UserInteractor<ArrayList
      * @throws UserNotFound if the user in the request can not be found.
      */
     public ArrayList<ConversationProfile> request(RequestModel request) throws UserNotFound {
-        int userId = (int) request.get(RequestField.USER_ID);
-        User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
+        String username = (String) request.get(RequestField.USERNAME);
+        User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         InterestSorter sorter = new InterestSorter();
 
