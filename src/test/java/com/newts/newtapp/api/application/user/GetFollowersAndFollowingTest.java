@@ -3,6 +3,7 @@ package com.newts.newtapp.api.application.user;
 import java.util.ArrayList;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
+import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.User;
@@ -44,12 +45,16 @@ public class GetFollowersAndFollowingTest {
     public void getFollowersFollowingTest() throws UserNotFound {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
-        ArrayList<Integer> followers = getFollowers.request(r);
-        ArrayList<Integer> following = getFollowing.request(r);
+        ArrayList<UserProfile> followers = getFollowers.request(r);
+        ArrayList<UserProfile> following = getFollowing.request(r);
         User user = testUserRepository.findById(1).get();
 
-        assertArrayEquals(followers.toArray(), user.getFollowers().toArray());
-        assertArrayEquals(following.toArray(), user. getFollowing().toArray());
+        for(UserProfile userProfile:followers){
+            assertTrue(user.getFollowers().contains(userProfile.id));
+        }
+        for(UserProfile userProfile:following){
+            assertTrue(user.getFollowing().contains(userProfile.id));
+        }
     }
 
 
