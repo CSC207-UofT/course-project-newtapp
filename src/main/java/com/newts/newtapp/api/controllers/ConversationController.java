@@ -20,6 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 /**
  * This Controller handles Conversation related mappings for our API.
  */
@@ -30,14 +32,17 @@ public class ConversationController {
     private final UserManager userManager;
     private final ConversationProfileModelAssembler profileAssembler;
     private final ConversationDataModelAssembler dataAssembler;
+    private final MessageDataModelAssembler messageAssembler;
 
     public ConversationController(ConversationManager conversationManager, UserManager userManager,
                                   ConversationProfileModelAssembler profileAssembler,
-                                  ConversationDataModelAssembler dataAssembler) {
+                                  ConversationDataModelAssembler dataAssembler,
+                                  MessageDataModelAssembler messageAssembler) {
         this.conversationManager = conversationManager;
         this.userManager = userManager;
         this.profileAssembler = profileAssembler;
         this.dataAssembler = dataAssembler;
+        this.messageAssembler = messageAssembler;
     }
 
     /**
@@ -248,6 +253,24 @@ public class ConversationController {
     }
 
     /**
+     * Returns a MessageData for the Message with given id in the covnersation with given cid
+     * @param id                        id of Conversation
+     * @return                          EntityModel containing Conversation data
+     * @throws ConversationNotFound     If no Conversation exists with id
+     * @throws MessageNotFound            If no conversation exists with id
+     * @throws MessageNotFoundInConversation If the message is not found in conversation
+     */
+    @GetMapping("/api/conversations/{cid}/messages/{id}")
+    public EntityModel<MessageData> getMessageData(@PathVariable int cid, @PathVariable int id) throws MessageNotFound,
+            ConversationNotFound, MessageNotFoundInConversation {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.CONVERSATION_ID, cid);
+        request.fill(RequestField.MESSAGE_ID, id);
+        MessageData data = conversationManager.getMessageData(request);
+        return messageAssembler.toModel(data);
+    }
+
+    /**
      * Add a message to a conversation.
      * @param id                          Conversation with id
      * @param messageBody                 the string body of the given message
@@ -350,6 +373,59 @@ public class ConversationController {
     }
 
     /**
+     * Get an Arraylist of EntityModels of ConversationProfile of the conversations of the given user
+     * @param username              name of the user
+     * @throws UserNotFound         if user with given id doesn't exist
+     * @throws ConversationNotFound if conversation with given id doesn't exist
+     * @return                      Currently authenticated user's username
+     */
+    @GetMapping("/api/users/{username}/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getConversationsByUsername(@PathVariable String username)
+            throws UserNotFound, ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        ArrayList<ConversationProfile> conversations = conversationManager.getConversationsByUsername(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(profileAssembler.toModel(c));
+        }
+        return conversationsModel;
+    }
+
+    /**
+     * Return a list of conversations in which users who this user is following are, sorted by interest.
+     * @return
+     */
+    @GetMapping("/api/following/conversations")
+    ArrayList<EntityModel<ConversationProfile>> followingConversation() throws UserNotFound, ConversationNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        ArrayList<ConversationProfile> conversations = conversationManager.getRelevantConversationsByFollow(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(profileAssembler.toModel(c));
+        }
+        return conversationsModel;
+    }
+
+    /**
+     * Return a list of conversations which are sorted approximately by relevance to the user.
+     * @return
+     * @throws UserNotFound
+     */
+    @GetMapping("/api/relevant/conversations")
+    ArrayList<EntityModel<ConversationProfile>> getRelevantConversations() throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        ArrayList<ConversationProfile> conversations = conversationManager.getRelevantConversations(request);
+        ArrayList<EntityModel<ConversationProfile>> conversationsModel = new ArrayList<>();
+        for (ConversationProfile c : conversations) {
+            conversationsModel.add(profileAssembler.toModel(c));
+        }
+        return conversationsModel;
+    }
+
+    /**
      * A helper method that returns the ID of the currently authenticated user
      * @return                  Currently authenticated user's id
      * @throws UserNotFound     If no User exists with username
@@ -364,6 +440,16 @@ public class ConversationController {
         request.fill(RequestField.USERNAME, username);
         UserProfile userProfile = userManager.getProfileByUsername(request);
         return userProfile.id;
+    }
+
+    /**
+     * A helper method that returns the username of the currently authenticated user
+     * @return                  Currently authenticated user's username
+     */
+    private String returnUsername(){
+        // fetch the currently authenticated user's username
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userDetails.getUsername();
     }
 
 }

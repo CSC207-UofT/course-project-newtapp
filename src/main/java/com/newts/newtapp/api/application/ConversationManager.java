@@ -13,6 +13,8 @@ import com.newts.newtapp.api.application.conversation.*;
 import com.newts.newtapp.api.errors.*;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+
 /**
  * An object representing a ConversationManager of the application.
  */
@@ -96,7 +98,7 @@ public class ConversationManager {
      */
     public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor, IncorrectPassword,
             ConversationNotFound {
-        Delete delete = new Delete(conversationRepository, messageRepository, userRepository);
+        Delete delete = new Delete(conversationRepository, userRepository);
         delete.request(request);
     }
 
@@ -157,5 +159,35 @@ public class ConversationManager {
             MessageNotFoundInConversation {
         GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);
         return getMessageData.request(request);
+    }
+
+    /**
+     * Returns an ArrayList of ConversationProfiles that are sorted approximately by relevance.
+     */
+    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
+        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
+                conversationRepository);
+        return getRelevantConversations.request(request);
+    }
+
+    /**
+     * Returns an ArrayList of ConversationsProfiles drawn from followed users sorted approximately by relevance.
+     */
+    public ArrayList<ConversationProfile> getRelevantConversationsByFollow(RequestModel request) throws UserNotFound,
+            ConversationNotFound {
+        GetRelevantConversationsByFollow getRelevantConversationsByFollow = new GetRelevantConversationsByFollow(userRepository,
+                conversationRepository);
+        return getRelevantConversationsByFollow.request(request);
+    }
+
+    /**
+     * Returns an arraylist of conversation profiles of conversations the token bearer is currently in.
+     * @param request                   RequestModel containing Conversation's id
+     * @return UserNotFound             If User with id does not exist
+     * @throws ConversationNotFound     If Conversation with id does not exist
+     */
+    public ArrayList<ConversationProfile> getConversationsByUsername(RequestModel request) throws UserNotFound, ConversationNotFound {
+        GetConversationsByUsername getConvByUsername = new GetConversationsByUsername(conversationRepository, userRepository);
+        return getConvByUsername.request(request);
     }
 }

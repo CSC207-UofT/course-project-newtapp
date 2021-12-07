@@ -4,7 +4,6 @@ import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.ConversationRepository;
-import com.newts.newtapp.api.gateways.MessageRepository;
 import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
@@ -13,15 +12,11 @@ import com.newts.newtapp.entities.User;
 public class Delete extends ConversationInteractor<Void,Exception> {
 
     /**
-     * Creates a Delete conversation interactor for deleting conversations
-     * @param conversationRepository ConversationRepository containing conversation data
-     * @param messageRepository MessageRepository containing message data
-     * @param userRepository UserRepository containing user data
+     * Initialize a new Delete interactor with given UserRepository.
+     * @param repository        ConversationRepository to access conversation data by
+     * @param userRepository    UserRepository to access user data by
      */
-    public Delete(ConversationRepository conversationRepository,
-                  MessageRepository messageRepository,
-                  UserRepository userRepository) { super(conversationRepository,
-            messageRepository,
+    public Delete(ConversationRepository repository, UserRepository userRepository) { super(repository,
             userRepository); }
 
     /**
@@ -45,13 +40,8 @@ public class Delete extends ConversationInteractor<Void,Exception> {
             User user = userRepository.findById(userId).orElseThrow(UserNotFound::new);
             user.removeConversation(conversation);
             userRepository.save(user);
-        }
 
-        // Deleting all associated messages from the MessageRepository
-        for (int messagedId : conversation.getMessages()){
-            messageRepository.delete(messageRepository.getById(messagedId));
         }
-
 
         conversationRepository.delete(conversation);
         return null;

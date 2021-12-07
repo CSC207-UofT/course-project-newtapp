@@ -2,7 +2,6 @@ package com.newts.newtapp.api.application.user;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
-import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.User;
 import org.junit.Before;
@@ -38,6 +37,8 @@ public class ChangePasswordTest {
         requestModel.fill(RequestField.PASSWORD, "test123");
         requestModel.fill(RequestField.NEW_PASSWORD, "test1234");
         changePassword.request(requestModel);
+
+        assertTrue(testUserRepository.findById(1).isPresent());
         User u = testUserRepository.findById(1).get();
         assertTrue(BCrypt.checkpw("test1234",u.getPassword()));
     }

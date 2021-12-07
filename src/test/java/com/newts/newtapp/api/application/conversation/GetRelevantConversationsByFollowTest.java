@@ -1,4 +1,4 @@
-package com.newts.newtapp.api.application.user;
+package com.newts.newtapp.api.application.conversation;
 
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-public class GetRelevantConversationsByFollowingTest {
+public class GetRelevantConversationsByFollowTest {
     TestConversationRepository c;
     TestUserRepository u;
     User user;
@@ -24,7 +24,7 @@ public class GetRelevantConversationsByFollowingTest {
     Conversation conversationOne;
     Conversation conversationTwo;
     Conversation conversationThree;
-    GetRelevantConversationsByFollowing g;
+    GetRelevantConversationsByFollow g;
 
     @Before
     public void setUp() {
@@ -40,6 +40,7 @@ public class GetRelevantConversationsByFollowingTest {
         interest.add("a");
         ArrayList<String> notInterest = new ArrayList<>();
         notInterest.add("b");
+        user.setUsername("user");
         user.setId(7);
         user.setInterests(interest);
         user.setLocation("Toronto");
@@ -53,7 +54,7 @@ public class GetRelevantConversationsByFollowingTest {
         conversationTwo.setId(2);
         conversationThree.setId(3);
         conversationOne.setTitle("a");
-        conversationTwo.setTitle("c");
+        conversationTwo.setTitle("d");
         conversationThree.setTitle("b");
         conversationOne.setTopics(interest);
         conversationTwo.setTopics(notInterest);
@@ -64,6 +65,9 @@ public class GetRelevantConversationsByFollowingTest {
         conversationOne.setMaxSize(5);
         conversationTwo.setMaxSize(5);
         conversationThree.setMaxSize(5);
+        conversationOne.setIsOpen(true);
+        conversationTwo.setIsOpen(true);
+        conversationThree.setIsOpen(true);
         ArrayList<Integer> conversationOneFollowing = new ArrayList<>();
         conversationOneFollowing.add(1);
         conversationOne.setUsers(conversationOneFollowing);
@@ -94,14 +98,14 @@ public class GetRelevantConversationsByFollowingTest {
         u.save(userOne);
         u.save(userTwo);
 
-        g = new GetRelevantConversationsByFollowing(u, c);
+        g = new GetRelevantConversationsByFollow(u, c);
     }
 
     @Test(timeout=50)
     public void testGetRelevantConversationsByFollowers() throws UserNotFound, ConversationNotFound {
         RequestModel r = new RequestModel();
 
-        r.fill(RequestField.USER_ID, 7);
+        r.fill(RequestField.USERNAME, "user");
 
         ArrayList<ConversationProfile> cp = g.request(r);
 
@@ -110,5 +114,3 @@ public class GetRelevantConversationsByFollowingTest {
         Assert.assertEquals("b", cp.get(1).topics.get(0));
     }
 }
-
-

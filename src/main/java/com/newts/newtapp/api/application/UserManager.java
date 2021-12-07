@@ -126,11 +126,6 @@ public class UserManager {
         block.request(request);
     }
 
-    /**
-     * Return an ArrayList of conversation profiles of conversations in "relevant conversation queue"
-     * @param request RequestModel containing the userid
-     * @return ArrayList of conversation profiles
-     */
     public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
         GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
                 conversationRepository);
@@ -141,38 +136,8 @@ public class UserManager {
      * Rate given user
      * @param request RequestModel containing the user to be rated and the rating
      */
-    public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated, InvalidRating {
+    public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
         Rate rate = new Rate((userRepository));
-        rate.request(request);
-    }
-
-    /**
-     * Return ArrayList of UserProfiles of all users in User's follower list
-     * @param request RequestModel containing userid
-     * @return ArrayList of UserProfiles
-     */
-    public ArrayList<UserProfile> getFollowers(RequestModel request) throws UserNotFound {
-        GetFollowers getFollowers = new GetFollowers(userRepository);
-        return getFollowers.request(request);
-    }
-
-    /**
-     * Return ArrayList of UserProfiles of all users in User's following list
-     * @param request RequestModel containing userid
-     * @return ArrayList of UserProfiles
-     */
-    public ArrayList<UserProfile> getFollowing(RequestModel request) throws UserNotFound {
-        GetFollowing getFollowing = new GetFollowing(userRepository);
-        return getFollowing.request(request);
-    }
-
-    /**
-     * Unblock given user
-     * @param request Requestmodel containing the ids of the user unblocking and the user being unblocked
-     */
-    public void unblock(RequestModel request) throws UserNotBlocked, UserNotFound {
-        Unblock unblock = new Unblock(userRepository);
-        unblock.request(request);
     }
 
 
