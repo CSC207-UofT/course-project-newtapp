@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 
 /**
  * This Controller handles User related mappings for our API.
@@ -205,7 +207,7 @@ public class UserController {
     }
 
     @PostMapping("/api/users/{username}/rate")
-    ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) throws UserNotFound, UserAlreadyRated {
+    ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) throws UserNotFound, UserAlreadyRated, InvalidRating {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameRating = userDetails.getUsername();
@@ -217,6 +219,24 @@ public class UserController {
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
     }
+
+    /**
+     *
+     * @param username Username of the user to be unblocked
+     */
+    @PostMapping("/api/users/{username}/unblock")
+    EntityModel<UserProfile> unblock(@PathVariable String username) throws UserNotFound, UserNotBlocked {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        request.fill(RequestField.USERNAME_TWO, username);
+        userManager.unblock(request);
+        // Build response
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
+    }
+
+
+
   
     /**
      * A helper method that returns the username of the currently authenticated user
