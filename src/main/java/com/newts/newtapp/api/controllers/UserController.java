@@ -15,6 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 
 /**
  * This Controller handles User related mappings for our API.
@@ -188,7 +191,7 @@ public class UserController {
     }
 
     /**
-     * Have a user follow another.
+     * Have a user block another.
      * @param username               username of the user to block
      * @throws UserNotFound          if no such user exists with id1 or id2
      * @throws UserAlreadyBlocked    if the user is already blocked
@@ -204,6 +207,28 @@ public class UserController {
         return profileAssembler.toModel(profile);
     }
 
+    /**
+     * Have a user follow another.
+     * @param username               username of the user to block
+     * @throws UserNotFound          if no such user exists with id1 or id2
+     * @throws UserAlreadyBlocked    if the user is already blocked
+     */
+    @PostMapping("/api/users/{username}/unblock")
+    EntityModel<UserProfile> unblock(@PathVariable String username) throws UserNotFound, UserNotBlocked {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, returnUsername());
+        request.fill(RequestField.USERNAME_TWO, username);
+        userManager.unblock(request);
+        // Build response
+        UserProfile profile = userManager.getProfileById(request);
+        return profileAssembler.toModel(profile);
+    }
+
+    /**
+     * Have a user rate another user
+     * @param rating Rating to be given to other user
+     * @param username Username of other user
+     */
     @PostMapping("/api/users/{username}/rate")
     ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) throws UserNotFound, UserAlreadyRated {
         // fetch the currently authenticated user's username
@@ -216,6 +241,38 @@ public class UserController {
         userManager.rate(request);
         // return empty ResponseEntity
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Returns user followers in the form of an ArrayList of EntityModels
+     * @param username Username of user
+     */
+    @GetMapping("/api/users/{username}/followers")
+    ArrayList<EntityModel<UserProfile>> getFollowers(@PathVariable String username) throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        ArrayList<UserProfile> followers = userManager.getFollowers(request);
+        ArrayList<EntityModel<UserProfile>> userModel = new ArrayList<>();
+        for(UserProfile userProfile:followers){
+            userModel.add(profileAssembler.toModel(userProfile));
+        }
+        return userModel;
+    }
+
+    /**
+     * Returns users that the user is following in the form of an ArrayList of EntityModels
+     * @param username Username of user
+     */
+    @GetMapping("/api/users/{username}/following")
+    ArrayList<EntityModel<UserProfile>> getFollowing(@PathVariable String username) throws UserNotFound {
+        RequestModel request = new RequestModel();
+        request.fill(RequestField.USERNAME, username);
+        ArrayList<UserProfile> following = userManager.getFollowing(request);
+        ArrayList<EntityModel<UserProfile>> userModel = new ArrayList<>();
+        for(UserProfile userProfile:following){
+            userModel.add(profileAssembler.toModel(userProfile));
+        }
+        return userModel;
     }
   
     /**
