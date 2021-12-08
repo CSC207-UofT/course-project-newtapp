@@ -68,8 +68,7 @@ Facade Design Pattern
 
    - The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. Conversations and Users have a lot of small interactors, so to simplify our code, we created “manager” facade classes for Conversations and Users to delegate calls to specific interactors as needed, rather than having all of these small interactor methods together in one class.
 
-   - A further feature our group considered for our manager facade is dependency injection, for injecting relevant internal components for our Manager facade. Doing so would make our program more compliant with the Open/Closed Principle, because it would inject relevant input dependencies into our outer manager facade., making it easy to change the specific implementation of our interactors. However, as our different interactors all require specific input and are not uniform across all of the use cases, we rather decided to focus our attention on completing our front-end specification.
-   - 
+   - A further feature our group considered for our manager facade is dependency injection, for injecting relevant internal components for our Manager facade. Doing so would make our program more compliant with the Open/Closed Principle, because it would inject relevant input dependencies into our outer manager facade., making it easy to change the specific implementation of our interactors. However, as our different interactors all require specific input and are not uniform across all of the use cases, adding dependency injection would require reworkig almost eveyrthing, including our request model. As such, considering the number of user and conversation use cases we have, our group decided it was an unrealistic goal to aim for in the completion of Phase 2.
 
 Strategy Design Pattern
 
