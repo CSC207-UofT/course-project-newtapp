@@ -165,6 +165,22 @@ const newtApi = {
                 return false;
             }
         return await response.json();
+    },
+
+    async joinConversation(cookies, id){
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch(`http://localhost:8080/api/conversations/${id}/join`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                },
+            })
+        if (response.status !== 200) {
+            return false;
+        }
+        return await response.json()
     }
 }
 
