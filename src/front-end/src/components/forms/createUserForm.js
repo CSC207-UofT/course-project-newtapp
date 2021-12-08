@@ -11,7 +11,7 @@ class CreateUserForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {redirect: false, tryAgain: false, username: '', password: '', interest: ''};
+        this.state = {redirect: false, tryAgain: false, username: '', password: '', interests: ''};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -23,12 +23,16 @@ class CreateUserForm extends React.Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        const newUser = await newtApi.createUser(this.state.username, this.state.password, this.state.interest);
+        const formData = {
+            username: this.state.username,
+            password: this.state.password,
+            interests: this.state.interests.split(',').map((value) => {return value.trim();})
+        }
+        const newUser = await newtApi.createUser(formData);
+
         if (!newUser) {
-            // Username already taken
             this.setState({tryAgain: true});
         } else {
-            // Redirect to login page
             this.setState({redirect: true});
         }
     }
@@ -43,8 +47,8 @@ class CreateUserForm extends React.Component {
                            value={this.state.username} onChange={this.handleChange} className="newtTextInput"/> <br/>
                     <input name="password" type="password" minLength="6" required="required" placeholder="Password"
                            value={this.state.password} onChange={this.handleChange} className="newtTextInput"/> <br/>
-                    <input name="interest" type="text" required="required" placeholder="Something you're interested in"
-                           value={this.state.interest} onChange={this.handleChange} className="newtTextInput"/> <br/>
+                    <input name="interests" type="text" required="required" placeholder="Something you're interested in"
+                           value={this.state.interests} onChange={this.handleChange} className="newtTextInput"/> <br/>
                     <input type="submit" value="Create Account" className="newtButtonDark"/>
                     <div className="formWarningText">
                         <p>Username is in use already, sorry! Please try another!</p>
@@ -58,8 +62,8 @@ class CreateUserForm extends React.Component {
                            value={this.state.username} onChange={this.handleChange} className="newtTextInput"/> <br/>
                     <input name="password" type="password" minLength="6" required="required" placeholder="Password"
                            value={this.state.password} onChange={this.handleChange} className="newtTextInput"/> <br/>
-                    <input name="interest" type="text" required="required" placeholder="Something you're interested in"
-                           value={this.state.interest} onChange={this.handleChange} className="newtTextInput"/> <br/>
+                    <input name="interests" type="text" required="required" placeholder="Something you're interested in"
+                           value={this.state.interests} onChange={this.handleChange} className="newtTextInput"/> <br/>
                     <input type="submit" value="Create Account" className="newtButtonDark"/>
                 </form>
             );
