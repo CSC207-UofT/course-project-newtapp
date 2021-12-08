@@ -1,5 +1,4 @@
 // Singleton to simplify API interface for use in front end JS
-import jwtDecode from "jwt-decode";
 import authUtil from "./auth";
 
 const newtApi = {
