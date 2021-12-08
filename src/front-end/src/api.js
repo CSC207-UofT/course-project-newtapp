@@ -9,14 +9,18 @@ const newtApi = {
         return await response.json()
     },
 
-     async createUser(username, password, interest) {
+     async createUser(formData) {
          const response = await fetch('http://localhost:8080/api/users',
              {
                  method: 'POST',
                  headers: {
                      'Content-Type': 'application/json'
                  },
-                 body: JSON.stringify({username: username, password: password, interest: interest})
+                 body: JSON.stringify({
+                     username: formData.username,
+                     password: formData.password,
+                     interests: formData.interests
+                 })
              })
          if (response.status !== 201) {
              return false;
@@ -114,7 +118,6 @@ const newtApi = {
 
     async createConversation(cookies, formData) {
         const bearerToken = "Bearer " + cookies.Auth;
-        console.log(bearerToken)
         const response = await fetch('http://localhost:8080/api/conversations',
             {
                 method: 'POST',
@@ -130,6 +133,41 @@ const newtApi = {
         const body = await response.json();
         console.log(body);
         return body;
+    },
+
+    async createMessage(cookies, id, messageBody) {
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch(`http://localhost:8080//api/conversations/${id}/messages`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': bearerToken
+                },
+                body: messageBody
+            })
+        if (response.status !== 201) {
+            return false;
+        }
+        return await response.json()
+    },
+
+    async getConversationData(cookies, id){
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch(`http://localhost:8080/api/conversations/${id}/view`,
+            {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': bearerToken
+                            }
+                        })
+            if (response.status !== 200) {
+                return false;
+            }
+            const body = await response.json();
+            console.log(body);
+            return body;
     }
 }
 
