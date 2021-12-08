@@ -180,16 +180,6 @@ public class UserController {
     }
 
     /**
-     * Return a list of conversations in which users' are user is following are
-     */
-    @GetMapping("/api/following/conversations")
-    void followingConversation() {
-        RequestModel request = new RequestModel();
-        request.fill(RequestField.USERNAME, returnUsername());
-        userManager.followingConversations(request);
-    }
-
-    /**
      * Have a user block another.
      * @param username               username of the user to block
      * @throws UserNotFound          if no such user exists with id1 or id2
