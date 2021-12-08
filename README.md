@@ -37,7 +37,7 @@ CREATE TABLE conversations (
     messages int[],
     users int[],
     author_id int
-)
+);
 
 CREATE TABLE users (
     id serial PRIMARY KEY,
@@ -53,7 +53,7 @@ CREATE TABLE users (
     conversations int[],
     authorities text[],
     rated_users int[]
-)
+);
 
 CREATE TABLE messages (
     id serial PRIMARY KEY,
@@ -62,7 +62,7 @@ CREATE TABLE messages (
     written_at text,
     last_updated_at text,
     conversation_id int
-)
+);
 ```
 
 ---

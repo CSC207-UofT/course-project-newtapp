@@ -305,7 +305,7 @@ nav {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   left: 50%;
   transform: translateX(-50%);
 }

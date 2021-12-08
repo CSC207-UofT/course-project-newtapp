@@ -5,24 +5,25 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import newtApi from "../api";
 import {useCookies} from "react-cookie";
+import MessageList from "../components/conversation/messages/messageList";
+import CreateMessageForm from "../components/forms/createMessageForm";
 
 export default function Messenger() {
     const { id } = useParams()
     const cookies = useCookies(["Auth"])[0];
     const [sent, setSent] = useState(false);
     const [loaded, setLoaded] = useState(false);
-    const [conversation, setConversation] = useState({});
+    const [conversation, setConversation] = useState({title: null});
 
     useEffect(() => {
         async function getConversation() {
             setSent(true);
-            setConversation(await newtApi.getConversation(cookies, id));  // TODO: order of the arguments matter?
+            setConversation(await newtApi.getConversationData(cookies, id));
         }
         if (!loaded && !sent) {
             getConversation().then();
         } else if (conversation.title !== null) {
             setLoaded(true);
-            setMessages(true);
         }
     }, [sent, loaded, conversation, cookies, id])
 
@@ -40,8 +41,8 @@ export default function Messenger() {
                 <CookieCheck />
                 <Layout>
                     <div className={"messenger"}>
-                    <MessageList messageData={conversation.messages}/>
-                    <createMessageForm/>
+                    <MessageList messageArray={conversation.messageData} userProfiles={conversation.userProfiles}/>
+                    <CreateMessageForm id={conversation.id}/>
                     </div>
                 </Layout>
             </>

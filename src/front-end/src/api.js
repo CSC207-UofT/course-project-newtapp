@@ -136,11 +136,11 @@ const newtApi = {
 
     async createMessage(cookies, id, messageBody) {
         const bearerToken = "Bearer " + cookies.Auth;
-        const response = await fetch(`http://localhost:8080//api/conversations/${id}/messages`,
+        const response = await fetch(`http://localhost:8080/api/conversations/${id}/messages`,
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/text',
                     'Authorization': bearerToken
                 },
                 body: messageBody
@@ -164,9 +164,7 @@ const newtApi = {
             if (response.status !== 200) {
                 return false;
             }
-            const body = await response.json();
-            console.log(body);
-            return body;
+        return await response.json();
     }
 }
 

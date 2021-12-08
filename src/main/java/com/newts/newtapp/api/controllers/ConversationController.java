@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 
 /**
@@ -283,7 +284,8 @@ public class ConversationController {
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @PostMapping("/api/conversations/{id}/messages")
-    public EntityModel<ConversationData> addMessage(@PathVariable int id, @RequestBody String messageBody)
+    public ResponseEntity<EntityModel<ConversationData>> addMessage(@PathVariable int id,
+                                                                    @RequestBody String messageBody)
             throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound, UserNotFound, MessageNotFound,
             IncorrectPassword, MessageNotFoundInConversation {
         //initiate a request model requesting the body, conversationId and the userId.
@@ -300,7 +302,9 @@ public class ConversationController {
 
         // Build response
         ConversationData data = conversationManager.getData(request);
-        return dataAssembler.toModel(data);
+        EntityModel<ConversationData> entity = dataAssembler.toModel(data);
+        return ResponseEntity.created(entity.getRequiredLink(IanaLinkRelations.SELF).toUri()).body(entity);
+
     }
 
     /**
