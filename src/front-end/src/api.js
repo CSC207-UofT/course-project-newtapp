@@ -171,7 +171,7 @@ const newtApi = {
 
     async joinConversation(cookies, id){
         const bearerToken = "Bearer " + cookies.Auth;
-        const response = await fetch(`http://localhost:8080//api/conversations/${id}/join`,
+        const response = await fetch(`http://localhost:8080/api/conversations/${id}/join`,
             {
                 method: 'POST',
                 headers: {
@@ -179,7 +179,7 @@ const newtApi = {
                     'Authorization': bearerToken
                 },
             })
-        if (response.status !== 201) {
+        if (response.status !== 200) {
             return false;
         }
         return await response.json()
