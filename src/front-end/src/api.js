@@ -130,6 +130,24 @@ const newtApi = {
         const body = await response.json();
         console.log(body);
         return body;
+    },
+
+    async getConversationData(cookies, id){
+        const bearerToken = "Bearer " + cookies.Auth;
+        const response = await fetch(`http://localhost:8080/api/conversations/${id}/view`,
+            {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': bearerToken
+                            }
+                        })
+            if (response.status !== 200) {
+                return false;
+            }
+            const body = await response.json();
+            console.log(body);
+            return body;
     }
 }
 
