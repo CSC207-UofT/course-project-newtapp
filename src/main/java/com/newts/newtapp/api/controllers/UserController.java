@@ -179,7 +179,6 @@ public class UserController {
         return profileAssembler.toModel(profile);
     }
 
-    // TODO implement followingConversation and getRelevantConversations
     /**
      * Return a list of conversations in which users' are user is following are
      */
@@ -211,7 +210,7 @@ public class UserController {
      * Have a user follow another.
      * @param username               username of the user to block
      * @throws UserNotFound          if no such user exists with id1 or id2
-     * @throws UserAlreadyBlocked    if the user is already blocked
+     * @throws UserNotBlocked      if the user is not blocked
      */
     @PostMapping("/api/users/{username}/unblock")
     EntityModel<UserProfile> unblock(@PathVariable String username) throws UserNotFound, UserNotBlocked {
