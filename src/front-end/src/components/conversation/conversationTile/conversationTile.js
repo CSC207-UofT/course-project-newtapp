@@ -23,8 +23,8 @@ function ConversationTile({ conversation }) {
                         {conversation.location}<p className="emoji"> &#x1F30D;</p>
                     </div>
                     <div className="conversationTileSidebarExtra">
-                        {conversation.currSize} / {conversation.maxSize}<p className="emoji"> &#x1F438;</p><
-                        /div>
+                        {conversation.currSize} / {conversation.maxSize}<p className="emoji"> &#x1F438;</p>
+                    </div>
                     <div className="conversationTileJoinButton">
                         <button className="newtJoinButton">Join</button>
                     </div>
