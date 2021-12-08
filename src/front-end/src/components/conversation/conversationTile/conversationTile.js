@@ -13,7 +13,7 @@ function ConversationTile({ conversation, buttonType }) {
     let buttonFunction;
 
     switch (buttonType) {
-        case "View":
+        case "Chat":
             buttonFunction = {};
             break;
         case "Join":
