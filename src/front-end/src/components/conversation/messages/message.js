@@ -5,18 +5,13 @@ import React from "react";
 // Nest step is dynamically sizing these to fit title/content!
 function Message({ message }) {
     return (
-        <>
+        <>  //everything
             <div className="message">
-                <div className="messageBox">
-                    {message.body}
-                </div>
-            </div>
-            <div className="messageSidebar">
-                <div className={"messageSidebarAuthor"}>
+                <div className="messageAuthor">
                     {message.author}
                 </div>
-                <div className={"messageSidebarEditButton"}>
-                    <button className="newtEditButton">Edit</button>
+                <div className="messageBody">
+                    {message.body}
                 </div>
             </div>
         </>
