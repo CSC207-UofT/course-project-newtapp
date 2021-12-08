@@ -3,10 +3,10 @@ import React from "react";
 import ConversationTile from "./conversationTile";
 
 // A component that displays one provided ConversationProfile
-function ConversationList({ conversations }) {
+function ConversationList({ conversations, buttonType }) {
     const tiles = conversations.map((conversation) => <ConversationTile key={conversation.id}
                                                                         conversation={conversation}
-                                                                        buttonType="Join"/> )
+                                                                        buttonType={buttonType}/> )
 
 
     return (

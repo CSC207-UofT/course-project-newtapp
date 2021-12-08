@@ -37,7 +37,7 @@ export default function Conversations() {
             <>
                 <CookieCheck />
                 <Layout>
-                    <ConversationList conversations={conversations} />
+                    <ConversationList conversations={conversations} buttonType="Chat" />
                 </Layout>
             </>
         )

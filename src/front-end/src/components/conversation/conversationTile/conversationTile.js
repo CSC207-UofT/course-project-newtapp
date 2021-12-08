@@ -1,28 +1,41 @@
 import '../../../App.css';
-import React from "react";
+import React, {useState} from "react";
 import ConversationTileTopic from "./conversationTileTopic";
+import {useCookies} from "react-cookie";
+import {Navigate} from "react-router-dom"
+import newtApi from "../../../api";
 
 // A component that displays a collection of ConversationTiles. Input is an array of ConversationProfiles.
-// Next step is dynamically sizing these to fit title/content!
 function ConversationTile({ conversation, buttonType }) {
+    const cookies = useCookies(["Auth"])[0];
+    const [redirect, setRedirect] = useState(false);
+    const navTo = `/conversations/${conversation.id}/view`
+
     let i = 0;
     const topics = conversation.topics.map((topic) =>
         <ConversationTileTopic key={i++} topic={topic}/> )
 
-    let buttonClass;
     let buttonFunction;
 
     switch (buttonType) {
         case "Chat":
-            buttonFunction = {};
+            buttonFunction = handleChat;
             break;
         case "Join":
-            buttonFunction = {};
+            buttonFunction = handleJoin;
             break;
         default:
-            buttonFunction = {};
             buttonType = ""
             break;
+    }
+
+    function handleJoin() {
+        newtApi.joinConversation(cookies, conversation.id);
+        setRedirect(true);
+    }
+
+    function handleChat() {
+        setRedirect(true);
     }
 
     if (buttonType === "") {
@@ -46,6 +59,12 @@ function ConversationTile({ conversation, buttonType }) {
             </div>
         </>
         )
+    } else if (redirect) {
+        return(
+            <>
+                <Navigate to={navTo}/>
+            </>
+        )
     } else {
         return(
             <>
@@ -62,7 +81,7 @@ function ConversationTile({ conversation, buttonType }) {
                         </div>
                         <div className="conversationTileSidebarExtra">
                             {conversation.currSize} / {conversation.maxSize}<p className="emoji"> &#x1F438;</p><
-                        /div>
+                    /div>
                         <div className="conversationTileButton">
                             <button className="newtBigButton" onClick={buttonFunction}>{buttonType}</button>
                         </div>

@@ -13,7 +13,6 @@ export default function Messenger() {
     const [loaded, setLoaded] = useState(false);
     const [conversation, setConversation] = useState({});
 
-
     useEffect(() => {
         async function getConversation() {
             setSent(true);
