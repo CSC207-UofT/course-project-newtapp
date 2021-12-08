@@ -37,7 +37,7 @@ export default function Browse() {
             <>
                 <CookieCheck />
                 <Layout>
-                    <ConversationList conversations={conversations} />
+                    <ConversationList conversations={conversations} buttonType="Join"/>
                 </Layout>
             </>
         )

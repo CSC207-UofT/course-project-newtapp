@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate } from 'react-router-dom';
 import newtApi from "../../api.js";
-import { instanceOf } from 'prop-types';
+import {instanceOf} from 'prop-types';
 import {withCookies, Cookies} from 'react-cookie';
 import authUtil from '../../auth';
 

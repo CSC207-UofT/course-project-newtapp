@@ -11,18 +11,18 @@ export default function Messenger() {
     const [loaded, setLoaded] = useState(false);
     const [messages, setMessages] = useState([]);
     const [conversation, setConversation] = useState({});
-
-    useEffect(() => {
-        async function getConversation() {
-            setSent(true);
-            setConversations(await newtApi.getRelevantConversations(cookies));
-        }
-        if (!loaded && !sent) {
-            getConversations().then();
-        } else if (conversations !== []) {
-            setLoaded(true);
-        }
-    }, [sent, loaded, conversations, cookies])
+    //
+    // useEffect(() => {
+    //     async function getConversation() {
+    //         setSent(true);
+    //         setConversations(await newtApi.getRelevantConversations(cookies));
+    //     }
+    //     if (!loaded && !sent) {
+    //         getConversations().then();
+    //     } else if (conversations !== []) {
+    //         setLoaded(true);
+    //     }
+    // }, [sent, loaded, conversations, cookies])
 
     if (!loaded) {
         return (
@@ -37,7 +37,6 @@ export default function Messenger() {
             <>
                 <CookieCheck />
                 <Layout>
-                    <ConversationList conversations={conversations} />
                 </Layout>
             </>
         )

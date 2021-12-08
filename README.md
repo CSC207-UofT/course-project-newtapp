@@ -61,7 +61,7 @@ CREATE TABLE messages (
     author integer,
     written_at text,
     last_updated_at text,
-    conversation_id
+    conversation_id int
 )
 ```
 
