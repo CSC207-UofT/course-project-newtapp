@@ -5,7 +5,7 @@ import React from "react";
 // Nest step is dynamically sizing these to fit title/content!
 function Message({ message }) {
     return (
-        <>  //everything
+        <>
             <div className="message">
                 <div className="messageAuthor">
                     {message.author}
