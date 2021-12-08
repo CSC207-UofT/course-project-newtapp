@@ -444,7 +444,7 @@ public class User implements UserDetails {
      * @param userID Identifier of user to be unblocked.
      */
     public void removeBlockedUser(int userID){
-        blockedUsers.remove(userID);
+        blockedUsers.remove(Integer.valueOf(userID));
     }
 
     /**

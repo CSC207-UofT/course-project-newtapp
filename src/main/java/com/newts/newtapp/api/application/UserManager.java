@@ -1,8 +1,6 @@
 package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
-import com.newts.newtapp.api.application.conversation.GetConversationsByUsername;
 import com.newts.newtapp.api.application.conversation.GetRelevantConversations;
-import com.newts.newtapp.api.application.conversation.GetRelevantConversationsByFollow;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.application.datatransfer.UserProfile;
 import com.newts.newtapp.api.gateways.ConversationRepository;
@@ -85,7 +83,6 @@ public class UserManager {
 
     /**
      * Changes a user's password.
-     * @param request
      * @throws UserNotFound         Given user is not in repository
      * @throws InvalidPassword      Password not valid
      * @throws IncorrectPassword    Old password is wrong
@@ -116,6 +113,11 @@ public class UserManager {
     }
 
     /**
+     * Following conversation method, implemented on other branch
+     */
+     public void followingConversations(RequestModel request) {}
+
+    /**
      * Block a given user
      * @param request   RequestModel containing the user and the user to block.
      */
@@ -125,10 +127,49 @@ public class UserManager {
     }
 
     /**
+     * Unlock a given user
+     * @param request   RequestModel containing the user and the user to unblock.
+     */
+    public void unblock(RequestModel request) throws UserNotFound, UserNotBlocked {
+        Unblock unblock = new Unblock(userRepository);
+        unblock.request(request);
+    }
+
+    /**
+     * Returns ArrayList of UserProfiles of the User's following list
+     * @param request RequestModel containing the user id
+     * @return Arraylist of UserProfiles
+     */
+    public ArrayList<UserProfile> getFollowing(RequestModel request) throws UserNotFound {
+        GetFollowing getFollowing = new GetFollowing(userRepository);
+        return getFollowing.request(request);
+    }
+
+    /**
+     * Returns ArrayList of UserProfiles of the User's follower list
+     * @param request RequestModel containing the user id
+     * @return Arraylist of UserProfiles
+     */
+    public ArrayList<UserProfile> getFollowers(RequestModel request) throws UserNotFound {
+        GetFollowers getFollowers = new GetFollowers(userRepository);
+        return getFollowers.request(request);
+    }
+
+    public ArrayList<ConversationProfile> getRelevantConversations(RequestModel request) throws UserNotFound {
+        GetRelevantConversations getRelevantConversations = new GetRelevantConversations(userRepository,
+                conversationRepository);
+        return getRelevantConversations.request(request);
+    }
+
+    /**
      * Rate given user
      * @param request RequestModel containing the user to be rated and the rating
      */
     public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
         Rate rate = new Rate((userRepository));
     }
+
+
+
+
 }

@@ -12,8 +12,9 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
-public class BlockTest {
+public class BlockUnblockTest {
     Block block;
+    Unblock unblock;
     TestUserRepository testUserRepository;
     TestConversationRepository testConversationRepository;
     Create create;
@@ -25,6 +26,7 @@ public class BlockTest {
         testUserRepository = new TestUserRepository();
         testConversationRepository = new TestConversationRepository();
         block = new Block(testUserRepository, testConversationRepository);
+        unblock = new Unblock(testUserRepository);
         create = new Create(testUserRepository);
         follow = new Follow(testUserRepository);
         ArrayList<String> interests = new ArrayList<>();
@@ -46,7 +48,7 @@ public class BlockTest {
     }
 
     @Test(timeout = 500)
-    public void testBlock() throws UserNotFound, UserAlreadyBlocked {
+    public void testBlock() throws UserNotFound, UserAlreadyBlocked, UserNotBlocked {
         RequestModel r = new RequestModel();
         r.fill(RequestField.USERNAME, "test");
         r.fill(RequestField.USERNAME_TWO, "test2");
@@ -57,6 +59,10 @@ public class BlockTest {
         assertFalse((u1.getFollowers().contains(u2.getId())));
         assertFalse((u2.getFollowers().contains(u1.getId())));
         assertTrue(u1.getBlockedUsers().contains(u2.getId()));
+
+        unblock.request(r);
+        assertFalse(u1.getBlockedUsers().contains(u2.getId()));
+
 
     }
 
