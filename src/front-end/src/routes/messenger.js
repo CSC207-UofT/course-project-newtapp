@@ -12,13 +12,12 @@ export default function Messenger() {
     const [sent, setSent] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [conversation, setConversation] = useState({});
-    const [messages, setMessages] = useState([]);
 
 
     useEffect(() => {
         async function getConversation() {
             setSent(true);
-            setConversation(await newtApi.getConversation(id));
+            setConversation(await newtApi.getConversation(cookies, id));  // TODO: order of the arguments matter?
         }
         if (!loaded && !sent) {
             getConversation().then();
@@ -26,7 +25,7 @@ export default function Messenger() {
             setLoaded(true);
             setMessages(true);
         }
-    }, [sent, loaded, conversation, messages, cookies, id])
+    }, [sent, loaded, conversation, cookies, id])
 
     if (!loaded) {
         return (
