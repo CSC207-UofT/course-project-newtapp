@@ -135,7 +135,7 @@ const newtApi = {
         return body;
     },
 
-    async createMessage(cookies, id, messageBody)  {
+    async createMessage(cookies, id, messageBody) {
         const bearerToken = "Bearer " + cookies.Auth;
         const response = await fetch(`http://localhost:8080//api/conversations/${id}/messages`,
             {
@@ -150,6 +150,7 @@ const newtApi = {
             return false;
         }
         return await response.json()
+    },
 
     async getConversationData(cookies, id){
         const bearerToken = "Bearer " + cookies.Auth;
