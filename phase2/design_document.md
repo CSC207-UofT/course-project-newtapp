@@ -1,6 +1,8 @@
 # Design Document
+
 ## Our Mission
 Our team is developing an application that facilitates meeting new people with similar interests through conversations. We want to allow our users to connect with other users without experiencing the social pressure induced by social media platforms.
+
 ## Updated Specification
 Since Phase 2, our group worked towards completing several critical components for our social media application. We began by finishing the remaining tasks in our specifications and user stories. Some of these tasks included:
 - Implementing Authentication
@@ -66,6 +68,9 @@ Facade Design Pattern
 
    - The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. Conversations and Users have a lot of small interactors, so to simplify our code, we created “manager” facade classes for Conversations and Users to delegate calls to specific interactors as needed, rather than having all of these small interactor methods together in one class.
 
+   - A further feature our group considered for our manager facade is dependency injection, for injecting relevant internal components for our Manager facade. Doing so would make our program more compliant with the Open/Closed Principle, because it would inject relevant input dependencies into our outer manager facade., making it easy to change the specific implementation of our interactors. However, as our different interactors all require specific input and are not uniform across all of the use cases, we rather decided to focus our attention on completing our front-end specification.
+   - 
+
 Strategy Design Pattern
 
    - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
@@ -88,6 +93,7 @@ Originally, we had different request models for each interactor, making sending 
 
 Message Controller
    - Our group decided not to include a controller for our Message entity, but rather to handle the use cases of messages through the conversation controller.
+
 Implementing our Front-End
    - When implementing our front-end, we originally wanted to use Gatsby for implementing a fast and efficient front-end. However, after further research, we realized Gatsby to be static. As such, we decided to simply stick to React for our front end, as we want our app to be able to update as new chats, conversations, and friends come in.
 
