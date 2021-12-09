@@ -78,7 +78,7 @@ Once the use cases accept the request, it fetches the entities from the database
 
 Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional functionalities. Along the way,
 - Moving to SpringBoot: Clean Architecture meant we could largely plug in our existing back-end on top of SpringBoot's functionality
-- Implementing PostGres: The use of a gateway meant we could easily move from a mock database to using PostgreSQL
+- Implementing PostgreSQL: The use of a gateway meant we could easily move from a mock database to using PostgreSQL
 - Implementing our frontend using React: The structure of our code allowed us to build our front-end on top of our existing code.
 
 ## Design Patterns <a name="Design-Patterns"></a>
