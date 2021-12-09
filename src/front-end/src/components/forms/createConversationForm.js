@@ -44,13 +44,13 @@ class CreateConversationForm extends React.Component {
             maxSize: parseInt(this.state.maxSize)};
         console.log(formData);
         const { cookies } = this.props;
-        const newConvo = await newtApi.createConversation(cookies.cookies, formData);
-        if (!newConvo) {
+        const newConversation = await newtApi.createConversation(cookies.cookies, formData);
+        if (!newConversation) {
             // Something wrong
             this.setState({tryAgain: true});
         } else {
             // Redirect to login page
-            this.setState({newId: newConvo.id})
+            this.setState({newId: newConversation.id})
             this.setState({redirect: true});
         }
     }
@@ -65,18 +65,18 @@ class CreateConversationForm extends React.Component {
                     <form onSubmit={this.handleSubmit} className="createConversationForm">
                         <input name="title" type="text" required="required" placeholder="Title"
                                value={this.state.title} onChange={this.handleChange}
-                               className="newtTextInput"/> <br/>
+                               className="createConversationTextInput"/> <br/>
                         <input name="topics" type="text" required="required" placeholder="Topics (Comma separated!)"
                                value={this.state.topics} onChange={this.handleChange}
-                               className="newtTextInput"/> <br/>
+                               className="createConversationTextInput"/> <br/>
                         <input name="location" type="text" required="required" placeholder="Location"
                                value={this.state.location} onChange={this.handleChange} min="1"
-                               className="newtTextInput"/><br/>
+                               className="createConversationTextInput"/><br/>
                         <div>
                             <p style={{"display": "inline"}}>Maximum capacity</p>
                             <input name="maxSize" type="number" step="1" required="required" placeholder="Maximum Size"
                                    value={this.state.maxSize} onChange={this.handleChange} min="1"
-                                   className="newtTextInput"/>
+                                   className="createConversationTextInput"/>
                         </div>
                         <div style={{"padding":"16px"}}>
                             <p style={{"display": "inline"}}>Minimum user rating:</p>
@@ -110,18 +110,18 @@ class CreateConversationForm extends React.Component {
                     <form onSubmit={this.handleSubmit} className="createConversationForm">
                         <input name="title" type="text" required="required" placeholder="Title"
                                value={this.state.title} onChange={this.handleChange}
-                               className="newtTextInput"/> <br/>
+                               className="createConversationTextInput"/> <br/>
                         <input name="topics" type="text" required="required" placeholder="Topics (Comma separated!)"
                                value={this.state.topics} onChange={this.handleChange}
-                               className="newtTextInput"/> <br/>
+                               className="createConversationTextInput"/> <br/>
                         <input name="location" type="text" required="required" placeholder="Location"
                                value={this.state.location} onChange={this.handleChange}
-                               className="newtTextInput"/><br/>
+                               className="createConversationTextInput"/><br/>
                         <div>
                             <p style={{"display": "inline"}}>Maximum capacity</p>
                             <input name="maxSize" type="number" step="1" required="required" placeholder="Maximum Size"
                                    value={this.state.maxSize} onChange={this.handleChange} min="1"
-                                   className="newtTextInput"/>
+                                   className="createConversationTextInput"/>
                         </div>
                         <div style={{"padding":"16px"}}>
                             <p style={{"display": "inline"}}>Minimum user rating:</p>

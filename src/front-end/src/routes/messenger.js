@@ -7,6 +7,8 @@ import newtApi from "../api";
 import {useCookies} from "react-cookie";
 import MessageList from "../components/conversation/messages/messageList";
 import CreateMessageForm from "../components/forms/createMessageForm";
+import ConversationTile from "../components/conversation/conversationTile/conversationTile";
+import LeaveButton from "../components/conversation/conversationTile/buttons/leaveButton";
 
 export default function Messenger() {
     const { id } = useParams()
@@ -14,6 +16,10 @@ export default function Messenger() {
     const [sent, setSent] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [conversation, setConversation] = useState({title: null});
+
+    const buttons = [
+        <LeaveButton key="Chat" id={id}/>
+    ]
 
     useEffect(() => {
         async function getConversation() {
@@ -40,9 +46,12 @@ export default function Messenger() {
             <>
                 <CookieCheck />
                 <Layout>
-                    <div className={"messenger"}>
-                    <MessageList messageArray={conversation.messageData} userProfiles={conversation.userProfiles}/>
-                    <CreateMessageForm id={conversation.id}/>
+                    <div className="messenger">
+                        <div className="messengerBanner">
+                            <ConversationTile conversation={conversation} buttons={buttons}/>
+                        </div>
+                        <MessageList messageArray={conversation.messageData} userProfiles={conversation.userProfiles}/>
+                        <CreateMessageForm id={conversation.id}/>
                     </div>
                 </Layout>
             </>
