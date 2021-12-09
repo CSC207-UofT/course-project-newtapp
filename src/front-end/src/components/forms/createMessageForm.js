@@ -7,15 +7,14 @@ import {withCookies, Cookies} from 'react-cookie';
 class CreateMessageForm extends React.Component{
     static propTypes = {
         cookies: instanceOf(Cookies).isRequired,
-        id: instanceOf(Number).isRequired
     }
 
     constructor(props) {
         super(props);
-        this.state = {redirect: false, tryAgain: false, newId: 0, body: ""};
-        this.previewData = ""
+        this.state = {redirect: false, body: ""};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.nav = `/conversations/${this.props.id}/view`;
     }
 
     handleChange(event) {
@@ -26,26 +25,23 @@ class CreateMessageForm extends React.Component{
     async handleSubmit(event){
         event.preventDefault()
         const { cookies, id } = this.props;
-        const newMessage = await newtApi.createMessage(cookies.cookies, id, this.state.body)
-        console.log(newMessage)
-        this.setState({newId: newMessage.id})
-        this.setState({redirect: true});
+        await newtApi.createMessage(cookies.cookies, id, this.state.body)
+            .then(() => window.location.reload())
+
+    }
+
+    componentWillUnmount() {
+        this.setState({redirect: false})
     }
 
     render(){
-        if (this.state.redirect) {
-            return(
-                <Navigate to="/conversations/id/view" replace={true} />
-            )
-        } else {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <textarea name="body" required="required" placeholder=""
-                       value={this.state.body} onChange={this.handleChange} className="newtTextInput"/> <br />
-                <input type="submit" value="Send" className="newtButtonDark"/>
+            <form onSubmit={this.handleSubmit} className="createMessageForm">
+                <textarea name="body" required="required" placeholder="What do you think?"
+                          onChange={this.handleChange} className="messageInput"/> <br />
+                <input type="submit" value="Send" className="newtButton"/>
             </form>
         )
-        }
     }
 }
 

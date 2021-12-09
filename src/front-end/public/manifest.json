@@ -1,8 +1,6 @@
 {
-  "short_name": "Newt",
-  "name": "Newt App",
+  "name": "Newt",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#252525"
+  "theme_color": "#000000"
 }
