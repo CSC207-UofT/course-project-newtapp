@@ -51,9 +51,9 @@ The Dependency Inversion principle
 Once the use cases accept the request, it fetches the entities from the database using a data access interface. The data access interface implemented by each repository associated with each entity is an explicit use of dependency inversion to maintain a clean architecture.
    Lastly, the output is returned through the controller and the information relevant to the user is displayed on the web application's graphical user interface. 
    
-- At the Enterprise Business Rules layer are the core components of the application: User, Conversation, Message.
-- At the Application Business Rules layer are the classes UserManager, ConversationManager, MessageManager. The three managers handle Use Cases also in that layer.
-- At the Interface Adapters layer are the controllers. (UserController is implemented and MessageController and ConversationController remain to be implemented)
+- At the Enterprise Business Rules layer are the core components of the application: `User`, `Conversation`, `Message`.
+- At the Application Business Rules layer are the classes `UserManager`, `ConversationManager`, `MessageManager`. The three managers handle Use Cases also in that layer.
+- At the Interface Adapters layer are the controllers: `UserController`, responsible for users, as well as `ConversationController`, responsible for handling conversations and messages
 - At the Framework & Drivers are the database and the web interface.
 
 Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional functionalities. Along the way,
@@ -72,7 +72,14 @@ Facade Design Pattern
 
 Strategy Design Pattern
 
-   - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating a ConversationSorter interface then creating implementing classes for each of our specific sorting algorithms. This way they are easily interchangeable.
+   - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating classes for each of our specific sorting algorithms that implement our ConversationSorter interface. Our application utilizes two Conversaiton Sorters: 
+      - `Interest Sorter`, that assigns priority to conversations based on the number of matching interests
+      - `Random Sorter`, that assigns priority to conversations randomly.
+  
+ 
+   - In Phase 2, our group added more algorithims for getting relevant conversations to pass to the Interest sorter: 
+      - a location sorter `GetRelevantConversationsByLocation`, to reccomend conversations matching a user's location
+      - a follower sorter, `GetRelevantConversationsByFollow` to reccomend conversations a user's friends are in.
 
 Builder Design Pattern
    - Our group considered the use of the Builder Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Although this model would be useful for our program, our group decided against implementing this design pattern, because it would require ConcreteBuilder for each use case implementation. In other words, we would not use the same ConcreteBuilder often. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
@@ -102,7 +109,7 @@ Implementing our Front-End
 
 Principle 1 - Equitable use: the design is useful and marketable to people with diverse abilities.
   
-  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily available high-contrast mode for the visually impaired.
+  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily available high-contrast mode for the visually impaired. Implementing a toggle between light and dark modes for our web page could add furhter customizability for users.
 
 Principle 2 - Flexibility in Use: The design accommodates a wide range of individual preferences and abilities.
  
@@ -126,9 +133,10 @@ Principle 6 - Low Physical Effort: The design can be used efficiently and comfor
 Principle 7 - Size and Space for Approach and Use: Appropriate size and space are provided for approach, reach, manipulation, and use regardless of the user's body size, posture, or mobility.
    
    - Once again, this design principle does not specifically relate to the implementation of a tech app, tho it is important to ensure text and data are presented in a legible, understandable and clear way as to not require extraneous strain from users.
-As a social media application, we hope to make our application accessible and usable for all age groups, ranging from teens to adults. Expressing one's opinions and communicating is invaluable and an essential part of human life, so we think our app will apply to all age groups who enjoy learning, interacting with others and sharing opinions.
    
-   However, if we were to provide some sort of subscription or premium service, we think this would be most popular among teenagers and young adults. We feel that teens and Millenials would be the most willing and interested in possible additional features like bigger chatrooms, voice-calling features, or simply allowing for more user customization.
+   As a social media application, we hope to make our application accessible and usable for all age groups, ranging from teens to adults. Expressing one's opinions and communicating is invaluable and an essential part of human life, so we think our app will apply to all age groups who enjoy learning, interacting with others and sharing opinions.
+   
+   In particular, we think our app is less likely to be used by younger kids and older adults, who are either too young to be on social-media platforms and to contribute and understand conversations in a meaningful way, or of age where they find social media as uninteresting or un-seful.
 
 ## Use of GitHub Features
    Throughout the development of our web app, our group has been making use of several features available on GitHub. One such feature is branching. So far we have been making separate branches for each new feature that we implement. Once the feature has been implemented, we used the pull request feature on GitHub to ensure that other members of the group have a chance to review the code before the branch is merged into our main branch.
