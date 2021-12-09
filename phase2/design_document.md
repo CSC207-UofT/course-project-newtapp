@@ -319,4 +319,4 @@ https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/6
 
 Our team has enjoyed working on this project and has learnt invaluable tools and skills about the implementation and functionality of web apps and databases. Our team looks foreward to seeing where we can take our idea further in the future. 
 
-Thank you for your continued help, support and time Evan. We have all really enjoyed working with you and having you as our TA. Hope to see you in future CS courses! :)
+Thank you for your continued help, support and time Evan. We have all really enjoyed working with you and having you as our TA. Your aid and strong interest for web apps has been incredibly helpful and we are infinitely grateful for your help in guiding us towards a web app. Hope to see you in future CS courses! :)
