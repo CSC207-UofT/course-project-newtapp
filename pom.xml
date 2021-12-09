@@ -10,11 +10,12 @@
     </parent>
     <groupId>com.newts</groupId>
     <artifactId>newtapp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>newtapp</name>
     <description>newtapp</description>
     <properties>
         <java.version>11</java.version>
+        <exec.mainClass>com.newts.newtapp.api.NewtappApplication</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
