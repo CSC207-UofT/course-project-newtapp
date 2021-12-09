@@ -68,9 +68,9 @@ CREATE TABLE messages (
 
 ## Start up the Front-end Web Server
 
-1. Install Node.js if you do not already have it.
+1. Install an up-to-date version of Node.js if you do not already have it.
 2. Navigate to `src/front-end/` from the project directory.
-3. `npm start`.
-4. You may or may not need to install some Node dependencies.
+3. `npm ci` to install dependencies.
+4. `npm start` to run the web server.
 
 
