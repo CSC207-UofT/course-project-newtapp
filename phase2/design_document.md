@@ -1,5 +1,3 @@
-# Design Document
-
 ## Table of contents
 1. [Our Mission](#Our-Mission)
 2. [Specification](#Specification)
@@ -80,7 +78,7 @@ Once the use cases accept the request, it fetches the entities from the database
 
 Throughout our project, Clean Architecture played a very useful role, as we moved and implemented additional functionalities. Along the way,
 - Moving to SpringBoot: Clean Architecture meant we could largely plug in our existing back-end on top of SpringBoot's functionality
-- Implementing PostGres: The use of a gateway meant we could easily move from a mock database to using PosGreSql
+- Implementing PostGres: The use of a gateway meant we could easily move from a mock database to using PostgreSQL
 - Implementing our frontend using React: The structure of our code allowed us to build our front-end on top of our existing code.
 
 ## Design Patterns <a name="Design-Patterns"></a>
@@ -90,18 +88,18 @@ Facade Design Pattern
 
    - The Facade design pattern provides a simple interface to a complex subsystem, containing many moving parts. Conversations and Users have a lot of small interactors, so to simplify our code, we created “manager” facade classes for Conversations and Users to delegate calls to specific interactors as needed, rather than having all of these small interactor methods together in one class.
 
-   - A further feature our group considered for our manager facade is dependency injection, for injecting relevant internal components for our Manager facade. Doing so would make our program more compliant with the Open/Closed Principle, because it would inject relevant input dependencies into our outer manager facade., making it easy to change the specific implementation of our interactors. However, as our different interactors all require specific input and are not uniform across all of the use cases, adding dependency injection would require reworkig almost eveyrthing, including our request model. As such, considering the number of user and conversation use cases we have, our group decided it was an unrealistic goal to aim for in the completion of Phase 2.
+   - A further feature our group considered for our manager facade is dependency injection, for injecting relevant internal components for our Manager facade. Doing so would make our program more compliant with the Open/Closed Principle, because it would inject relevant input dependencies into our outer manager facade., making it easy to change the specific implementation of our interactors. However, as our different interactors all require specific input and are not uniform across all of the use cases, adding dependency injection would require reworking almost everything, including our request model. As such, considering the number of user and conversation use cases we have, our group decided it was an unrealistic goal to aim for in the completion of Phase 2.
 
 Strategy Design Pattern
 
-   - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating classes for each of our specific sorting algorithms that implement our ConversationSorter interface. Our application utilizes two Conversaiton Sorters: 
+   - The Strategy Design pattern facilitates defining families of algorithms in separate classes, while still making their objects interchangeable. An important feature of our app is recommending new conversations based on a User’s interests. So, to sort through which Conversations to recommend we have a few different algorithms in mind. We employed the Strategy Design Pattern for this, creating classes for each of our specific sorting algorithms that implement our ConversationSorter interface. Our application utilizes two Conversation Sorters: 
       - `Interest Sorter`, that assigns priority to conversations based on the number of matching interests
-      - `Random Sorter`, that assigns priority to conversations randomly.
+      - `Random Sorter`, which assigns priority to conversations randomly.
   
  
-   - In Phase 2, our group added more algorithims for getting relevant conversations to pass to the Interest sorter: 
-      - a location sorter `GetRelevantConversationsByLocation`, to reccomend conversations matching a user's location
-      - a follower sorter, `GetRelevantConversationsByFollow` to reccomend conversations a user's friends are in.
+   - In Phase 2, our group added more algorithms for getting relevant conversations to pass to the Interest sorter: 
+      - a location sorter `GetRelevantConversationsByLocation`, to recommend conversations matching a user's location
+      - a follower sorter, `GetRelevantConversationsByFollow` to recommend conversations a user's friends are in.
 
 Builder Design Pattern
    - Our group considered the use of the Builder Design Pattern for our Interactor Request Model. The builder design pattern is useful for constructing complex objects in steps, allowing for the production of different types and representations of an object using the same construction code. In the case of our Interactors, we use our request model with each use case for receiving and replying to requests for interactions between components of our program. Although this model would be useful for our program, our group decided against implementing this design pattern, because it would require ConcreteBuilder for each use case implementation. In other words, we would not use the same ConcreteBuilder often. As such, we decided it was more important to focus our time on our remaining specifications and towards our front-end.
@@ -127,11 +125,11 @@ Implementing our Front-End
 
 ## Accessibility Report <a name="Accessibility-Report"></a>
 
-   Design principles are essential design considerations for guiding the design of environments, products and communications. Incorporating design principles make products or applications accessible to the greatest range of people possible, incorporating equitable usages for people of all backgrounds, abilities and education.
+   Design principles are essential to design considerations for guiding the design of environments, products and communications. Incorporating design principles make products or applications accessible to the greatest range of people possible, incorporating equitable usages for people of all backgrounds, abilities and education.
 
 Principle 1 - Equitable use: the design is useful and marketable to people with diverse abilities.
   
-  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily available high-contrast mode for the visually impaired. Implementing a toggle between light and dark modes for our web page could add furhter customizability for users.
+  - Our app aims to deliver a safe, simple and appealing experience for all users. Some ways we could further implement equitable use is supporting text-to-speech for those unable to type, or by including high-contrast designs or an easily available high-contrast mode for the visually impaired. Implementing a toggle between light and dark modes for our web page could add further customizability for users.
 
 Principle 2 - Flexibility in Use: The design accommodates a wide range of individual preferences and abilities.
  
@@ -158,10 +156,10 @@ Principle 7 - Size and Space for Approach and Use: Appropriate size and space ar
    
    As a social media application, we hope to make our application accessible and usable for all age groups, ranging from teens to adults. Expressing one's opinions and communicating is invaluable and an essential part of human life, so we think our app will apply to all age groups who enjoy learning, interacting with others and sharing opinions.
    
-   In particular, we think our app is less likely to be used by younger kids and older adults, who are either too young to be on social-media platforms and to contribute and understand conversations in a meaningful way, or of age where they find social media as uninteresting or un-seful.
+   In particular, we think our app is less likely to be used by younger kids and older adults, who are either too young to be on social media platforms and to contribute and understand conversations in a meaningful way, or of age where they find social media as uninteresting or un-useful.
 
 ## Use of GitHub Features <a name="Use-of-GitHub-Features"></a>
-   Throughout the development of our web app, our group has been making use of several features available on GitHub. One such feature is branching. In phase 2, we made branches for each new feature that we implemented. Once the feature had been implemented, we used pull requests to provide oppurtunities for code review, before merging the development branch into our main branch.
+   Throughout the development of our web app, our group has been making use of several features available on GitHub. One such feature is branching. In phase 2, we made branches for each new feature that we implemented. Once the feature had been implemented, we used pull requests to provide opportunities for code review, before merging the development branch into our main branch.
    
    ![Feature Branching](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/Feature%20branching.JPG)
    
@@ -173,7 +171,7 @@ Principle 7 - Size and Space for Approach and Use: Appropriate size and space ar
    ![GitHub Issues](https://github.com/CSC207-UofT/course-project-newtapp/blob/main/phase2/images/issues%20tab.JPG)
    
 ## Code Style and Documentation <a name="Code-Style-and-Documentation"></a>
-   At the moment, we have a bunch of IntelliJ warnings across our project, but please know that we are aware of each warning. They mostly are unused code warnings related to parts of our program that are not fully fleshed out yet. All of the code that is accessible through our API server has no warnings that we have left unintentionally.
+   Following Phase 2, our code continues to have a number of IntelliJ unused method warnings, but please know that we are aware of each warning. They mostly reflect unused code relating to parts of our program to be used for future functionality. All of the code accessible through our API server have no warnings that we have left unintentionally.
 
 ## Testing <a name="Testing"></a>
    
@@ -195,7 +193,7 @@ Spring Boot (this repository ): We transformed our original application into a S
 
 - Constants (https://github.com/CSC207-UofT/course-project-optimistic-newts/pull/35): We refactored our constants' names to fit the naming convention.
 
-- Constructor (https://github.com/CSC207-UofT/course-project-newtapp/commit/5a4191f7db6457c287c59a979ee9785a22f16d82): We used refactoring of the constructor to delete the use of a obsolete variable, LocationRadius.
+- Constructor (https://github.com/CSC207-UofT/course-project-newtapp/commit/5a4191f7db6457c287c59a979ee9785a22f16d82): We used refactoring of the constructor to delete the use of an obsolete variable, LocationRadius.
 
 ## Open Questions <a name="Open-Questions"></a>
 
