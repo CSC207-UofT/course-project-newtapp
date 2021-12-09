@@ -3,20 +3,21 @@
 ## Table of contents
 1. [Our Mission](#Our-Mission)
 2. [Specification](#Specification)
-3. [Progress in Phase 2](#Progress-in-Phase2)
-4. [SOLID design principles](#SOLID-Design-Principles)
-5. [Clean Architecture](#Clean-Architecture)
-6. [Design Patterns](#Design-Patterns)
-7. [Design Decisions](#Design-Decisions)
-8. [Accessibility Report](#Accessibility-Report)
-9. [Use of GitHub Features](#Use-of-GitHub-Features)
-10. [Code Style and Documentation](#Code-Style-and-Documentation)
-11. [Testing](#Testing)
-12. [Packaging Strategies](#Packaging-Strategies)
-13. [Refactoring](#Refactoring)
-14. [Open Questions](#Open-Questions)
-15. [Progress Report and Work Allocation](#Progress-Report-and-Work-Allocation)
-16. [Final Thoughts](#Final-Thoughts)
+3. [Setup Instructions](#Setup-Instructions)
+4. [Progress in Phase 2](#Progress-in-Phase2)
+5. [SOLID design principles](#SOLID-Design-Principles)
+6. [Clean Architecture](#Clean-Architecture)
+7. [Design Patterns](#Design-Patterns)
+8. [Design Decisions](#Design-Decisions)
+9. [Accessibility Report](#Accessibility-Report)
+10. [Use of GitHub Features](#Use-of-GitHub-Features)
+11. [Code Style and Documentation](#Code-Style-and-Documentation)
+12. [Testing](#Testing)
+13. [Packaging Strategies](#Packaging-Strategies)
+14. [Refactoring](#Refactoring)
+15. [Open Questions](#Open-Questions)
+16. [Progress Report and Work Allocation](#Progress-Report-and-Work-Allocation)
+17. [Final Thoughts](#Final-Thoughts)
 
 
 ## Our Mission <a name="Our-Mission"></a>
@@ -24,6 +25,77 @@ Our team is developing an application that facilitates meeting new people with s
 
 ## Specification <a name="Specification"></a>
 Our group has chosen to create and develop a social media application that facilitates meeting new people with similar interests through conversations. Our application aims to deliver a platform for users to find, initiate and contribute to conversations through topics that interest them, with a focus on inspiring opportunities for people to meet and make new friends. As such, we want to give users the option of searching for conversations locally or internationally so that groups can have the opportunity to make and meet friends both in person or online. After creating and personalizing an account, users will be able to specify topics of interest. They will then be given the option to join existing groups on these topics. Users can also choose to create a new thread.
+
+## Setup Instructions <a name="Setup-Instructions"></a>
+
+[Setup Walkthrough Video](https://www.youtube.com/watch?v=0o1EFIUH57c)
+
+### Database Setup
+
+1. Set up PostgreSQL on your machine.
+2. Create a new database called `newtapp`.
+3. Create `users`, `conversations` and `messages` tables in the database (see SQL commands below).
+
+You can complete steps 2 and 3 by running the following in `psql`:
+```
+CREATE DATABASE newtapp;
+
+\c newtapp
+
+CREATE TABLE conversations (
+    id serial PRIMARY KEY,
+    title text,
+    topics text[],
+    location text,
+    location_radius int,
+    min_rating int,
+    max_size int,
+    is_open boolean,
+    messages int[],
+    users int[],
+    author_id int
+);
+
+CREATE TABLE users (
+    id serial PRIMARY KEY,
+    username text NOT NULL UNIQUE,
+    password text NOT NULL,
+    location text,
+    interests text[],
+    total_rating int,
+    num_ratings int,
+    following int[],
+    followers int[],
+    blocked_users int[],
+    conversations int[],
+    authorities text[],
+    rated_users int[]
+);
+
+CREATE TABLE messages (
+    id serial PRIMARY KEY,
+    body text,
+    author integer,
+    written_at text,
+    last_updated_at text,
+    conversation_id int
+);
+```
+
+### Start up the Back-end API Server
+
+1. Navigate to the project directory.
+2. `mvn clean compile exec:java`
+
+### Start up the Front-end Web Server
+
+1. Install an up-to-date version of Node.js if you do not already have it.
+2. Navigate to `src/front-end/` from the project directory.
+3. `npm ci` to install dependencies (don't be alarmed by the warnings, they only concern the dev environment, you can confirm this with `npm audit -production`).
+4. `npm start` to run the web server.
+
+
+
 
 ## Progress in Phase 2 <a name="Progress-in-Phase2"></a>
 Since Phase 2, our group worked towards completing several critical components for our social media application. We began by finishing the remaining tasks in our specifications and user stories. Some of these tasks included:
