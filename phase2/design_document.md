@@ -1,3 +1,5 @@
+# Design Document - Optimistic Newts
+
 ## Table of contents
 1. [Our Mission](#Our-Mission)
 2. [Specification](#Specification)
