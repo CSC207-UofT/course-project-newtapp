@@ -67,10 +67,18 @@ CREATE TABLE messages (
 
 ---
 
-**Start up the Web Interface**
+**Start up the Back-end API Server**
+
+1. Compile the Maven Project
+2. Run `NewtappApplication`
+
+---
+
+**Start up the Front-end Web Server**
 
 1. Install Node.js if you do not already have it.
 2. Navigate to `src/front-end/` from the project directory.
 3. `npm start`.
+4. You may or may not need to install some Node dependencies to do this.
 
 
