@@ -21,10 +21,10 @@ function ConversationTile({ conversation, buttons }) {
                 </div>
                 <div className="conversationTileSidebar">
                     <div className="conversationTileSidebarExtra">
-                        {conversation.location}<p className="emoji"> &#x1F30D;</p>
+                        {conversation.location}<span aria-label="Globe Emoji" role="img" className="emoji"> &#x1F30D;</span>
                     </div>
                     <div className="conversationTileSidebarExtra">
-                        {conversation.currSize} / {conversation.maxSize}<p className="emoji"> &#x1F438;</p>
+                        {conversation.currSize} / {conversation.maxSize}<span aria-label="Newt Emoji" role="img" className="emoji"> &#x1F438;</span>
                     </div>
                 </div>
             </div>
@@ -42,10 +42,10 @@ function ConversationTile({ conversation, buttons }) {
                     </div>
                     <div className="conversationTileSidebar">
                         <div className="conversationTileSidebarExtra">
-                            {conversation.location}<p className="emoji"> &#x1F30D;</p>
+                            {conversation.location}<span aria-label="Globe Emoji" role="img" className="emoji"> &#x1F30D;</span>
                         </div>
                         <div className="conversationTileSidebarExtra">
-                            {conversation.currSize} / {conversation.maxSize}<p className="emoji"> &#x1F438;</p>
+                            {conversation.currSize} / {conversation.maxSize}<span aria-label="Newt Emoji" role="img" className="emoji"> &#x1F438;</span>
                         </div>
                         <div className="conversationTileButton">
                             {buttons}

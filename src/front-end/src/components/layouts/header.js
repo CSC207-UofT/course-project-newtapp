@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import React from 'react';
 import logo from '../../images/logo128.png';
 import logo2 from '../../images/logo.png';
 import {useCookies} from "react-cookie";

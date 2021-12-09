@@ -5,22 +5,15 @@ An app for meeting people and having conversations.
 ## Database Setup
 
 1. Set up PostgreSQL on your machine.
-2. Create a user called `optimisticnewt` with password `newtdb`.
-3. Create a new database called `newtapp`.
-4. Give user `optimisticnewt` privileges on `newtapp` database.
-5. Create User, Conversation and Message tables in the database (see SQL commands below).
-6. Assign data source to User, Conversation and Message.
+2. Create a new database called `newtapp`.
+3. Create `users`, `conversations` and `messages` tables in the database (see SQL commands below).
 
-You can complete steps 2-4 by running the following at the command line in `psql`:
+You can complete steps 2 and 3 by running the following in `psql`:
 ```
 CREATE DATABASE newtapp;
-CREATE USER optimisticnewt WITH ENCRYPTED PASSWORD 'newtdb';
-GRANT ALL PRIVILEGES ON DATABASE newtapp TO optimisticnewt;
-```
 
-SQL table creation commands for step 5:
+\c newtapp
 
-```
 CREATE TABLE conversations (
     id serial PRIMARY KEY,
     title text,
@@ -70,7 +63,7 @@ CREATE TABLE messages (
 
 1. Install an up-to-date version of Node.js if you do not already have it.
 2. Navigate to `src/front-end/` from the project directory.
-3. `npm ci` to install dependencies.
+3. `npm ci` to install dependencies (don't be alarmed by the warnings, they only concern the dev environment, you can confirm this with `npm audit -production`).
 4. `npm start` to run the web server.
 
 
