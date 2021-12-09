@@ -1,12 +1,8 @@
-## Newt
-
----
+# Newt
 
 An app for meeting people and having conversations.
 
----
-
-**Database setup instructions**:
+## Database Setup
 
 1. Set up PostgreSQL on your machine.
 2. Create a user called `optimisticnewt` with password `newtdb`.
@@ -65,16 +61,12 @@ CREATE TABLE messages (
 );
 ```
 
----
-
-**Start up the Back-end API Server**
+## Start up the Back-end API Server
 
 1. Compile the Maven Project
 2. Run `NewtappApplication`
 
----
-
-**Start up the Front-end Web Server**
+## Start up the Front-end Web Server
 
 1. Install Node.js if you do not already have it.
 2. Navigate to `src/front-end/` from the project directory.
