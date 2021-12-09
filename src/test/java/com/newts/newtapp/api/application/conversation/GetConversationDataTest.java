@@ -51,7 +51,7 @@ public class GetConversationDataTest {
     }
 
     @Test(timeout = 5000)
-    public void testGetConversationData() throws UserNotFound, MessageNotFound, IncorrectPassword, ConversationNotFound,
+    public void testGetConversationData() throws UserNotFound, MessageNotFound, ConversationNotFound,
             MessageNotFoundInConversation {
         RequestModel r = new RequestModel();
         r.fill(RequestField.CONVERSATION_ID, 1);

@@ -5,7 +5,6 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Before;
 import org.junit.Test;
 

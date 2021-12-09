@@ -44,9 +44,16 @@ public class Create extends UserInteractor<Void,Exception> {
         // hash the provided password with a generated salt
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        ArrayList<String> interests = (ArrayList<String>) request.get(RequestField.INTERESTS);
+        ArrayList<?> interests = (ArrayList<?>) request.get(RequestField.INTERESTS);
 
-        User user = new User(0, username, hashedPassword, interests);
+        ArrayList<String> interestList = new ArrayList<>();
+        for (Object o : interests) {
+            if (o instanceof String) {
+                interestList.add((String) o);
+            }
+        }
+
+        User user = new User(0, username, hashedPassword, interestList);
         userRepository.save(user);
         return null;
     }

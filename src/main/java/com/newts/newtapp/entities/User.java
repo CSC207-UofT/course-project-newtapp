@@ -1,18 +1,15 @@
 package com.newts.newtapp.entities;
 
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
-import javassist.Loader;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.*;
 

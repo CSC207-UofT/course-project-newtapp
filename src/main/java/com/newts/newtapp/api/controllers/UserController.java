@@ -15,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -85,12 +84,11 @@ public class UserController {
      * Edit a user.
      * @param form                  A filled in CreateUserForm
      * @throws UserAlreadyExists    If a user with the provided username already exists
-     * @throws InvalidPassword      If the provided password is invalid
      * @throws UserNotFound         If no user exists with id
      * @throws InvalidUsername      If the provided username is not valid
      */
     @PostMapping("/api/users/edit")
-    public EntityModel<UserProfile> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, InvalidPassword, UserNotFound, InvalidUsername {
+    public EntityModel<UserProfile> edit(@RequestBody CreateUserForm form) throws UserAlreadyExists, UserNotFound, InvalidUsername {
         RequestModel request = new RequestModel();
         request.fill(RequestField.USERNAME, returnUsername());
         request.fill(RequestField.NEW_USERNAME, form.getUsername());
@@ -219,7 +217,7 @@ public class UserController {
      * @param username Username of other user
      */
     @PostMapping("/api/users/{username}/rate")
-    ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) throws UserNotFound, UserAlreadyRated {
+    ResponseEntity<?> rate(@RequestBody int rating, @PathVariable String username) {
         // fetch the currently authenticated user's username
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String usernameRating = userDetails.getUsername();

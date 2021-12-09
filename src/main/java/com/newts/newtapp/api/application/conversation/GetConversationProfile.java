@@ -5,14 +5,13 @@ import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
 import com.newts.newtapp.api.errors.ConversationNotFound;
 import com.newts.newtapp.api.gateways.ConversationRepository;
-import com.newts.newtapp.api.gateways.UserRepository;
 import com.newts.newtapp.entities.Conversation;
 
 public class GetConversationProfile extends ConversationInteractor<ConversationProfile, Exception> {
 
     /**
      * Create a GetConversationProfile interactor with supplied repositories
-     * @param conversationRepository ConversatioRepository containing Conversation data
+     * @param conversationRepository ConversationRepository containing Conversation data
      */
     public GetConversationProfile(ConversationRepository conversationRepository){
         super(conversationRepository);

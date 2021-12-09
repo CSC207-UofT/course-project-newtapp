@@ -20,7 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 
 /**
@@ -67,12 +66,11 @@ public class ConversationController {
      * @throws ConversationNotFound     If no Conversation exists with id
      * @throws UserNotFound               If no user exists with id
      * @throws MessageNotFound            If no conversation exists with id
-     * @throws IncorrectPassword          If the password is incorrect
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @GetMapping("/api/conversations/{id}/view")
     public EntityModel<ConversationData> getData(@PathVariable int id) throws ConversationNotFound, UserNotFound,
-            MessageNotFound, IncorrectPassword, MessageNotFoundInConversation {
+            MessageNotFound, MessageNotFoundInConversation {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, id);
         ConversationData data = conversationManager.getData(request);
@@ -119,12 +117,10 @@ public class ConversationController {
      * @throws UserBlocked                If the user is blocked from the conversation
      * @throws ConversationFull           If the conversation is full
      * @throws ConversationNotFound       If no conversation exists with id
-     * @throws MessageNotFound            If no conversation exists with id
-     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/join")
     public EntityModel<ConversationProfile> join(@PathVariable int id) throws UserBelowMinimumRating, UserNotFound,
-            UserBlocked, ConversationFull, ConversationNotFound, MessageNotFound, IncorrectPassword {
+            UserBlocked, ConversationFull, ConversationNotFound {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -173,13 +169,10 @@ public class ConversationController {
      * @throws UserNotFound               If no user exists with id
      * @throws ConversationNotFound       If no conversation exists with id
      * @throws WrongAuthor                If the given user didn't create the given conversation
-     * @throws MessageNotFound            If no conversation exists with id
-     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/edit")
     public EntityModel<ConversationProfile> edit(@PathVariable int id, @RequestBody CreateConversationForm form)
-            throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize,
-            MessageNotFound, IncorrectPassword {
+            throws UserNotFound, ConversationNotFound, InvalidMinRating, WrongAuthor, InvalidConversationSize {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -208,11 +201,10 @@ public class ConversationController {
      * @throws UserNotFound                  If no user exists with id
      * @throws ConversationNotFound          If no conversation exists with id
      * @throws WrongAuthor                   If the given user didn't create the given conversation
-     * @throws IncorrectPassword             If the password is incorrect
      */
     @DeleteMapping("/api/conversations/{id}")
     ResponseEntity<?> delete(@PathVariable int id)
-            throws UserNotFound, ConversationNotFound, WrongAuthor, IncorrectPassword {
+            throws UserNotFound, ConversationNotFound, WrongAuthor {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -232,12 +224,10 @@ public class ConversationController {
      * @throws UserNotFound               If no user exists with id
      * @throws ConversationNotFound       If no conversation exists with id
      * @throws WrongAuthor                If the given user didn't create the given conversation
-     * @throws MessageNotFound            If no conversation exists with id
-     * @throws IncorrectPassword          If the password is incorrect
      */
     @PostMapping("/api/conversations/{id}/open")
     public EntityModel<ConversationProfile> changeStatus(@PathVariable int id) throws UserNotFound, WrongAuthor,
-            ConversationNotFound, MessageNotFound, IncorrectPassword {
+            ConversationNotFound {
         //initiate a request model requesting the conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -254,7 +244,7 @@ public class ConversationController {
     }
 
     /**
-     * Returns a MessageData for the Message with given id in the covnersation with given cid
+     * Returns a MessageData for the Message with given id in the conversation with given cid
      * @param id                        id of Conversation
      * @return                          EntityModel containing Conversation data
      * @throws ConversationNotFound     If no Conversation exists with id
@@ -280,14 +270,13 @@ public class ConversationController {
      * @throws EmptyMessage               If the given message body isEmpty
      * @throws UserNotFoundInConversation If the given user is not in the conversation
      * @throws MessageNotFound            If no conversation exists with id
-     * @throws IncorrectPassword          If the password is incorrect
      * @throws MessageNotFoundInConversation If the message is not found in conversation
      */
     @PostMapping("/api/conversations/{id}/messages")
     public ResponseEntity<EntityModel<ConversationData>> addMessage(@PathVariable int id,
                                                                     @RequestBody String messageBody)
             throws UserNotFoundInConversation, EmptyMessage, ConversationNotFound, UserNotFound, MessageNotFound,
-            IncorrectPassword, MessageNotFoundInConversation {
+            MessageNotFoundInConversation {
         //initiate a request model requesting the body, conversationId and the userId.
         RequestModel request = new RequestModel();
 
@@ -324,7 +313,7 @@ public class ConversationController {
     public EntityModel<ConversationData> editMessage(@PathVariable int cid, @PathVariable int id,
                                                         @RequestBody String messageBody)
             throws UserNotFound, ConversationNotFound, EmptyMessage, WrongAuthor, MessageNotFound,
-            UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
+            UserNotFoundInConversation, MessageNotFoundInConversation {
         //initiate a request model requesting the body, conversationId, messageId and the userId.
         RequestModel request = new RequestModel();
 
@@ -358,7 +347,7 @@ public class ConversationController {
     @DeleteMapping("/api/conversations/{cid}/messages/{id}")
     public EntityModel<ConversationData> deleteMessage(@PathVariable int cid, @PathVariable int id)
             throws UserNotFound, ConversationNotFound, WrongAuthor, MessageNotFound,
-            UserNotFoundInConversation, MessageNotFoundInConversation, IncorrectPassword {
+            UserNotFoundInConversation, MessageNotFoundInConversation {
         //initiate a request model requesting the conversationId, messageId and the userId.
         RequestModel request = new RequestModel();
 
@@ -398,7 +387,6 @@ public class ConversationController {
 
     /**
      * Return a list of conversations in which users who this user is following are, sorted by interest.
-     * @return
      */
     @GetMapping("/api/following/conversations")
     ArrayList<EntityModel<ConversationProfile>> followingConversation() throws UserNotFound, ConversationNotFound {
@@ -414,8 +402,6 @@ public class ConversationController {
 
     /**
      * Return a list of conversations which are sorted approximately by relevance to the user.
-     * @return
-     * @throws UserNotFound
      */
     @GetMapping("/api/relevant/conversations")
     ArrayList<EntityModel<ConversationProfile>> getRelevantConversations() throws UserNotFound {

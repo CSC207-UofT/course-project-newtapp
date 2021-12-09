@@ -10,7 +10,6 @@ public class Rate extends UserInteractor<Void, Exception>{
 
     /**
      * Creates Rate UserInteractor which allows user to rate another user
-     * @param userRepository
      */
     public Rate(UserRepository userRepository){super(userRepository);}
 
@@ -32,7 +31,7 @@ public class Rate extends UserInteractor<Void, Exception>{
             throw new UserAlreadyRated();
         }
 
-        if (0 < rating || rating > 5){
+        if (0 > rating || rating > 5){
             throw new InvalidRating();
         }
 

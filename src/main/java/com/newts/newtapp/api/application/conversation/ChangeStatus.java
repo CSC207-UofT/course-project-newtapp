@@ -26,8 +26,8 @@ public class ChangeStatus extends ConversationInteractor<Void, Exception> {
      */
     @Override
     public Void request(RequestModel request) throws ConversationNotFound, WrongAuthor {
-        int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
         int userId = (int) request.get(RequestField.USER_ID);
+        int conversationId = (int) request.get(RequestField.CONVERSATION_ID);
 
         Conversation conversation = conversationRepository.findById(conversationId).orElseThrow(ConversationNotFound::new);
 

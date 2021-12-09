@@ -3,8 +3,6 @@ package com.newts.newtapp.api.application;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.ConversationData;
 import com.newts.newtapp.api.application.datatransfer.ConversationProfile;
-import com.newts.newtapp.api.application.conversation.GetConversationProfile;
-import com.newts.newtapp.api.application.conversation.EditMessage;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.gateways.ConversationRepository;
 import com.newts.newtapp.api.gateways.MessageRepository;
@@ -58,7 +56,7 @@ public class ConversationManager {
      * @return                          ConversationData of corresponding Conversation
      * @throws ConversationNotFound     If Conversation id does not exist
      */
-    public ConversationData getData(RequestModel request) throws UserNotFound, MessageNotFound, IncorrectPassword, ConversationNotFound, MessageNotFoundInConversation {
+    public ConversationData getData(RequestModel request) throws UserNotFound, MessageNotFound, ConversationNotFound, MessageNotFoundInConversation {
         GetConversationData getDataById = new GetConversationData(conversationRepository, messageRepository,
                 userRepository);
         return getDataById.request(request);
@@ -96,7 +94,7 @@ public class ConversationManager {
      * Deletes a conversation using request
      * @param request the filled in RequestModel
      */
-    public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor, IncorrectPassword,
+    public void deleteConversation(RequestModel request) throws UserNotFound, WrongAuthor,
             ConversationNotFound {
         Delete delete = new Delete(conversationRepository, userRepository);
         delete.request(request);

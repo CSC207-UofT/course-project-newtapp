@@ -7,7 +7,6 @@ import com.newts.newtapp.api.errors.InvalidConversationSize;
 import com.newts.newtapp.api.errors.InvalidMinRating;
 import com.newts.newtapp.api.errors.WrongAuthor;
 import com.newts.newtapp.api.gateways.TestConversationRepository;
-import com.newts.newtapp.api.gateways.TestMessageRepository;
 import com.newts.newtapp.api.gateways.TestUserRepository;
 import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;

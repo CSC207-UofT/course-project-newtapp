@@ -3,7 +3,6 @@ package com.newts.newtapp.api.security;
 import com.newts.newtapp.api.gateways.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,8 +24,8 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    UserRepository repository;
-    JwtTokenFilter jwtTokenFilter;
+    final UserRepository repository;
+    final JwtTokenFilter jwtTokenFilter;
 
     public WebSecurityConfig(UserRepository repository, JwtTokenFilter jwtTokenFilter) {
         this.repository = repository;
@@ -51,6 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
+    @SuppressWarnings("EmptyMethod") // Removing this causes Spring errors
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();

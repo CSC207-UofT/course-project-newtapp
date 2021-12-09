@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class EditMessageTest {
     TestConversationRepository testConversationRepository;
     TestMessageRepository testMessageRepository;

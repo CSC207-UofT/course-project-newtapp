@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 public class BlockUnblockTest {
     Block block;
     Unblock unblock;

@@ -24,13 +24,13 @@ public class Delete extends ConversationInteractor<Void,Exception> {
      * @param request   a request stored as a RequestModel
      */
     @Override
-    public Void request(RequestModel request) throws UserNotFound, IncorrectPassword, ConversationNotFound, WrongAuthor {
+    public Void request(RequestModel request) throws UserNotFound, ConversationNotFound, WrongAuthor {
         int conversationID = (int) request.get(RequestField.CONVERSATION_ID);
-        int userID = (int) request.get(RequestField.USER_ID);
 
         Conversation conversation = conversationRepository.findById(conversationID).orElseThrow(ConversationNotFound::new);
 
         //Check if the conversation is created by the given userID
+        int userID = (int) request.get(RequestField.USER_ID);
         if (conversation.getAuthorId() != userID)  {
             throw new WrongAuthor();
         }

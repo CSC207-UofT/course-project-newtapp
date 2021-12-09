@@ -30,7 +30,7 @@ public class DeleteConversationTest {
     }
 
     @Test(timeout = 50)
-    public void testDeleteConversation() throws UserNotFound, WrongAuthor, IncorrectPassword, ConversationNotFound {
+    public void testDeleteConversation() throws UserNotFound, WrongAuthor, ConversationNotFound {
         RequestModel request = new RequestModel();
         request.fill(RequestField.CONVERSATION_ID, testConversation.getId());
         request.fill(RequestField.USER_ID, testUser.getId());

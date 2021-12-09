@@ -11,7 +11,7 @@ import com.newts.newtapp.entities.User;
 public class Block extends UserInteractor<Void, Exception>{
 
     /**
-     * Intializes a new Block interactor with a given UserRepository and ConversationRepository
+     * Initializes a new Block interactor with a given UserRepository and ConversationRepository
      * @param userRepository UserRepository containing user data
      * @param conversationRepository ConversationRepository containing conversation data
      */

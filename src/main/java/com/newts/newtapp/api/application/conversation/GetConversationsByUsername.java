@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class GetConversationsByUsername extends UserInteractor<ArrayList<ConversationProfile>, Exception> {
     /**
      * Create a GetConversationProfile interactor with supplied repositories
-     * @param conversationRepository ConversatioRepository containing Conversation data
+     * @param conversationRepository ConversationRepository containing Conversation data
      * @param userRepository         UserRepository containing User data
      */
     public GetConversationsByUsername(ConversationRepository conversationRepository, UserRepository userRepository){
@@ -37,7 +37,7 @@ public class GetConversationsByUsername extends UserInteractor<ArrayList<Convers
         User user = userRepository.findByUsername(username).orElseThrow(UserNotFound::new);
 
         // Initialize the ArrayList to hold the conversation profiles
-        ArrayList<ConversationProfile> conversationProfiles = new ArrayList<ConversationProfile>();
+        ArrayList<ConversationProfile> conversationProfiles = new ArrayList<>();
 
         for (int cid : user.getConversations()) {
             Conversation conversation = conversationRepository.findById(cid).orElseThrow(ConversationNotFound::new);

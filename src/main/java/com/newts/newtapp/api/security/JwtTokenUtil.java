@@ -16,8 +16,8 @@ import java.util.Map;
 
 @Component
 public class JwtTokenUtil {
-    static Algorithm algorithm = Algorithm.HMAC256("12345678901234567890123456789012"); // secret key is >= 256 bits
-    static JWTVerifier verifier = JWT.require(algorithm).withIssuer("newts").build();
+    static final Algorithm algorithm = Algorithm.HMAC256("12345678901234567890123456789012"); // secret key is >= 256 bits
+    static final JWTVerifier verifier = JWT.require(algorithm).withIssuer("newts").build();
 
     /**
      * Generates a JWT for the given user issued at the current system time.

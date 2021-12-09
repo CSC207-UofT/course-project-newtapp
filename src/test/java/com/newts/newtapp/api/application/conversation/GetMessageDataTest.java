@@ -4,7 +4,6 @@ import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.application.datatransfer.MessageData;
 import com.newts.newtapp.api.errors.ConversationNotFound;
-import com.newts.newtapp.api.errors.IncorrectPassword;
 import com.newts.newtapp.api.errors.MessageNotFound;
 import com.newts.newtapp.api.errors.MessageNotFoundInConversation;
 import com.newts.newtapp.api.gateways.TestConversationRepository;

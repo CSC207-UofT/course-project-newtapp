@@ -1,5 +1,4 @@
 package com.newts.newtapp.api.application.user;
-import com.newts.newtapp.api.application.*;
 import com.newts.newtapp.api.application.boundary.RequestField;
 import com.newts.newtapp.api.application.boundary.RequestModel;
 import com.newts.newtapp.api.errors.*;
@@ -34,9 +33,16 @@ public class Edit extends UserInteractor<Void, Exception> {
         // look up the user, if it doesn't exist throw UserNotFound
         User user = userRepository.findByUsername(oldUsername).orElseThrow(UserNotFound::new);
 
+        ArrayList<?> interests = (ArrayList<?>) request.get(RequestField.INTERESTS);
         String username = (String) request.get(RequestField.NEW_USERNAME);
         String location = (String) request.get(RequestField.LOCATION);
-        ArrayList<String> interests = ((ArrayList<String>) request.get(RequestField.INTERESTS));
+
+        ArrayList<String> interestList = new ArrayList<>();
+        for (Object o : interests) {
+            if (o instanceof String) {
+                interestList.add((String) o);
+            }
+        }
 
         if (username.contains(" ")) {
             throw new InvalidUsername();
@@ -47,7 +53,7 @@ public class Edit extends UserInteractor<Void, Exception> {
 
         user.setUsername(username);
         user.setLocation(location);
-        user.setInterests(interests);
+        user.setInterests(interestList);
 
         userRepository.save(user);
         return null;

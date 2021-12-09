@@ -113,11 +113,6 @@ public class UserManager {
     }
 
     /**
-     * Following conversation method, implemented on other branch
-     */
-     public void followingConversations(RequestModel request) {}
-
-    /**
      * Block a given user
      * @param request   RequestModel containing the user and the user to block.
      */
@@ -165,7 +160,7 @@ public class UserManager {
      * Rate given user
      * @param request RequestModel containing the user to be rated and the rating
      */
-    public void rate(RequestModel request) throws UserNotFound, UserAlreadyRated {
+    public void rate(RequestModel request) {
         Rate rate = new Rate((userRepository));
     }
 

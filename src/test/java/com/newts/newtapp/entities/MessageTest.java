@@ -14,7 +14,7 @@ public class MessageTest {
     Message m;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         m = new Message(1, "Luke, I am your father", 0, 0);
     }
 

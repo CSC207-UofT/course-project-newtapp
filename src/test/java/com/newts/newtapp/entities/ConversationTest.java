@@ -15,7 +15,7 @@ public class ConversationTest {
     Conversation c;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ArrayList<String> topics = new ArrayList<>();
         topics.add("");
         c = new Conversation(0, "Sample Conversation", topics, "",

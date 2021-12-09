@@ -13,6 +13,7 @@ import java.util.*;
 /**
  * A mock UserRepository implemented for testing purposes.
  */
+@SuppressWarnings({"NullableProblems", "SpringDataMethodInconsistencyInspection", "SpringDataRepositoryMethodParametersInspection"})
 @Configuration
 @ConditionalOnMissingBean
 public class TestUserRepository implements UserRepository {
@@ -28,11 +29,6 @@ public class TestUserRepository implements UserRepository {
         this.users = new HashMap<>();
     }
 
-//    @Override
-//    public Optional<User> findByUsernameIgnoreCase(String username) {
-//        return Optional.empty();
-//    }
-
     @Override
     public List<User> findAll() {
         return null;
@@ -44,12 +40,12 @@ public class TestUserRepository implements UserRepository {
     }
 
     @Override
-    public Page<User> findAll(Pageable pageable) {
+    public List<User> findAllById(Iterable<Integer> integers) {
         return null;
     }
 
     @Override
-    public List<User> findAllById(Iterable<Integer> integers) {
+    public Page<User> findAll(Pageable pageable) {
         return null;
     }
 
@@ -60,16 +56,12 @@ public class TestUserRepository implements UserRepository {
 
     @Override
     public void deleteById(Integer integer) {
-        if (users.containsKey(integer)){
-            users.remove(integer);
-        }
+        users.remove(integer);
     }
 
     @Override
     public void delete(User entity) {
-        if (users.containsKey(entity.getId())){
-            users.remove(entity.getId());
-        }
+        users.remove(entity.getId());
     }
 
     @Override
@@ -90,11 +82,11 @@ public class TestUserRepository implements UserRepository {
     @Override
     public <S extends User> S save(S entity) {
         if (entity.getId() == 0) {
-            int newid = 1;
-            while (users.containsKey(newid)) {
-                newid++;
+            int newId = 1;
+            while (users.containsKey(newId)) {
+                newId++;
             }
-            entity.setId(newid);
+            entity.setId(newId);
         }
         users.put(entity.getId(), entity);
         return entity;
@@ -131,11 +123,6 @@ public class TestUserRepository implements UserRepository {
     @Override
     public <S extends User> List<S> saveAllAndFlush(Iterable<S> entities) {
         return null;
-    }
-
-    @Override
-    public void deleteInBatch(Iterable<User> entities) {
-        UserRepository.super.deleteInBatch(entities);
     }
 
     @Override

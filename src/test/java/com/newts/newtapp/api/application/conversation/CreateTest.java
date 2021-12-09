@@ -11,7 +11,6 @@ import com.newts.newtapp.entities.Conversation;
 import com.newts.newtapp.entities.User;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.Request;
 
 import java.util.ArrayList;
 

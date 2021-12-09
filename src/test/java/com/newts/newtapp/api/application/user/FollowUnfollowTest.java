@@ -18,7 +18,7 @@ public class FollowUnfollowTest {
     Unfollow unfollow;
 
     @Before
-    public void setUp() throws UserNotFound, SameUser, AlreadyFollowingUser, InvalidUsername, UserAlreadyExists,
+    public void setUp() throws InvalidUsername, UserAlreadyExists,
             InvalidPassword {
         testUserRepository = new TestUserRepository();
         create = new com.newts.newtapp.api.application.user.Create(testUserRepository);

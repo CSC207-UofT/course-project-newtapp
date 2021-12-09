@@ -4,11 +4,11 @@ package com.newts.newtapp.api.application.datatransfer;
 import com.newts.newtapp.entities.Message;
 
 public class MessageData {
-    public int id;
-    public String body;
-    public int author;
-    public String writtenAt;
-    public String lastUpdatedAt;
+    public final int id;
+    public final String body;
+    public final int author;
+    public final String writtenAt;
+    public final String lastUpdatedAt;
 
     public MessageData(Message message) {
         this.id = message.getId();

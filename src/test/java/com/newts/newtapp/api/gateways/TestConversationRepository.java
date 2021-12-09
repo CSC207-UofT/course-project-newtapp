@@ -16,6 +16,7 @@ import java.util.Optional;
 /**
  * A mock ConversationRepository implemented for testing purposes.
  */
+@SuppressWarnings({"NullableProblems", "SpringDataMethodInconsistencyInspection", "SpringDataRepositoryMethodParametersInspection"})
 @Configuration
 @ConditionalOnMissingBean
 public class TestConversationRepository implements ConversationRepository{
@@ -85,11 +86,11 @@ public class TestConversationRepository implements ConversationRepository{
     @Override
     public <S extends Conversation> S save(S entity) {
         if (entity.getId() == 0) {
-            int newid = 1;
-            while (conversations.containsKey(newid)) {
-                newid++;
+            int newId = 1;
+            while (conversations.containsKey(newId)) {
+                newId++;
             }
-            entity.setId(newid);
+            entity.setId(newId);
         }
         conversations.put(entity.getId(), entity);
         return entity;

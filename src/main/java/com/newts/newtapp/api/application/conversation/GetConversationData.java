@@ -40,7 +40,7 @@ public class GetConversationData extends ConversationInteractor<ConversationData
      * @param request a request stored as a RequestModel
      */
     @Override
-    public ConversationData request(RequestModel request) throws IncorrectPassword, UserNotFound, ConversationNotFound, MessageNotFound, MessageNotFoundInConversation {
+    public ConversationData request(RequestModel request) throws UserNotFound, ConversationNotFound, MessageNotFound, MessageNotFoundInConversation {
         RequestModel requestModel = new RequestModel();
         GetProfileById getProfileById = new GetProfileById(userRepository);
         GetMessageData getMessageData = new GetMessageData(conversationRepository, messageRepository);

@@ -15,6 +15,9 @@ import java.util.Optional;
 /**
  * A mock MessageRepository implemented for testing purposes.
  */
+@SuppressWarnings({"NullableProblems", "SpringDataMethodInconsistencyInspection", "SpringDataRepositoryMethodParametersInspection"})
+// We suppress warnings for all of the test repositories. We are not worried about
+// this particular warning.
 @Configuration
 @ConditionalOnMissingBean
 public class TestMessageRepository implements MessageRepository{
@@ -39,12 +42,12 @@ public class TestMessageRepository implements MessageRepository{
     }
 
     @Override
-    public Page<Message> findAll(Pageable pageable) {
+    public List<Message> findAllById(Iterable<Integer> integers) {
         return null;
     }
 
     @Override
-    public List<Message> findAllById(Iterable<Integer> integers) {
+    public Page<Message> findAll(Pageable pageable) {
         return null;
     }
 

@@ -329,12 +329,10 @@ public class Conversation {
     /**
      * Delete a message from a conversation.
      * @param messageId   a message to be removed
-     * @return          true iff the message was removed
      */
-    public boolean deleteMessage(int messageId) {
+    public void deleteMessage(int messageId) {
         int beforeSize = messages.size();
         messages.remove(Integer.valueOf(messageId));
-        return beforeSize != messages.size();
     }
 
     /**

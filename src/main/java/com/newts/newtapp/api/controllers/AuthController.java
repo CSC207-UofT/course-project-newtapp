@@ -8,10 +8,8 @@ import com.newts.newtapp.api.controllers.assemblers.UserProfileModelAssembler;
 import com.newts.newtapp.api.controllers.forms.UserAuthForm;
 import com.newts.newtapp.api.errors.UserNotFound;
 import com.newts.newtapp.api.security.JwtTokenUtil;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.format.SignStyle;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,14 +26,12 @@ import java.util.Map;
 public class AuthController {
     private final AuthenticationManager authManager;
     private final JwtTokenUtil jwtTokenUtil;
-    private final UserProfileModelAssembler profileAssembler;
     private final UserManager userManager;
 
     public AuthController(AuthenticationManager authManager, JwtTokenUtil jwtTokenUtil,
                           UserProfileModelAssembler profileAssembler, UserManager userManager) {
         this.authManager = authManager;
         this.jwtTokenUtil = jwtTokenUtil;
-        this.profileAssembler = profileAssembler;
         this.userManager = userManager;
     }
 
