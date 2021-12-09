@@ -4,7 +4,7 @@ An app for meeting people and having conversations.
 
 ## Database Setup
 
-[Setup Demo Video](https://www.youtube.com/watch?v=MBijNO8BkRE)
+[Setup Walkthrough Video](https://www.youtube.com/watch?v=0o1EFIUH57c)
 
 1. Set up PostgreSQL on your machine.
 2. Create a new database called `newtapp`.
